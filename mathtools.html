@@ -1510,6 +1510,157 @@
             background: #dc2626;
         }
 
+        /* 学生管理样式 */
+        .student-status-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .student-status-active {
+            background: #d1fae5;
+            color: #059669;
+        }
+
+        .student-status-paused {
+            background: #fef3c7;
+            color: #d97706;
+        }
+
+        .student-status-graduated {
+            background: #e5e7eb;
+            color: #6b7280;
+        }
+
+        .student-progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e5e7eb;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 4px;
+        }
+
+        .student-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3b82f6, #60a5fa);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        .student-info-cell {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .student-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .student-name {
+            font-weight: 600;
+            color: #1f2937;
+        }
+
+        .student-phone {
+            font-size: 12px;
+            color: #6b7280;
+        }
+
+        .student-hours-info {
+            text-align: center;
+        }
+
+        .student-hours-text {
+            font-size: 14px;
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .student-hours-remaining {
+            font-size: 12px;
+            color: #6b7280;
+            margin-top: 2px;
+        }
+
+        .student-action-btn {
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+        }
+
+        .student-action-view {
+            background: #dbeafe;
+            color: #2563eb;
+        }
+
+        .student-action-view:hover {
+            background: #bfdbfe;
+        }
+
+        .student-action-edit {
+            background: #fef3c7;
+            color: #d97706;
+            margin-left: 8px;
+        }
+
+        .student-action-edit:hover {
+            background: #fde68a;
+        }
+
+        .student-detail-section {
+            margin-bottom: 20px;
+        }
+
+        .student-detail-label {
+            font-size: 12px;
+            color: #6b7280;
+            margin-bottom: 4px;
+        }
+
+        .student-detail-value {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1f2937;
+        }
+
+        .student-detail-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        .student-weak-points {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .student-weak-point-tag {
+            background: #fee2e2;
+            color: #dc2626;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+        }
+
         /* 月计划样式 */
         .month-calendar-container {
             background-color: var(--card-bg);
@@ -1612,6 +1763,7 @@
         <button class="nav-tab" data-tab="function" role="tab" aria-selected="false">📊 函数绘制</button>
         <button class="nav-tab" data-tab="geometry" role="tab" aria-selected="false">📐 几何绘图</button>
         <button class="nav-tab" data-tab="income" role="tab" aria-selected="false">💰 收入记录</button>
+        <button class="nav-tab" data-tab="students" role="tab" aria-selected="false">👨‍🎓 学生管理</button>
     </div>
 
     <!-- 主页 -->
@@ -1623,15 +1775,81 @@
                     独立数学老师辅助工具
                 </h1>
                 <p class="text-xl md:text-2xl text-gray-600 mb-10 max-w-3xl mx-auto">
-                    为数学教师打造的专业辅助工具集，提高教学效率，优化教学体验
+                    专为独立数学老师打造的免费辅助工具集<br>
+                    <span class="text-lg">涵盖答题卡生成、函数绘制、几何绘图、课表管理、学生管理、收入统计等8大功能</span>
                 </p>
                 <div class="flex flex-wrap justify-center gap-4">
-                    <button onclick="switchTab('answer-sheet')" class="bg-blue-600 text-white px-8 py-3 rounded-full text-lg font-medium hover:bg-blue-700 transition-colors duration-300 transform hover:-translate-y-1 shadow-lg">
-                        📝 开始使用
+                    <button onclick="scrollToFeatures()" class="bg-blue-600 text-white px-8 py-3 rounded-full text-lg font-medium hover:bg-blue-700 transition-colors duration-300 transform hover:-translate-y-1 shadow-lg">
+                        🚀 开始使用
                     </button>
-                    <button onclick="scrollToFeatures()" class="bg-white text-gray-900 px-8 py-3 rounded-full text-lg font-medium hover:bg-gray-100 transition-colors duration-300 transform hover:-translate-y-1 shadow-md border border-gray-200">
-                        了解功能
+                    <button onclick="switchTab('students')" class="bg-white text-gray-900 px-8 py-3 rounded-full text-lg font-medium hover:bg-gray-100 transition-colors duration-300 transform hover:-translate-y-1 shadow-md border border-gray-200">
+                        👨‍🎓 管理学生
                     </button>
+                </div>
+                <!-- 快捷功能入口 -->
+                <div class="mt-10 flex flex-wrap justify-center gap-3">
+                    <span class="text-gray-500 text-sm">快速访问：</span>
+                    <button onclick="switchTab('answer-sheet')" class="text-sm bg-white/80 hover:bg-white px-4 py-2 rounded-full transition-colors border border-gray-200">
+                        📝 答题卡
+                    </button>
+                    <button onclick="switchTab('function')" class="text-sm bg-white/80 hover:bg-white px-4 py-2 rounded-full transition-colors border border-gray-200">
+                        📊 函数绘制
+                    </button>
+                    <button onclick="switchTab('geometry')" class="text-sm bg-white/80 hover:bg-white px-4 py-2 rounded-full transition-colors border border-gray-200">
+                        📐 几何绘图
+                    </button>
+                    <button onclick="switchTab('income')" class="text-sm bg-white/80 hover:bg-white px-4 py-2 rounded-full transition-colors border border-gray-200">
+                        💰 收入记录
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 小红书关注区域 -->
+        <div class="py-16 bg-gradient-to-r from-red-50 to-pink-50">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="bg-white rounded-3xl shadow-xl p-8 md:p-12 flex flex-col md:flex-row items-center gap-8 md:gap-12">
+                    <!-- 二维码区域 -->
+                    <div class="flex-shrink-0">
+                        <a href="https://www.xiaohongshu.com/discovery/item/67bdcd1a000000002900a81e?source=webshare&xhsshare=pc_web&xsec_token=ABtk6u0VsuMS3LlGa1O46qOCNIfsNM4Zj1GnaNYwcvbdE=&xsec_source=pc_share" target="_blank" rel="noopener noreferrer" class="block relative group">
+                            <div class="w-48 h-48 bg-gray-100 rounded-2xl border-4 border-red-500 flex items-center justify-center overflow-hidden group-hover:shadow-lg transition-shadow">
+                                <!-- 这里放置小红书二维码图片 -->
+                                <img id="xiaohongshu-qr" src="./images/xiaohongshu-qr.png" alt="小红书二维码" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                <div class="hidden w-full h-full flex-col items-center justify-center text-gray-400">
+                                    <i class="fa fa-qrcode text-4xl mb-2"></i>
+                                    <span class="text-sm">请添加二维码图片</span>
+                                </div>
+                            </div>
+                            <div class="absolute -bottom-3 left-1/2 transform -translate-x-1/2 bg-red-500 text-white px-4 py-1 rounded-full text-sm font-medium group-hover:bg-red-600 transition-colors">
+                                扫码关注
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- 文字内容 -->
+                    <div class="flex-1 text-center md:text-left">
+                        <div class="flex items-center justify-center md:justify-start gap-3 mb-4">
+                            <i class="fa fa-book text-red-500 text-2xl"></i>
+                            <h2 class="text-2xl md:text-3xl font-bold text-gray-900">关注我，获取更多教学干货</h2>
+                        </div>
+                        <p class="text-gray-600 mb-6 text-lg">
+                            分享独立数学老师的日常教学经验、备课技巧、学生案例，以及更多实用教学资源
+                        </p>
+                        <div class="flex flex-wrap items-center justify-center md:justify-start gap-4">
+                            <div class="bg-red-50 px-6 py-3 rounded-xl border-2 border-red-200">
+                                <span class="text-gray-500 text-sm">小红书账号</span>
+                                <div class="text-red-600 font-bold text-xl" id="xiaohongshu-id">4152927294</div>
+                            </div>
+                            <button onclick="copyXiaohongshuId()" class="bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-xl font-medium transition-colors flex items-center gap-2">
+                                <i class="fa fa-copy"></i>
+                                复制账号
+                            </button>
+                            <a href="https://www.xiaohongshu.com/discovery/item/67bdcd1a000000002900a81e?source=webshare&xhsshare=pc_web&xsec_token=ABtk6u0VsuMS3LlGa1O46qOCNIfsNM4Zj1GnaNYwcvbdE=&xsec_source=pc_share" target="_blank" rel="noopener noreferrer" class="bg-pink-500 hover:bg-pink-600 text-white px-6 py-3 rounded-xl font-medium transition-colors flex items-center gap-2">
+                                <i class="fa fa-external-link"></i>
+                                访问主页
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1639,56 +1857,122 @@
         <!-- 功能特点区域 -->
         <div id="features" class="py-20 bg-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="text-3xl md:text-4xl font-semibold text-center text-gray-900 mb-16">
-                    专业工具，轻松教学
+                <h2 class="text-3xl md:text-4xl font-semibold text-center text-gray-900 mb-6">
+                    八大核心功能，助力独立教学
                 </h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    <!-- 答题卡生成 -->
-                    <div class="bg-gray-50 rounded-2xl p-8 text-center hover:shadow-xl transition-shadow duration-300 transform hover:-translate-y-2">
-                        <div class="bg-blue-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-6">
-                            <i class="fa fa-file-text-o text-2xl text-blue-600"></i>
-                        </div>
-                        <h3 class="text-xl font-semibold text-gray-900 mb-3">答题卡生成</h3>
-                        <p class="text-gray-600 mb-6">快速生成标准化答题卡，支持自定义题目数量和分值</p>
-                        <button onclick="switchTab('answer-sheet')" class="text-blue-600 font-medium hover:text-blue-800 transition-colors duration-300">
-                            开始使用 <i class="fa fa-arrow-right ml-2"></i>
-                        </button>
-                    </div>
+                <p class="text-center text-gray-600 mb-16 max-w-3xl mx-auto">
+                    从备课到授课，从时间管理到财务统计，一站式解决独立数学老师的所有需求
+                </p>
 
-                    <!-- 番茄时钟 -->
-                    <div class="bg-gray-50 rounded-2xl p-8 text-center hover:shadow-xl transition-shadow duration-300 transform hover:-translate-y-2">
-                        <div class="bg-red-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-6">
-                            <i class="fa fa-clock-o text-2xl text-red-600"></i>
+                <!-- 第一行：教学工具 -->
+                <div class="mb-8">
+                    <h3 class="text-lg font-semibold text-gray-700 mb-6 flex items-center gap-2">
+                        <i class="fa fa-graduation-cap text-blue-500"></i>
+                        教学工具
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <!-- 答题卡生成 -->
+                        <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-6 text-center hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-blue-200">
+                            <div class="bg-white rounded-full w-14 h-14 flex items-center justify-center mx-auto mb-4 shadow-md">
+                                <i class="fa fa-file-text-o text-2xl text-blue-600"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-gray-900 mb-2">答题卡生成</h3>
+                            <p class="text-gray-600 text-sm mb-4">自定义生成标准化答题卡和草稿纸，支持PDF导出打印</p>
+                            <button onclick="switchTab('answer-sheet')" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                                开始使用
+                            </button>
                         </div>
-                        <h3 class="text-xl font-semibold text-gray-900 mb-3">番茄时钟</h3>
-                        <p class="text-gray-600 mb-6">科学的时间管理工具，帮助学生专注学习，提高效率</p>
-                        <button onclick="switchTab('tomato')" class="text-blue-600 font-medium hover:text-blue-800 transition-colors duration-300">
-                            开始使用 <i class="fa fa-arrow-right ml-2"></i>
-                        </button>
-                    </div>
 
-                    <!-- 课表程序 -->
-                    <div class="bg-gray-50 rounded-2xl p-8 text-center hover:shadow-xl transition-shadow duration-300 transform hover:-translate-y-2">
-                        <div class="bg-green-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-6">
-                            <i class="fa fa-calendar text-2xl text-green-600"></i>
+                        <!-- 函数绘制 -->
+                        <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-2xl p-6 text-center hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-purple-200">
+                            <div class="bg-white rounded-full w-14 h-14 flex items-center justify-center mx-auto mb-4 shadow-md">
+                                <i class="fa fa-line-chart text-2xl text-purple-600"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-gray-900 mb-2">函数绘制</h3>
+                            <p class="text-gray-600 text-sm mb-4">支持11种函数类型绘制，方程求解并展示详细步骤</p>
+                            <button onclick="switchTab('function')" class="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                                开始使用
+                            </button>
                         </div>
-                        <h3 class="text-xl font-semibold text-gray-900 mb-3">课表程序</h3>
-                        <p class="text-gray-600 mb-6">可视化课程安排，支持导出PDF和Excel格式</p>
-                        <button onclick="switchTab('schedule')" class="text-blue-600 font-medium hover:text-blue-800 transition-colors duration-300">
-                            开始使用 <i class="fa fa-arrow-right ml-2"></i>
-                        </button>
-                    </div>
 
-                    <!-- 函数绘制 -->
-                    <div class="bg-gray-50 rounded-2xl p-8 text-center hover:shadow-xl transition-shadow duration-300 transform hover:-translate-y-2">
-                        <div class="bg-purple-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-6">
-                            <i class="fa fa-line-chart text-2xl text-purple-600"></i>
+                        <!-- 几何绘图 -->
+                        <div class="bg-gradient-to-br from-indigo-50 to-indigo-100 rounded-2xl p-6 text-center hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-indigo-200">
+                            <div class="bg-white rounded-full w-14 h-14 flex items-center justify-center mx-auto mb-4 shadow-md">
+                                <i class="fa fa-pencil-square-o text-2xl text-indigo-600"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-gray-900 mb-2">几何绘图</h3>
+                            <p class="text-gray-600 text-sm mb-4">拖拽绘制几何图形，支持点、线、圆、多边形等多种形状</p>
+                            <button onclick="switchTab('geometry')" class="bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                                开始使用
+                            </button>
                         </div>
-                        <h3 class="text-xl font-semibold text-gray-900 mb-3">函数绘制</h3>
-                        <p class="text-gray-600 mb-6">直观绘制各种函数图像，支持方程求解和坐标显示</p>
-                        <button onclick="switchTab('function')" class="text-blue-600 font-medium hover:text-blue-800 transition-colors duration-300">
-                            开始使用 <i class="fa fa-arrow-right ml-2"></i>
-                        </button>
+
+                        <!-- 番茄时钟 -->
+                        <div class="bg-gradient-to-br from-red-50 to-red-100 rounded-2xl p-6 text-center hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-red-200">
+                            <div class="bg-white rounded-full w-14 h-14 flex items-center justify-center mx-auto mb-4 shadow-md">
+                                <i class="fa fa-clock-o text-2xl text-red-600"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-gray-900 mb-2">番茄时钟</h3>
+                            <p class="text-gray-600 text-sm mb-4">科学的时间管理工具，帮助学生专注学习，提高效率</p>
+                            <button onclick="switchTab('tomato')" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                                开始使用
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 第二行：管理工具 -->
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-700 mb-6 flex items-center gap-2">
+                        <i class="fa fa-briefcase text-green-500"></i>
+                        管理工具
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <!-- 课表程序 -->
+                        <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-2xl p-6 text-center hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-green-200">
+                            <div class="bg-white rounded-full w-14 h-14 flex items-center justify-center mx-auto mb-4 shadow-md">
+                                <i class="fa fa-calendar text-2xl text-green-600"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-gray-900 mb-2">课表程序</h3>
+                            <p class="text-gray-600 text-sm mb-4">周课表和月计划管理，可视化课程安排，支持导出</p>
+                            <button onclick="switchTab('schedule')" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                                开始使用
+                            </button>
+                        </div>
+
+                        <!-- 学生管理 -->
+                        <div class="bg-gradient-to-br from-orange-50 to-orange-100 rounded-2xl p-6 text-center hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-orange-200">
+                            <div class="bg-white rounded-full w-14 h-14 flex items-center justify-center mx-auto mb-4 shadow-md">
+                                <i class="fa fa-users text-2xl text-orange-600"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-gray-900 mb-2">学生管理</h3>
+                            <p class="text-gray-600 text-sm mb-4">管理学生信息、课时进度、薄弱知识点，Excel导入导出</p>
+                            <button onclick="switchTab('students')" class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                                开始使用
+                            </button>
+                        </div>
+
+                        <!-- 收入记录 -->
+                        <div class="bg-gradient-to-br from-emerald-50 to-emerald-100 rounded-2xl p-6 text-center hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-emerald-200">
+                            <div class="bg-white rounded-full w-14 h-14 flex items-center justify-center mx-auto mb-4 shadow-md">
+                                <i class="fa fa-money text-2xl text-emerald-600"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-gray-900 mb-2">收入记录</h3>
+                            <p class="text-gray-600 text-sm mb-4">日历视图记录每日收入，自动统计月度总收入</p>
+                            <button onclick="switchTab('income')" class="bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                                开始使用
+                            </button>
+                        </div>
+
+                        <!-- 更多功能 -->
+                        <div class="bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl p-6 text-center border border-gray-200 border-dashed">
+                            <div class="bg-white rounded-full w-14 h-14 flex items-center justify-center mx-auto mb-4 shadow-md">
+                                <i class="fa fa-plus text-2xl text-gray-400"></i>
+                            </div>
+                            <h3 class="text-lg font-bold text-gray-700 mb-2">更多功能</h3>
+                            <p class="text-gray-500 text-sm mb-4">持续更新中，敬请期待...</p>
+                            <span class="text-gray-400 text-sm">即将推出</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -2277,6 +2561,190 @@
                 <div class="income-modal-footer">
                     <button onclick="closeIncomeSettings()" class="income-btn-cancel">取消</button>
                     <button onclick="saveIncomeSettings()" class="income-btn-save">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 学生管理 -->
+    <div class="tab-content" id="students">
+        <div class="max-w-7xl mx-auto px-4 py-4 mb-4">
+            <button onclick="switchToTab('home')" class="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors">
+                <i class="fa fa-arrow-left"></i>
+                返回主页
+            </button>
+        </div>
+        <main class="container mx-auto px-4 md:px-6 py-6 md:py-8">
+            <!-- 统计卡片 -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                <div class="bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl p-6 text-white">
+                    <div class="text-3xl font-bold" id="student-total-count">0</div>
+                    <div class="text-blue-100 mt-1">学生总数</div>
+                </div>
+                <div class="bg-gradient-to-br from-green-500 to-green-600 rounded-2xl p-6 text-white">
+                    <div class="text-3xl font-bold" id="student-active-count">0</div>
+                    <div class="text-green-100 mt-1">在读学生</div>
+                </div>
+                <div class="bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl p-6 text-white">
+                    <div class="text-3xl font-bold" id="student-total-hours">0</div>
+                    <div class="text-orange-100 mt-1">累计课时</div>
+                </div>
+                <div class="bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl p-6 text-white">
+                    <div class="text-3xl font-bold" id="student-total-income">0</div>
+                    <div class="text-purple-100 mt-1">累计收入</div>
+                </div>
+            </div>
+
+            <!-- 操作栏 -->
+            <div class="flex flex-wrap gap-4 mb-6">
+                <button onclick="openStudentModal()" class="flex-1 md:flex-none bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-xl font-medium transition-colors flex items-center justify-center gap-2">
+                    <i class="fa fa-plus"></i>添加学生
+                </button>
+                <button onclick="exportStudentsData()" class="flex-1 md:flex-none bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-xl font-medium transition-colors flex items-center justify-center gap-2">
+                    <i class="fa fa-download"></i>导出数据
+                </button>
+                <button onclick="importStudentsData()" class="flex-1 md:flex-none bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-xl font-medium transition-colors flex items-center justify-center gap-2">
+                    <i class="fa fa-upload"></i>导入数据
+                </button>
+                <input type="file" id="student-import-file" accept=".xlsx,.xls" style="display:none" onchange="handleStudentImport(event)">
+            </div>
+
+            <!-- 学生列表 -->
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+                <div class="p-6 border-b border-gray-100">
+                    <h2 class="text-xl font-bold text-gray-800">学生列表</h2>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-gray-600">学生信息</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-gray-600">年级/学校</th>
+                                <th class="px-6 py-4 text-center text-sm font-semibold text-gray-600">课时情况</th>
+                                <th class="px-6 py-4 text-center text-sm font-semibold text-gray-600">课时费</th>
+                                <th class="px-6 py-4 text-center text-sm font-semibold text-gray-600">状态</th>
+                                <th class="px-6 py-4 text-center text-sm font-semibold text-gray-600">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="student-list-body" class="divide-y divide-gray-100">
+                            <!-- 动态生成 -->
+                        </tbody>
+                    </table>
+                </div>
+                <div id="student-empty-state" class="hidden py-12 text-center text-gray-500">
+                    <i class="fa fa-users text-4xl mb-4 text-gray-300"></i>
+                    <p>暂无学生，点击"添加学生"开始管理</p>
+                </div>
+            </div>
+        </main>
+
+        <!-- 学生信息模态框 -->
+        <div class="income-modal" id="student-modal">
+            <div class="income-modal-content" style="max-width: 500px;">
+                <div class="income-modal-header">
+                    <h3 id="student-modal-title">添加学生</h3>
+                    <button onclick="closeStudentModal()" class="income-modal-close">
+                        <i class="fa fa-times"></i>
+                    </button>
+                </div>
+                <div class="income-modal-body">
+                    <input type="hidden" id="student-id">
+                    <div class="income-form-group">
+                        <label>学生姓名 <span class="text-red-500">*</span></label>
+                        <input type="text" id="student-name" placeholder="请输入学生姓名">
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="income-form-group">
+                            <label>年级</label>
+                            <select id="student-grade" class="w-full px-3 py-2 border-2 border-gray-200 rounded-lg">
+                                <option value="">请选择</option>
+                                <option value="初一">初一</option>
+                                <option value="初二">初二</option>
+                                <option value="初三">初三</option>
+                                <option value="高一">高一</option>
+                                <option value="高二">高二</option>
+                                <option value="高三">高三</option>
+                                <option value="小学">小学</option>
+                                <option value="其他">其他</option>
+                            </select>
+                        </div>
+                        <div class="income-form-group">
+                            <label>学校</label>
+                            <input type="text" id="student-school" placeholder="学校名称">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="income-form-group">
+                            <label>总课时</label>
+                            <input type="number" id="student-total-hours-input" step="1" min="0" placeholder="0">
+                        </div>
+                        <div class="income-form-group">
+                            <label>已上课时</label>
+                            <input type="number" id="student-used-hours" step="0.5" min="0" placeholder="0">
+                        </div>
+                    </div>
+                    <div class="income-form-group">
+                        <label>课时费单价（元/小时）</label>
+                        <input type="number" id="student-hourly-rate" step="10" min="0" placeholder="200">
+                    </div>
+                    <div class="income-form-group">
+                        <label>联系电话</label>
+                        <input type="tel" id="student-phone" placeholder="家长或学生电话">
+                    </div>
+                    <div class="income-form-group">
+                        <label>薄弱知识点</label>
+                        <input type="text" id="student-weak-points" placeholder="例如：二次函数、几何证明">
+                    </div>
+                    <div class="income-form-group">
+                        <label>备注</label>
+                        <textarea id="student-notes" rows="3" placeholder="其他需要记录的信息"></textarea>
+                    </div>
+                    <div class="income-form-group">
+                        <label>状态</label>
+                        <div class="flex gap-4 mt-2">
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="radio" name="student-status" value="active" checked>
+                                <span>在读</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="radio" name="student-status" value="paused">
+                                <span>暂停</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="radio" name="student-status" value="graduated">
+                                <span>结课</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="income-modal-footer">
+                    <button onclick="deleteStudent()" class="income-btn-delete" id="student-btn-delete" style="display:none;">
+                        <i class="fa fa-trash"></i>删除
+                    </button>
+                    <div class="income-modal-actions">
+                        <button onclick="closeStudentModal()" class="income-btn-cancel">取消</button>
+                        <button onclick="saveStudent()" class="income-btn-save">保存</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 学生详情模态框 -->
+        <div class="income-modal" id="student-detail-modal">
+            <div class="income-modal-content" style="max-width: 600px;">
+                <div class="income-modal-header">
+                    <h3>学生详情</h3>
+                    <button onclick="closeStudentDetailModal()" class="income-modal-close">
+                        <i class="fa fa-times"></i>
+                    </button>
+                </div>
+                <div class="income-modal-body" id="student-detail-content">
+                    <!-- 动态生成 -->
+                </div>
+                <div class="income-modal-footer">
+                    <button onclick="editCurrentStudent()" class="income-btn-save">
+                        <i class="fa fa-edit"></i>编辑信息
+                    </button>
                 </div>
             </div>
         </div>
@@ -3037,6 +3505,25 @@
             }
         }
 
+        // 复制小红书账号
+        function copyXiaohongshuId() {
+            const xiaohongshuId = document.getElementById('xiaohongshu-id').textContent;
+            navigator.clipboard.writeText(xiaohongshuId).then(() => {
+                showNotification('小红书账号已复制到剪贴板', 'success');
+            }).catch(() => {
+                // 降级方案
+                const textarea = document.createElement('textarea');
+                textarea.value = xiaohongshuId;
+                textarea.style.position = 'fixed';
+                textarea.style.opacity = '0';
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                showNotification('小红书账号已复制到剪贴板', 'success');
+            });
+        }
+
         // ========== 键盘快捷键支持 ==========
         
         document.addEventListener('keydown', function(e) {
@@ -3181,6 +3668,7 @@
                 initFunctionDrawing();
                 initGeometryDrawing();
                 initIncomeModule();
+                initStudentsModule();
 
                 console.log('✅ 独立数学老师辅助工具加载完成');
                 showNotification('工具已加载完成', 'success');
@@ -5529,6 +6017,460 @@
             XLSX.writeFile(wb, `收入记录_${year}年${String(month + 1).padStart(2, '0')}月.xlsx`);
             
             showNotification('收入记录已导出Excel', 'success');
+        }
+
+        // ========== 学生管理程序 ==========
+        let studentsData = [];
+        let currentStudentId = null;
+        const STUDENTS_STORAGE_KEY = 'teacherStudentsData';
+
+        function initStudentsModule() {
+            loadStudentsData();
+            renderStudentList();
+            updateStudentStats();
+        }
+
+        function loadStudentsData() {
+            const saved = localStorage.getItem(STUDENTS_STORAGE_KEY);
+            if (saved) {
+                studentsData = JSON.parse(saved);
+            }
+        }
+
+        function saveStudentsData() {
+            localStorage.setItem(STUDENTS_STORAGE_KEY, JSON.stringify(studentsData));
+        }
+
+        function updateStudentStats() {
+            const totalCount = studentsData.length;
+            const activeCount = studentsData.filter(s => s.status === 'active').length;
+            const totalHours = studentsData.reduce((sum, s) => sum + (parseFloat(s.usedHours) || 0), 0);
+            const totalIncome = studentsData.reduce((sum, s) => {
+                const hours = parseFloat(s.usedHours) || 0;
+                const rate = parseFloat(s.hourlyRate) || 0;
+                return sum + (hours * rate);
+            }, 0);
+
+            document.getElementById('student-total-count').textContent = totalCount;
+            document.getElementById('student-active-count').textContent = activeCount;
+            document.getElementById('student-total-hours').textContent = totalHours.toFixed(1) + 'h';
+            document.getElementById('student-total-income').textContent = totalIncome.toFixed(0) + '元';
+        }
+
+        function renderStudentList() {
+            const tbody = document.getElementById('student-list-body');
+            const emptyState = document.getElementById('student-empty-state');
+
+            if (studentsData.length === 0) {
+                tbody.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                return;
+            }
+
+            emptyState.classList.add('hidden');
+
+            tbody.innerHTML = studentsData.map(student => {
+                const totalHours = parseFloat(student.totalHours) || 0;
+                const usedHours = parseFloat(student.usedHours) || 0;
+                const remainingHours = totalHours - usedHours;
+                const progressPercent = totalHours > 0 ? (usedHours / totalHours * 100) : 0;
+                const hourlyRate = parseFloat(student.hourlyRate) || 0;
+
+                const statusClass = {
+                    'active': 'student-status-active',
+                    'paused': 'student-status-paused',
+                    'graduated': 'student-status-graduated'
+                }[student.status] || 'student-status-active';
+
+                const statusText = {
+                    'active': '在读',
+                    'paused': '暂停',
+                    'graduated': '结课'
+                }[student.status] || '在读';
+
+                const avatarText = student.name ? student.name.charAt(0) : '?';
+
+                return `
+                    <tr class="hover:bg-gray-50 transition-colors">
+                        <td class="px-6 py-4">
+                            <div class="student-info-cell">
+                                <div class="student-avatar">${avatarText}</div>
+                                <div>
+                                    <div class="student-name">${escapeHTML(student.name)}</div>
+                                    ${student.phone ? `<div class="student-phone">${escapeHTML(student.phone)}</div>` : ''}
+                                </div>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4">
+                            <div class="text-sm text-gray-900">${escapeHTML(student.grade || '-')}</div>
+                            <div class="text-xs text-gray-500">${escapeHTML(student.school || '')}</div>
+                        </td>
+                        <td class="px-6 py-4">
+                            <div class="student-hours-info">
+                                <div class="student-hours-text">${usedHours.toFixed(1)} / ${totalHours.toFixed(0)} h</div>
+                                <div class="student-progress-bar">
+                                    <div class="student-progress-fill" style="width: ${Math.min(progressPercent, 100)}%"></div>
+                                </div>
+                                <div class="student-hours-remaining">剩余 ${remainingHours.toFixed(1)} h</div>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 text-center">
+                            <div class="text-sm font-semibold text-gray-900">${hourlyRate}元/h</div>
+                        </td>
+                        <td class="px-6 py-4 text-center">
+                            <span class="student-status-badge ${statusClass}">${statusText}</span>
+                        </td>
+                        <td class="px-6 py-4 text-center">
+                            <button class="student-action-btn student-action-view" onclick="viewStudent('${student.id}')">
+                                <i class="fa fa-eye"></i> 查看
+                            </button>
+                            <button class="student-action-btn student-action-edit" onclick="editStudent('${student.id}')">
+                                <i class="fa fa-edit"></i> 编辑
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function openStudentModal() {
+            currentStudentId = null;
+            document.getElementById('student-modal-title').textContent = '添加学生';
+            document.getElementById('student-id').value = '';
+            document.getElementById('student-name').value = '';
+            document.getElementById('student-grade').value = '';
+            document.getElementById('student-school').value = '';
+            document.getElementById('student-total-hours-input').value = '';
+            document.getElementById('student-used-hours').value = '';
+            document.getElementById('student-hourly-rate').value = '';
+            document.getElementById('student-phone').value = '';
+            document.getElementById('student-weak-points').value = '';
+            document.getElementById('student-notes').value = '';
+            document.querySelector('input[name="student-status"][value="active"]').checked = true;
+            document.getElementById('student-btn-delete').style.display = 'none';
+
+            document.getElementById('student-modal').classList.add('show');
+        }
+
+        function closeStudentModal() {
+            document.getElementById('student-modal').classList.remove('show');
+            currentStudentId = null;
+        }
+
+        function editStudent(studentId) {
+            const student = studentsData.find(s => s.id === studentId);
+            if (!student) return;
+
+            currentStudentId = studentId;
+            document.getElementById('student-modal-title').textContent = '编辑学生';
+            document.getElementById('student-id').value = student.id;
+            document.getElementById('student-name').value = student.name;
+            document.getElementById('student-grade').value = student.grade || '';
+            document.getElementById('student-school').value = student.school || '';
+            document.getElementById('student-total-hours-input').value = student.totalHours || '';
+            document.getElementById('student-used-hours').value = student.usedHours || '';
+            document.getElementById('student-hourly-rate').value = student.hourlyRate || '';
+            document.getElementById('student-phone').value = student.phone || '';
+            document.getElementById('student-weak-points').value = student.weakPoints || '';
+            document.getElementById('student-notes').value = student.notes || '';
+
+            const statusRadio = document.querySelector(`input[name="student-status"][value="${student.status}"]`);
+            if (statusRadio) statusRadio.checked = true;
+
+            document.getElementById('student-btn-delete').style.display = 'block';
+            document.getElementById('student-modal').classList.add('show');
+        }
+
+        function viewStudent(studentId) {
+            const student = studentsData.find(s => s.id === studentId);
+            if (!student) return;
+
+            currentStudentId = studentId;
+
+            const totalHours = parseFloat(student.totalHours) || 0;
+            const usedHours = parseFloat(student.usedHours) || 0;
+            const remainingHours = totalHours - usedHours;
+            const hourlyRate = parseFloat(student.hourlyRate) || 0;
+            const totalIncome = usedHours * hourlyRate;
+
+            const statusText = {
+                'active': '在读',
+                'paused': '暂停',
+                'graduated': '结课'
+            }[student.status] || '在读';
+
+            const weakPoints = student.weakPoints ? student.weakPoints.split(/[,，]/).filter(p => p.trim()) : [];
+
+            document.getElementById('student-detail-content').innerHTML = `
+                <div class="student-detail-grid">
+                    <div class="student-detail-section">
+                        <div class="student-detail-label">学生姓名</div>
+                        <div class="student-detail-value">${escapeHTML(student.name)}</div>
+                    </div>
+                    <div class="student-detail-section">
+                        <div class="student-detail-label">当前状态</div>
+                        <div class="student-detail-value">${statusText}</div>
+                    </div>
+                    <div class="student-detail-section">
+                        <div class="student-detail-label">年级</div>
+                        <div class="student-detail-value">${escapeHTML(student.grade || '-')}</div>
+                    </div>
+                    <div class="student-detail-section">
+                        <div class="student-detail-label">学校</div>
+                        <div class="student-detail-value">${escapeHTML(student.school || '-')}</div>
+                    </div>
+                    <div class="student-detail-section">
+                        <div class="student-detail-label">课时进度</div>
+                        <div class="student-detail-value">${usedHours.toFixed(1)} / ${totalHours.toFixed(0)} 小时</div>
+                        <div class="student-progress-bar" style="margin-top: 8px;">
+                            <div class="student-progress-fill" style="width: ${totalHours > 0 ? (usedHours / totalHours * 100) : 0}%"></div>
+                        </div>
+                        <div style="font-size: 12px; color: #6b7280; margin-top: 4px;">剩余 ${remainingHours.toFixed(1)} 小时</div>
+                    </div>
+                    <div class="student-detail-section">
+                        <div class="student-detail-label">课时费</div>
+                        <div class="student-detail-value">${hourlyRate} 元/小时</div>
+                    </div>
+                    <div class="student-detail-section">
+                        <div class="student-detail-label">累计收入</div>
+                        <div class="student-detail-value" style="color: #059669;">${totalIncome.toFixed(0)} 元</div>
+                    </div>
+                    <div class="student-detail-section">
+                        <div class="student-detail-label">联系电话</div>
+                        <div class="student-detail-value">${escapeHTML(student.phone || '-')}</div>
+                    </div>
+                </div>
+                ${weakPoints.length > 0 ? `
+                    <div class="student-detail-section" style="margin-top: 20px;">
+                        <div class="student-detail-label">薄弱知识点</div>
+                        <div class="student-weak-points">
+                            ${weakPoints.map(p => `<span class="student-weak-point-tag">${escapeHTML(p.trim())}</span>`).join('')}
+                        </div>
+                    </div>
+                ` : ''}
+                ${student.notes ? `
+                    <div class="student-detail-section" style="margin-top: 20px;">
+                        <div class="student-detail-label">备注</div>
+                        <div style="background: #f3f4f6; padding: 12px; border-radius: 8px; margin-top: 8px; color: #374151;">${escapeHTML(student.notes)}</div>
+                    </div>
+                ` : ''}
+            `;
+
+            document.getElementById('student-detail-modal').classList.add('show');
+        }
+
+        function closeStudentDetailModal() {
+            document.getElementById('student-detail-modal').classList.remove('show');
+        }
+
+        function editCurrentStudent() {
+            closeStudentDetailModal();
+            if (currentStudentId) {
+                setTimeout(() => editStudent(currentStudentId), 100);
+            }
+        }
+
+        function saveStudent() {
+            const name = document.getElementById('student-name').value.trim();
+            if (!name) {
+                showNotification('请输入学生姓名', 'warning');
+                return;
+            }
+
+            const studentData = {
+                id: currentStudentId || Date.now().toString(),
+                name: name,
+                grade: document.getElementById('student-grade').value,
+                school: document.getElementById('student-school').value.trim(),
+                totalHours: parseFloat(document.getElementById('student-total-hours-input').value) || 0,
+                usedHours: parseFloat(document.getElementById('student-used-hours').value) || 0,
+                hourlyRate: parseFloat(document.getElementById('student-hourly-rate').value) || 0,
+                phone: document.getElementById('student-phone').value.trim(),
+                weakPoints: document.getElementById('student-weak-points').value.trim(),
+                notes: document.getElementById('student-notes').value.trim(),
+                status: document.querySelector('input[name="student-status"]:checked')?.value || 'active',
+                updatedAt: new Date().toISOString()
+            };
+
+            if (currentStudentId) {
+                const index = studentsData.findIndex(s => s.id === currentStudentId);
+                if (index !== -1) {
+                    studentsData[index] = studentData;
+                }
+                showNotification('学生信息已更新', 'success');
+            } else {
+                studentsData.push(studentData);
+                showNotification('学生添加成功', 'success');
+            }
+
+            saveStudentsData();
+            renderStudentList();
+            updateStudentStats();
+            closeStudentModal();
+        }
+
+        function deleteStudent() {
+            if (!currentStudentId) return;
+
+            if (confirm('确定要删除这位学生的信息吗？此操作不可恢复！')) {
+                studentsData = studentsData.filter(s => s.id !== currentStudentId);
+                saveStudentsData();
+                renderStudentList();
+                updateStudentStats();
+                closeStudentModal();
+                showNotification('学生已删除', 'success');
+            }
+        }
+
+        function exportStudentsData() {
+            if (studentsData.length === 0) {
+                showNotification('暂无学生数据可导出', 'warning');
+                return;
+            }
+
+            // 准备Excel数据
+            const headers = ['姓名', '年级', '学校', '总课时', '已上课时', '剩余课时', '课时费(元/小时)', '联系电话', '薄弱知识点', '备注', '状态', '累计收入(元)'];
+            const data = [headers];
+
+            studentsData.forEach(student => {
+                const totalHours = parseFloat(student.totalHours) || 0;
+                const usedHours = parseFloat(student.usedHours) || 0;
+                const remainingHours = totalHours - usedHours;
+                const hourlyRate = parseFloat(student.hourlyRate) || 0;
+                const totalIncome = usedHours * hourlyRate;
+
+                const statusText = {
+                    'active': '在读',
+                    'paused': '暂停',
+                    'graduated': '结课'
+                }[student.status] || '在读';
+
+                data.push([
+                    student.name,
+                    student.grade || '',
+                    student.school || '',
+                    totalHours,
+                    usedHours,
+                    remainingHours,
+                    hourlyRate,
+                    student.phone || '',
+                    student.weakPoints || '',
+                    student.notes || '',
+                    statusText,
+                    totalIncome
+                ]);
+            });
+
+            // 添加汇总行
+            const totalStudents = studentsData.length;
+            const totalHours = studentsData.reduce((sum, s) => sum + (parseFloat(s.usedHours) || 0), 0);
+            const totalIncome = studentsData.reduce((sum, s) => {
+                const hours = parseFloat(s.usedHours) || 0;
+                const rate = parseFloat(s.hourlyRate) || 0;
+                return sum + (hours * rate);
+            }, 0);
+
+            data.push([]);
+            data.push(['汇总', '', '', '', totalStudents + '人', totalHours + '小时', '', '', '', '', '', totalIncome + '元']);
+
+            // 创建工作表
+            const ws = XLSX.utils.aoa_to_sheet(data);
+
+            // 设置列宽
+            ws['!cols'] = [
+                { wch: 12 }, // 姓名
+                { wch: 10 }, // 年级
+                { wch: 20 }, // 学校
+                { wch: 10 }, // 总课时
+                { wch: 10 }, // 已上课时
+                { wch: 10 }, // 剩余课时
+                { wch: 15 }, // 课时费
+                { wch: 15 }, // 联系电话
+                { wch: 25 }, // 薄弱知识点
+                { wch: 30 }, // 备注
+                { wch: 10 }, // 状态
+                { wch: 15 }  // 累计收入
+            ];
+
+            // 创建工作簿并导出
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, '学生列表');
+            XLSX.writeFile(wb, `学生数据_${new Date().toISOString().slice(0, 10)}.xlsx`);
+
+            showNotification('学生数据已导出Excel', 'success');
+        }
+
+        function importStudentsData() {
+            document.getElementById('student-import-file').click();
+        }
+
+        function handleStudentImport(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = new Uint8Array(e.target.result);
+                    const workbook = XLSX.read(data, { type: 'array' });
+                    const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+                    const jsonData = XLSX.utils.sheet_to_json(firstSheet, { header: 1 });
+
+                    if (jsonData.length < 2) {
+                        showNotification('Excel文件格式不正确', 'error');
+                        return;
+                    }
+
+                    // 解析数据（跳过表头）
+                    const importedStudents = [];
+                    for (let i = 1; i < jsonData.length; i++) {
+                        const row = jsonData[i];
+                        if (!row[0]) continue; // 跳过空行
+
+                        // 检查是否是汇总行
+                        if (row[0] === '汇总') break;
+
+                        const statusMap = {
+                            '在读': 'active',
+                            '暂停': 'paused',
+                            '结课': 'graduated'
+                        };
+
+                        importedStudents.push({
+                            id: Date.now().toString() + '_' + i,
+                            name: row[0] || '',
+                            grade: row[1] || '',
+                            school: row[2] || '',
+                            totalHours: parseFloat(row[3]) || 0,
+                            usedHours: parseFloat(row[4]) || 0,
+                            hourlyRate: parseFloat(row[6]) || 0,
+                            phone: row[7] || '',
+                            weakPoints: row[8] || '',
+                            notes: row[9] || '',
+                            status: statusMap[row[10]] || 'active',
+                            updatedAt: new Date().toISOString()
+                        });
+                    }
+
+                    if (importedStudents.length === 0) {
+                        showNotification('未找到有效的学生数据', 'warning');
+                        return;
+                    }
+
+                    if (confirm(`确定要导入 ${importedStudents.length} 位学生的数据吗？这将追加到现有数据。`)) {
+                        studentsData = [...studentsData, ...importedStudents];
+                        saveStudentsData();
+                        renderStudentList();
+                        updateStudentStats();
+                        showNotification('数据导入成功', 'success');
+                    }
+                } catch (err) {
+                    console.error('导入错误:', err);
+                    showNotification('文件解析失败，请检查Excel格式', 'error');
+                }
+            };
+            reader.readAsArrayBuffer(file);
+            event.target.value = '';
         }
 
         // ========== 函数绘制程序 ==========
