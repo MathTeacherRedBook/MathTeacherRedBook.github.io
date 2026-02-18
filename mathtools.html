@@ -16,6 +16,24 @@
     <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+    <!-- 百度统计 -->
+    <script>
+        // 请将此处的 YOUR_BAIDU_TRACKING_ID 替换为你从百度统计获取的真实跟踪ID
+        // 获取方式：
+        // 1. 访问 https://tongji.baidu.com/
+        // 2. 注册/登录百度账号
+        // 3. 点击"新增网站"，填写你的网站信息
+        // 4. 获取跟踪ID（类似：0123456789abcdef0123456789abcdef）
+
+        var _hmt = _hmt || [];
+        (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?5d0914528f74ad1ba2153b4ecc0310a8";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
     <style>
         /* ========== CSS变量和主题系统 ========== */
         :root {
@@ -640,30 +658,35 @@
             background-color: #0071e3;
             color: white;
             border: none;
-            border-radius: 10px;
-            padding: 8px 16px;
-            font-size: 14px;
+            border-radius: 980px;
+            padding: 6px 14px;
+            font-size: 13px;
             cursor: pointer;
             transition: all 0.2s ease;
-        }
-
-        .schedule-date-controls button:hover {
-            opacity: 0.9;
-        }
-
-        .schedule-date-display {
-            font-size: 18px;
             font-weight: 500;
         }
 
+        .schedule-date-controls button:hover {
+            background-color: #0077ed;
+        }
+
+        .schedule-date-controls button:active {
+            transform: scale(0.98);
+        }
+
+        .schedule-date-display {
+            font-size: 17px;
+            font-weight: 600;
+            color: #1d1d1f;
+        }
+
         .schedule-controls-bar {
-            background-color: #ffffff;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            padding: 20px;
+            background-color: #f5f5f7;
+            border-radius: 16px;
+            padding: 12px;
             margin-bottom: 20px;
             display: flex;
-            gap: 10px;
+            gap: 8px;
             flex-wrap: wrap;
             align-items: center;
             justify-content: center;
@@ -673,29 +696,47 @@
             background-color: #0071e3;
             color: white;
             border: none;
-            border-radius: 12px;
-            padding: 10px 20px;
-            font-size: 14px;
+            border-radius: 980px;
+            padding: 6px 14px;
+            font-size: 13px;
             cursor: pointer;
             transition: all 0.2s ease;
+            font-weight: 500;
+            min-height: 32px;
         }
 
         .schedule-btn:hover {
-            opacity: 0.9;
-            transform: translateY(-2px);
+            background-color: #0077ed;
         }
 
         .schedule-btn:active {
-            transform: translateY(0);
+            transform: scale(0.98);
         }
 
         .schedule-btn-secondary {
-            background-color: #f5f5f7;
+            background-color: #e8e8ed;
             color: #1d1d1f;
+        }
+
+        .schedule-btn-secondary:hover {
+            background-color: #dedee3;
         }
 
         .schedule-btn-success {
             background-color: #34c759;
+        }
+
+        .schedule-btn-success:hover {
+            background-color: #30b350;
+        }
+
+        .schedule-btn-danger {
+            background-color: #ff3b30;
+        }
+
+        .schedule-btn-danger:hover {
+            background-color: #e6352b;
+        }
         }
 
         .schedule-table-container {
@@ -1195,16 +1236,12 @@
             background-image: none;
         }
 
-        /* 收入记录样式 */
+        /* 收入记录样式 - 苹果风格 */
         .income-stats-card {
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-            border-radius: 16px;
-            padding: 20px;
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 16px;
-            color: white;
-            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+            gap: 12px;
+            margin-bottom: 20px;
         }
 
         @media (max-width: 768px) {
@@ -1214,30 +1251,52 @@
         }
 
         .income-stat-item {
-            text-align: center;
-            padding: 10px;
+            background: white;
+            border-radius: 16px;
+            padding: 16px;
+            border: 1px solid #e5e5e7;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .income-stat-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .income-stat-icon.blue { background: #e8f4fd; color: #0071e3; }
+        .income-stat-icon.green { background: #e8f5e9; color: #34c759; }
+        .income-stat-icon.orange { background: #fff3e0; color: #ff9500; }
+        .income-stat-icon.teal { background: #e0f2f1; color: #009688; }
+
+        .income-stat-content {
+            flex: 1;
         }
 
         .income-stat-label {
-            font-size: 12px;
-            opacity: 0.9;
-            margin-bottom: 8px;
+            font-size: 11px;
+            color: #86868b;
+            margin-bottom: 2px;
+            font-weight: 500;
         }
 
         .income-stat-value {
             font-size: 20px;
-            font-weight: 700;
-        }
-
-        .income-total-highlight {
-            font-size: 24px;
+            font-weight: 600;
+            color: #1d1d1f;
         }
 
         .income-calendar-container {
             background: white;
-            border-radius: 16px;
+            border-radius: 20px;
             padding: 20px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e5e5e7;
         }
 
         .income-weekdays {
@@ -1510,7 +1569,136 @@
             background: #dc2626;
         }
 
-        /* 学生管理样式 */
+        /* 学生管理样式 - 苹果风格 */
+        .apple-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border-radius: 980px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            border: none;
+            cursor: pointer;
+            min-height: 36px;
+        }
+
+        .apple-btn-primary {
+            background: #0071e3;
+            color: white;
+        }
+
+        .apple-btn-primary:hover {
+            background: #0077ed;
+        }
+
+        .apple-btn-primary:active {
+            background: #0068d1;
+            transform: scale(0.98);
+        }
+
+        .apple-btn-secondary {
+            background: #e8e8ed;
+            color: #1d1d1f;
+        }
+
+        .apple-btn-secondary:hover {
+            background: #dedee3;
+        }
+
+        .apple-btn-secondary:active {
+            background: #d4d4d9;
+            transform: scale(0.98);
+        }
+
+        /* 公式编辑器样式 */
+        .formula-level-btn {
+            flex: 1;
+            padding: 8px 12px;
+            border-radius: 980px;
+            border: none;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: #e8e8ed;
+            color: #1d1d1f;
+        }
+
+        .formula-level-btn:hover {
+            background: #dedee3;
+        }
+
+        .formula-level-btn.active {
+            background: #0071e3;
+            color: white;
+        }
+
+        .formula-symbol-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            border: 1px solid #e5e5e7;
+            background: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .formula-symbol-btn:hover {
+            background: #f5f5f7;
+            border-color: #0071e3;
+        }
+
+        .formula-symbol-btn:active {
+            transform: scale(0.95);
+            background: #e8e8ed;
+        }
+
+        .formula-item {
+            padding: 10px 12px;
+            border-radius: 10px;
+            background: #f5f5f7;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .formula-item:hover {
+            background: #e8e8ed;
+        }
+
+        .formula-item:active {
+            transform: scale(0.98);
+        }
+
+        .formula-category-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: #86868b;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin: 12px 0 8px 0;
+            padding-left: 4px;
+        }
+
+        #formula-editor {
+            font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+        }
+
+        #formula-preview {
+            font-family: 'Times New Roman', Times, serif;
+            line-height: 1.8;
+        }
+
         .student-status-badge {
             display: inline-flex;
             align-items: center;
@@ -1764,6 +1952,7 @@
         <button class="nav-tab" data-tab="geometry" role="tab" aria-selected="false">📐 几何绘图</button>
         <button class="nav-tab" data-tab="income" role="tab" aria-selected="false">💰 收入记录</button>
         <button class="nav-tab" data-tab="students" role="tab" aria-selected="false">👨‍🎓 学生管理</button>
+        <button class="nav-tab" data-tab="feedback" role="tab" aria-selected="false">📝 课后反馈</button>
     </div>
 
     <!-- 主页 -->
@@ -2010,6 +2199,44 @@
             </div>
         </div>
 
+        <!-- 开发者设置区域 -->
+        <div class="bg-gray-50 py-12 border-t border-gray-200">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-gray-200">
+                    <h3 class="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                        <i class="fa fa-cog text-blue-500"></i>
+                        开发者设置
+                    </h3>
+                    <p class="text-gray-600 text-sm mb-6">以下设置仅保存在您的浏览器中，用于配置网站统计等功能。</p>
+
+                    <!-- 百度统计设置 -->
+                    <div class="border-t pt-6">
+                        <h4 class="text-lg font-medium text-gray-900 mb-3 flex items-center gap-2">
+                            <i class="fa fa-bar-chart text-orange-500"></i>
+                            百度统计配置
+                        </h4>
+                        <div class="bg-orange-50 rounded-lg p-4 mb-4">
+                            <p class="text-sm text-orange-800 mb-2"><strong>配置步骤：</strong></p>
+                            <ol class="text-sm text-orange-700 list-decimal list-inside space-y-1">
+                                <li>访问 <a href="https://tongji.baidu.com/" target="_blank" class="underline hover:text-orange-900">https://tongji.baidu.com/</a></li>
+                                <li>注册/登录百度账号</li>
+                                <li>点击"新增网站"，填写网站信息</li>
+                                <li>获取跟踪ID（32位字符串）</li>
+                                <li>将跟踪ID粘贴到下方输入框</li>
+                            </ol>
+                        </div>
+                        <div class="flex gap-3">
+                            <input type="text" id="baiduTrackingIdInput" placeholder="请输入百度统计跟踪ID（32位）" class="flex-1 px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 text-sm">
+                            <button onclick="saveBaiduTrackingId()" class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg text-sm font-medium transition-colors">
+                                保存
+                            </button>
+                        </div>
+                        <p class="text-xs text-gray-500 mt-2">当前状态：<span id="baiduStatus">未配置</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- 底部区域 -->
         <div class="bg-gray-900 text-white py-16">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -2041,6 +2268,17 @@
                 </div>
                 <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-500">
                     <p>© 2026 独立数学老师辅助工具. 保留所有权利.</p>
+                    <div class="mt-4 flex justify-center items-center gap-4 text-sm">
+                        <span class="flex items-center gap-2">
+                            <i class="fa fa-eye text-blue-400"></i>
+                            访问量: <span id="visitCount" class="text-white font-mono">加载中...</span>
+                        </span>
+                        <span class="text-gray-600">|</span>
+                        <span class="flex items-center gap-2">
+                            <i class="fa fa-users text-green-400"></i>
+                            今日访问: <span id="todayVisitCount" class="text-white font-mono">加载中...</span>
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -2440,23 +2678,43 @@
                 </button>
             </div>
 
-            <!-- 统计卡片 -->
-            <div class="income-stats-card mb-6">
+            <!-- 统计卡片 - 苹果风格 -->
+            <div class="income-stats-card">
                 <div class="income-stat-item">
-                    <div class="income-stat-label">总课时</div>
-                    <div class="income-stat-value" id="income-total-hours">0h</div>
+                    <div class="income-stat-icon blue">
+                        <i class="fa fa-clock-o"></i>
+                    </div>
+                    <div class="income-stat-content">
+                        <div class="income-stat-label">总课时</div>
+                        <div class="income-stat-value" id="income-total-hours">0h</div>
+                    </div>
                 </div>
                 <div class="income-stat-item">
-                    <div class="income-stat-label">课时收入</div>
-                    <div class="income-stat-value" id="income-total-amount">0元</div>
+                    <div class="income-stat-icon green">
+                        <i class="fa fa-graduation-cap"></i>
+                    </div>
+                    <div class="income-stat-content">
+                        <div class="income-stat-label">课时收入</div>
+                        <div class="income-stat-value" id="income-total-amount">0元</div>
+                    </div>
                 </div>
                 <div class="income-stat-item">
-                    <div class="income-stat-label">补贴+其他</div>
-                    <div class="income-stat-value" id="income-total-bonus">0元</div>
+                    <div class="income-stat-icon orange">
+                        <i class="fa fa-plus-circle"></i>
+                    </div>
+                    <div class="income-stat-content">
+                        <div class="income-stat-label">补贴+其他</div>
+                        <div class="income-stat-value" id="income-total-bonus">0元</div>
+                    </div>
                 </div>
                 <div class="income-stat-item">
-                    <div class="income-stat-label">总收入</div>
-                    <div class="income-stat-value income-total-highlight" id="income-grand-total">0元</div>
+                    <div class="income-stat-icon teal">
+                        <i class="fa fa-yen"></i>
+                    </div>
+                    <div class="income-stat-content">
+                        <div class="income-stat-label">总收入</div>
+                        <div class="income-stat-value" id="income-grand-total">0元</div>
+                    </div>
                 </div>
             </div>
 
@@ -2575,36 +2833,64 @@
             </button>
         </div>
         <main class="container mx-auto px-4 md:px-6 py-6 md:py-8">
-            <!-- 统计卡片 -->
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-                <div class="bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl p-6 text-white">
-                    <div class="text-3xl font-bold" id="student-total-count">0</div>
-                    <div class="text-blue-100 mt-1">学生总数</div>
+            <!-- 统计卡片 - 苹果风格 -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+                <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center">
+                            <i class="fa fa-users text-blue-500 text-lg"></i>
+                        </div>
+                        <div>
+                            <div class="text-2xl font-semibold text-gray-900" id="student-total-count">0</div>
+                            <div class="text-xs text-gray-500">学生总数</div>
+                        </div>
+                    </div>
                 </div>
-                <div class="bg-gradient-to-br from-green-500 to-green-600 rounded-2xl p-6 text-white">
-                    <div class="text-3xl font-bold" id="student-active-count">0</div>
-                    <div class="text-green-100 mt-1">在读学生</div>
+                <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-green-50 flex items-center justify-center">
+                            <i class="fa fa-user-check text-green-500 text-lg"></i>
+                        </div>
+                        <div>
+                            <div class="text-2xl font-semibold text-gray-900" id="student-active-count">0</div>
+                            <div class="text-xs text-gray-500">在读学生</div>
+                        </div>
+                    </div>
                 </div>
-                <div class="bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl p-6 text-white">
-                    <div class="text-3xl font-bold" id="student-total-hours">0</div>
-                    <div class="text-orange-100 mt-1">累计课时</div>
+                <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-orange-50 flex items-center justify-center">
+                            <i class="fa fa-clock-o text-orange-500 text-lg"></i>
+                        </div>
+                        <div>
+                            <div class="text-2xl font-semibold text-gray-900" id="student-total-hours">0</div>
+                            <div class="text-xs text-gray-500">累计课时</div>
+                        </div>
+                    </div>
                 </div>
-                <div class="bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl p-6 text-white">
-                    <div class="text-3xl font-bold" id="student-total-income">0</div>
-                    <div class="text-purple-100 mt-1">累计收入</div>
+                <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-100">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-purple-50 flex items-center justify-center">
+                            <i class="fa fa-yen text-purple-500 text-lg"></i>
+                        </div>
+                        <div>
+                            <div class="text-2xl font-semibold text-gray-900" id="student-total-income">0</div>
+                            <div class="text-xs text-gray-500">累计收入</div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- 操作栏 -->
-            <div class="flex flex-wrap gap-4 mb-6">
-                <button onclick="openStudentModal()" class="flex-1 md:flex-none bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-xl font-medium transition-colors flex items-center justify-center gap-2">
+            <!-- 操作栏 - 苹果风格 -->
+            <div class="flex flex-wrap gap-3 mb-6">
+                <button onclick="openStudentModal()" class="apple-btn apple-btn-primary">
                     <i class="fa fa-plus"></i>添加学生
                 </button>
-                <button onclick="exportStudentsData()" class="flex-1 md:flex-none bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-xl font-medium transition-colors flex items-center justify-center gap-2">
-                    <i class="fa fa-download"></i>导出数据
+                <button onclick="exportStudentsData()" class="apple-btn apple-btn-secondary">
+                    <i class="fa fa-download"></i>导出
                 </button>
-                <button onclick="importStudentsData()" class="flex-1 md:flex-none bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-xl font-medium transition-colors flex items-center justify-center gap-2">
-                    <i class="fa fa-upload"></i>导入数据
+                <button onclick="importStudentsData()" class="apple-btn apple-btn-secondary">
+                    <i class="fa fa-upload"></i>导入
                 </button>
                 <input type="file" id="student-import-file" accept=".xlsx,.xls" style="display:none" onchange="handleStudentImport(event)">
             </div>
@@ -2746,6 +3032,167 @@
                         <i class="fa fa-edit"></i>编辑信息
                     </button>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 课后反馈 -->
+    <div class="tab-content" id="feedback">
+        <div class="max-w-7xl mx-auto px-4 py-4 mb-4">
+            <button onclick="switchToTab('home')" class="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors">
+                <i class="fa fa-arrow-left"></i>
+                返回主页
+            </button>
+        </div>
+        <main class="container mx-auto px-4 md:px-6 py-6 md:py-8">
+            <div class="max-w-4xl mx-auto">
+                <!-- 页面标题 -->
+                <div class="text-center mb-8">
+                    <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-2">课后反馈</h1>
+                    <p class="text-gray-600">记录每节课的教学情况，生成专业的课后反馈</p>
+                </div>
+
+                <!-- 反馈表单 -->
+                <div class="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-gray-100 mb-6">
+                    <h2 class="text-xl font-semibold text-gray-900 mb-6 flex items-center gap-2">
+                        <i class="fa fa-edit text-blue-500"></i>
+                        填写反馈
+                    </h2>
+                    
+                    <form id="feedbackForm" class="space-y-6">
+                        <!-- 基本信息 -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">学生姓名</label>
+                                <input type="text" id="feedbackStudentName" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-500" placeholder="请输入学生姓名">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">课程日期</label>
+                                <input type="date" id="feedbackDate" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-500">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">科目</label>
+                                <select id="feedbackSubject" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-500">
+                                    <option value="">请选择科目</option>
+                                    <option value="数学">数学</option>
+                                    <option value="语文">语文</option>
+                                    <option value="英语">英语</option>
+                                    <option value="物理">物理</option>
+                                    <option value="化学">化学</option>
+                                    <option value="生物">生物</option>
+                                    <option value="其他">其他</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">课时</label>
+                                <input type="number" id="feedbackDuration" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-500" placeholder="课时（小时）" step="0.5" min="0.5">
+                            </div>
+                        </div>
+
+                        <!-- 教学内容 -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">本次教学内容</label>
+                            <textarea id="feedbackContent" rows="3" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 resize-none" placeholder="请描述本次课教授的主要内容..."></textarea>
+                        </div>
+
+                        <!-- 学生掌握情况 -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">学生掌握情况</label>
+                            <textarea id="feedbackUnderstanding" rows="3" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 resize-none" placeholder="请描述学生对知识点的掌握情况..."></textarea>
+                        </div>
+
+                        <!-- 存在问题 -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">存在问题</label>
+                            <textarea id="feedbackIssues" rows="2" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 resize-none" placeholder="请描述学生在学习中存在的问题（可选）..."></textarea>
+                        </div>
+
+                        <!-- 课后作业 -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">课后作业</label>
+                            <textarea id="feedbackHomework" rows="2" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 resize-none" placeholder="请布置课后作业（可选）..."></textarea>
+                        </div>
+
+                        <!-- 下节课计划 -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">下节课计划</label>
+                            <textarea id="feedbackNextPlan" rows="2" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 resize-none" placeholder="请描述下节课的教学计划（可选）..."></textarea>
+                        </div>
+
+                        <!-- 老师评语 -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">老师评语</label>
+                            <textarea id="feedbackComment" rows="3" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 resize-none" placeholder="请给出综合评语..."></textarea>
+                        </div>
+
+                        <!-- 按钮 -->
+                        <div class="flex gap-4 pt-4">
+                            <button type="button" onclick="saveFeedback()" class="flex-1 bg-blue-500 text-white py-3 rounded-lg font-medium hover:bg-blue-600 transition-colors">
+                                <i class="fa fa-save mr-2"></i>保存反馈
+                            </button>
+                            <button type="button" onclick="previewFeedback()" class="flex-1 bg-gray-100 text-gray-700 py-3 rounded-lg font-medium hover:bg-gray-200 transition-colors">
+                                <i class="fa fa-eye mr-2"></i>预览
+                            </button>
+                            <button type="button" onclick="copyFeedback()" class="flex-1 bg-green-500 text-white py-3 rounded-lg font-medium hover:bg-green-600 transition-colors">
+                                <i class="fa fa-copy mr-2"></i>复制文本
+                            </button>
+                        </div>
+
+                        <!-- 导出按钮 -->
+                        <div class="flex gap-4 pt-2">
+                            <button type="button" onclick="exportFeedbackToWord()" class="flex-1 bg-indigo-500 text-white py-3 rounded-lg font-medium hover:bg-indigo-600 transition-colors">
+                                <i class="fa fa-file-word-o mr-2"></i>导出Word
+                            </button>
+                            <button type="button" onclick="exportFeedbackToExcel()" class="flex-1 bg-emerald-500 text-white py-3 rounded-lg font-medium hover:bg-emerald-600 transition-colors">
+                                <i class="fa fa-file-excel-o mr-2"></i>导出Excel
+                            </button>
+                            <button type="button" onclick="exportAllFeedbackToExcel()" class="flex-1 bg-orange-500 text-white py-3 rounded-lg font-medium hover:bg-orange-600 transition-colors">
+                                <i class="fa fa-download mr-2"></i>导出全部
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- 历史反馈列表 -->
+                <div class="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-gray-100">
+                    <h2 class="text-xl font-semibold text-gray-900 mb-6 flex items-center gap-2">
+                        <i class="fa fa-history text-blue-500"></i>
+                        历史反馈
+                    </h2>
+                    <div id="feedbackHistoryList" class="space-y-4">
+                        <!-- 动态生成 -->
+                        <div class="text-center text-gray-500 py-8">
+                            <i class="fa fa-inbox text-4xl mb-2"></i>
+                            <p>暂无反馈记录</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- 反馈预览模态框 -->
+    <div id="feedbackPreviewModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-2xl p-6 md:p-8 max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-semibold text-gray-900">课后反馈预览</h3>
+                <button onclick="closeFeedbackPreview()" class="text-gray-400 hover:text-gray-600">
+                    <i class="fa fa-times text-xl"></i>
+                </button>
+            </div>
+            <div id="feedbackPreviewContent" class="prose max-w-none">
+                <!-- 预览内容 -->
+            </div>
+            <div class="mt-6 flex gap-4">
+                <button onclick="copyFeedbackFromPreview()" class="flex-1 bg-green-500 text-white py-3 rounded-lg font-medium hover:bg-green-600 transition-colors">
+                    <i class="fa fa-copy mr-2"></i>复制反馈
+                </button>
+                <button onclick="closeFeedbackPreview()" class="flex-1 bg-gray-100 text-gray-700 py-3 rounded-lg font-medium hover:bg-gray-200 transition-colors">
+                    关闭
+                </button>
             </div>
         </div>
     </div>
@@ -3208,6 +3655,18 @@
                             <button class="geometry-tool-btn p-2 rounded-lg border-2 border-gray-200 text-gray-600 text-sm hover:border-primary hover:text-primary" data-tool="polygon">
                                 <i class="fa fa-star-o block mb-1"></i>多边形
                             </button>
+                            <button class="geometry-tool-btn p-2 rounded-lg border-2 border-gray-200 text-gray-600 text-sm hover:border-primary hover:text-primary" data-tool="regular-polygon">
+                                <i class="fa fa-gear block mb-1"></i>正多边形
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 正多边形设置 -->
+                    <div id="regular-polygon-settings" class="mb-4 p-3 bg-gray-50 rounded-md hidden">
+                        <h3 class="text-sm font-medium text-gray-700 mb-2">正多边形设置</h3>
+                        <div>
+                            <label class="block text-xs text-gray-600 mb-1">边数</label>
+                            <input type="number" id="polygon-sides" min="3" max="20" value="5" class="w-full px-2 py-1 border rounded text-sm">
                         </div>
                     </div>
 
@@ -3263,11 +3722,14 @@
                         <p class="font-medium mb-1"><i class="fa fa-info-circle mr-1"></i>使用说明：</p>
                         <ul class="space-y-1 ml-4 list-disc">
                             <li><strong>选择工具</strong>：点击选中图形，拖拽移动位置</li>
+                            <li><strong>选中后</strong>：拖拽控制点调整大小，拖拽旋转手柄旋转</li>
+                            <li><strong>Delete键</strong>：删除选中的图形</li>
                             <li><strong>点</strong>：点击放置</li>
                             <li><strong>线/线段</strong>：拖拽绘制</li>
                             <li><strong>圆</strong>：从圆心拖拽到边缘</li>
                             <li><strong>矩形/三角形</strong>：拖拽绘制</li>
                             <li><strong>多边形</strong>：点击添加顶点，双击完成</li>
+                            <li><strong>正多边形</strong>：设置边数后，拖拽绘制</li>
                             <li><strong>右键</strong>：取消当前绘制</li>
                         </ul>
                     </div>
@@ -3302,7 +3764,8 @@
                 ANSWER_SHEET: 'answerSheetSettings',
                 TOMATO: 'tomatoStats',
                 SCHEDULE: 'scheduleData',
-                THEME: 'themePreference'
+                THEME: 'themePreference',
+                BAIDU_TRACKING_ID: 'baiduTrackingId'
             },
             COLORS: {
                 PRIMARY: '#0071e3',
@@ -3313,6 +3776,86 @@
                 GRAY_700: '#374151'
             }
         };
+
+        // ========== 百度统计初始化 ==========
+        function initBaiduAnalytics() {
+            // 从本地存储获取用户设置的百度统计ID
+            const trackingId = localStorage.getItem(CONFIG.STORAGE_KEYS.BAIDU_TRACKING_ID);
+
+            if (trackingId && trackingId !== 'YOUR_BAIDU_TRACKING_ID') {
+                // 动态加载百度统计脚本
+                window._hmt = window._hmt || [];
+                var hm = document.createElement("script");
+                hm.src = "https://hm.baidu.com/hm.js?" + trackingId;
+                hm.async = true;
+                var s = document.getElementsByTagName("script")[0];
+                s.parentNode.insertBefore(hm, s);
+
+                console.log('百度统计已初始化，跟踪ID:', trackingId);
+            } else {
+                console.log('百度统计未配置，请在设置中添加跟踪ID');
+            }
+        }
+
+        // 设置百度统计ID
+        function setBaiduTrackingId(trackingId) {
+            if (!trackingId || trackingId.trim() === '') {
+                showNotification('请输入有效的百度统计跟踪ID', 'warning');
+                return false;
+            }
+
+            localStorage.setItem(CONFIG.STORAGE_KEYS.BAIDU_TRACKING_ID, trackingId.trim());
+            showNotification('百度统计ID已保存，刷新页面后生效', 'success');
+            return true;
+        }
+
+        // 获取当前百度统计ID
+        function getBaiduTrackingId() {
+            return localStorage.getItem(CONFIG.STORAGE_KEYS.BAIDU_TRACKING_ID) || '';
+        }
+
+        // 保存百度统计ID（从输入框）
+        function saveBaiduTrackingId() {
+            const input = document.getElementById('baiduTrackingIdInput');
+            if (!input) return;
+
+            const trackingId = input.value.trim();
+            if (!trackingId) {
+                showNotification('请输入百度统计跟踪ID', 'warning');
+                return;
+            }
+
+            // 验证格式（32位十六进制字符串）
+            if (!/^[a-f0-9]{32}$/i.test(trackingId)) {
+                showNotification('跟踪ID格式不正确，应为32位字符串', 'warning');
+                return;
+            }
+
+            localStorage.setItem(CONFIG.STORAGE_KEYS.BAIDU_TRACKING_ID, trackingId);
+            updateBaiduStatus();
+            showNotification('百度统计ID已保存，刷新页面后生效', 'success');
+            input.value = '';
+        }
+
+        // 更新百度统计状态显示
+        function updateBaiduStatus() {
+            const statusEl = document.getElementById('baiduStatus');
+            const input = document.getElementById('baiduTrackingIdInput');
+            const trackingId = getBaiduTrackingId();
+
+            if (statusEl) {
+                if (trackingId) {
+                    statusEl.innerHTML = `<span class="text-green-600">已配置 (${trackingId.substring(0, 8)}...)</span>`;
+                } else {
+                    statusEl.textContent = '未配置';
+                }
+            }
+
+            // 如果输入框存在且为空，显示提示
+            if (input && trackingId) {
+                input.placeholder = `当前已配置: ${trackingId.substring(0, 8)}... (输入新ID可覆盖)`;
+            }
+        }
 
         // ========== 工具函数库 ==========
         
@@ -3433,6 +3976,73 @@
             }
         }
 
+        // ========== 访问统计 ==========
+        const VISIT_COUNT_KEY = 'teacherToolsVisitCount';
+        const TODAY_VISIT_KEY = 'teacherToolsTodayVisit';
+        const LAST_VISIT_DATE_KEY = 'teacherToolsLastVisitDate';
+
+        function initVisitCounter() {
+            // 获取今天的日期字符串
+            const today = new Date().toDateString();
+            const lastVisitDate = localStorage.getItem(LAST_VISIT_DATE_KEY);
+            
+            // 获取或初始化总访问量
+            let totalVisits = parseInt(localStorage.getItem(VISIT_COUNT_KEY) || '0');
+            
+            // 获取或初始化今日访问量
+            let todayVisits = parseInt(localStorage.getItem(TODAY_VISIT_KEY) || '0');
+            
+            // 如果是新的一天，重置今日访问量
+            if (lastVisitDate !== today) {
+                todayVisits = 0;
+                localStorage.setItem(LAST_VISIT_DATE_KEY, today);
+            }
+            
+            // 检查是否是新会话（简单判断：页面加载时计数）
+            // 使用 sessionStorage 标记当前会话是否已经计数
+            if (!sessionStorage.getItem('visitCounted')) {
+                totalVisits++;
+                todayVisits++;
+                
+                localStorage.setItem(VISIT_COUNT_KEY, totalVisits.toString());
+                localStorage.setItem(TODAY_VISIT_KEY, todayVisits.toString());
+                sessionStorage.setItem('visitCounted', 'true');
+            }
+            
+            // 更新显示
+            updateVisitDisplay(totalVisits, todayVisits);
+            
+            // 每分钟更新一次显示（以防日期变化）
+            setInterval(() => {
+                const currentTotal = parseInt(localStorage.getItem(VISIT_COUNT_KEY) || '0');
+                const currentToday = parseInt(localStorage.getItem(TODAY_VISIT_KEY) || '0');
+                updateVisitDisplay(currentTotal, currentToday);
+            }, 60000);
+        }
+
+        function updateVisitDisplay(total, today) {
+            const totalEl = document.getElementById('visitCount');
+            const todayEl = document.getElementById('todayVisitCount');
+            
+            if (totalEl) {
+                totalEl.textContent = total.toLocaleString('zh-CN');
+            }
+            if (todayEl) {
+                todayEl.textContent = today.toLocaleString('zh-CN');
+            }
+        }
+
+        // 重置统计数据（调试用，可以删除）
+        function resetVisitStats() {
+            if (confirm('确定要重置访问统计数据吗？')) {
+                localStorage.removeItem(VISIT_COUNT_KEY);
+                localStorage.removeItem(TODAY_VISIT_KEY);
+                localStorage.removeItem(LAST_VISIT_DATE_KEY);
+                sessionStorage.removeItem('visitCounted');
+                location.reload();
+            }
+        }
+
         // ========== 主题系统 ==========
         function initTheme() {
             const savedTheme = loadFromStorage(CONFIG.STORAGE_KEYS.THEME, 'light');
@@ -3549,13 +4159,17 @@
                 e.preventDefault();
                 toggleTheme();
             }
-        });
-
-        // ========== 事件绑定优化 ==========
-        document.querySelectorAll('.nav-tab').forEach(tab => {
-            tab.addEventListener('click', () => {
-                switchToTab(tab.dataset.tab);
-            });
+            
+            // Delete键删除选中的几何图形
+            if (e.key === 'Delete' || e.key === 'Backspace') {
+                // 检查当前是否在几何绘图页面且有选中的图形
+                const geometryTab = document.getElementById('geometry');
+                if (geometryTab && !geometryTab.classList.contains('hidden') && 
+                    geometrySelectedShape !== null && geometrySelectedShape !== undefined) {
+                    e.preventDefault();
+                    deleteSelectedGeometryShape();
+                }
+            }
         });
 
         // ========== 答题卡生成程序 ==========
@@ -4016,6 +4630,8 @@
         let tomatoTimerInterval = null;
         let tomatoIsRunning = false;
         let tomatoCount = 0;
+        let tomatoLastTickTime = null;
+        let tomatoIsInitialized = false;
 
         function saveTomatoStats() {
             saveToStorage(CONFIG.STORAGE_KEYS.TOMATO, { count: tomatoCount });
@@ -4028,7 +4644,96 @@
             }
         }
 
+        function saveTomatoStats() {
+            saveToStorage(CONFIG.STORAGE_KEYS.TOMATO, { count: tomatoCount });
+        }
+
+        function loadTomatoStats() {
+            const stats = loadFromStorage(CONFIG.STORAGE_KEYS.TOMATO);
+            if (stats) {
+                tomatoCount = stats.count || 0;
+            }
+        }
+
+        function formatTomatoTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+        }
+
+        function updateTomatoTimerDisplay() {
+            const tomatoTimerDisplayEl = document.getElementById('tomatoTimerDisplay');
+            if (tomatoTimerDisplayEl) {
+                tomatoTimerDisplayEl.textContent = formatTomatoTime(tomatoCountdownTime);
+            }
+        }
+
+        // 使用 requestAnimationFrame 实现更精确的计时
+        function tomatoTick() {
+            if (!tomatoIsRunning) return;
+            
+            const now = Date.now();
+            if (!tomatoLastTickTime) {
+                tomatoLastTickTime = now;
+            }
+            
+            const elapsed = Math.floor((now - tomatoLastTickTime) / 1000);
+            
+            if (elapsed >= 1) {
+                tomatoCountdownTime -= elapsed;
+                tomatoLastTickTime = now;
+                updateTomatoTimerDisplay();
+                
+                if (tomatoCountdownTime <= 0) {
+                    tomatoCountdownTime = 0;
+                    updateTomatoTimerDisplay();
+                    completeTomatoSession();
+                    return;
+                }
+            }
+            
+            tomatoTimerInterval = requestAnimationFrame(tomatoTick);
+        }
+
+        function completeTomatoSession() {
+            clearInterval(tomatoTimerInterval);
+            cancelAnimationFrame(tomatoTimerInterval);
+            tomatoIsRunning = false;
+            tomatoLastTickTime = null;
+            const tomatoStartBtn = document.getElementById('tomatoStartBtn');
+            if (tomatoStartBtn) tomatoStartBtn.textContent = '开始';
+            
+            const activeMode = document.querySelector('.tomato-mode-btn.active');
+            if (activeMode && activeMode.dataset.time === '1500') {
+                tomatoCount++;
+                const tomatoCountEl = document.getElementById('tomatoCount');
+                if (tomatoCountEl) {
+                    tomatoCountEl.textContent = tomatoCount;
+                }
+                saveTomatoStats();
+                showNotification('恭喜完成一个番茄钟!', 'success');
+            }
+            
+            // 播放提示音
+            try {
+                const audio = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-software-interface-start-2574.mp3');
+                audio.play().catch(() => {});
+            } catch (e) {
+                console.warn('音频播放失败');
+            }
+            
+            // 重置时间
+            setTimeout(() => {
+                if (activeMode) {
+                    tomatoCountdownTime = parseInt(activeMode.dataset.time) || 1500;
+                }
+                updateTomatoTimerDisplay();
+            }, 2000);
+        }
+
         function initTomato() {
+            if (tomatoIsInitialized) return;
+            
             loadTomatoStats();
             
             const tomatoCurrentTimeEl = document.getElementById('tomatoCurrentTime');
@@ -4037,6 +4742,13 @@
             const tomatoStartBtn = document.getElementById('tomatoStartBtn');
             const tomatoResetBtn = document.getElementById('tomatoResetBtn');
             const tomatoCountEl = document.getElementById('tomatoCount');
+            
+            console.log('番茄时钟初始化:', {
+                tomatoStartBtn: !!tomatoStartBtn,
+                tomatoResetBtn: !!tomatoResetBtn,
+                tomatoTimerDisplayEl: !!tomatoTimerDisplayEl,
+                modeBtnsCount: tomatoModeBtns.length
+            });
             
             if (tomatoCountEl) {
                 tomatoCountEl.textContent = tomatoCount;
@@ -4051,24 +4763,15 @@
                 tomatoCurrentTimeEl.textContent = `${hours}:${minutes}:${seconds}`;
             }
 
-            function formatTomatoTime(seconds) {
-                const mins = Math.floor(seconds / 60);
-                const secs = seconds % 60;
-                return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
-            }
-
-            function updateTomatoTimerDisplay() {
-                if (tomatoTimerDisplayEl) {
-                    tomatoTimerDisplayEl.textContent = formatTomatoTime(tomatoCountdownTime);
-                }
-            }
-
             tomatoModeBtns.forEach(btn => {
                 btn.addEventListener('click', () => {
                     if (tomatoIsRunning) {
                         clearInterval(tomatoTimerInterval);
+                        cancelAnimationFrame(tomatoTimerInterval);
                         tomatoIsRunning = false;
-                        if (tomatoStartBtn) tomatoStartBtn.textContent = '开始';
+                        tomatoLastTickTime = null;
+                        const startBtn = document.getElementById('tomatoStartBtn');
+                        if (startBtn) startBtn.textContent = '开始';
                     }
                     tomatoModeBtns.forEach(b => b.classList.remove('active'));
                     btn.classList.add('active');
@@ -4078,51 +4781,34 @@
             });
 
             if (tomatoStartBtn) {
-                tomatoStartBtn.addEventListener('click', () => {
+                console.log('绑定开始按钮事件');
+                tomatoStartBtn.addEventListener('click', function() {
+                    console.log('开始按钮被点击, 当前状态:', tomatoIsRunning);
                     if (tomatoIsRunning) {
                         clearInterval(tomatoTimerInterval);
+                        cancelAnimationFrame(tomatoTimerInterval);
                         tomatoIsRunning = false;
-                        tomatoStartBtn.textContent = '开始';
+                        tomatoLastTickTime = null;
+                        this.textContent = '开始';
                     } else {
                         tomatoIsRunning = true;
-                        tomatoStartBtn.textContent = '暂停';
-                        tomatoTimerInterval = setInterval(() => {
-                            tomatoCountdownTime--;
-                            updateTomatoTimerDisplay();
-                            if (tomatoCountdownTime <= 0) {
-                                clearInterval(tomatoTimerInterval);
-                                tomatoIsRunning = false;
-                                tomatoStartBtn.textContent = '开始';
-                                const activeMode = document.querySelector('.tomato-mode-btn.active');
-                                if (activeMode && activeMode.dataset.time === '1500') {
-                                    tomatoCount++;
-                                    if (tomatoCountEl) {
-                                        tomatoCountEl.textContent = tomatoCount;
-                                    }
-                                    saveTomatoStats();
-                                    showNotification('恭喜完成一个番茄钟!', 'success');
-                                }
-                                try {
-                                    const audio = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-software-interface-start-2574.mp3');
-                                    audio.play().catch(() => {});
-                                } catch (e) {
-                                    console.warn('音频播放失败');
-                                }
-                                if (activeMode) {
-                                    tomatoCountdownTime = parseInt(activeMode.dataset.time) || 1500;
-                                }
-                                updateTomatoTimerDisplay();
-                            }
-                        }, 1000);
+                        this.textContent = '暂停';
+                        tomatoLastTickTime = Date.now();
+                        tomatoTick();
                     }
                 });
+            } else {
+                console.warn('未找到开始按钮');
             }
 
             if (tomatoResetBtn) {
                 tomatoResetBtn.addEventListener('click', () => {
                     clearInterval(tomatoTimerInterval);
+                    cancelAnimationFrame(tomatoTimerInterval);
                     tomatoIsRunning = false;
-                    if (tomatoStartBtn) tomatoStartBtn.textContent = '开始';
+                    tomatoLastTickTime = null;
+                    const startBtn = document.getElementById('tomatoStartBtn');
+                    if (startBtn) startBtn.textContent = '开始';
                     const activeMode = document.querySelector('.tomato-mode-btn.active');
                     if (activeMode) {
                         tomatoCountdownTime = parseInt(activeMode.dataset.time) || 1500;
@@ -4131,9 +4817,34 @@
                 });
             }
 
+            // 页面可见性变化时处理
+            document.addEventListener('visibilitychange', () => {
+                if (tomatoIsRunning) {
+                    if (document.hidden) {
+                        // 页面隐藏时记录时间
+                        tomatoLastTickTime = Date.now();
+                    } else {
+                        // 页面显示时恢复计时
+                        const now = Date.now();
+                        const elapsed = Math.floor((now - tomatoLastTickTime) / 1000);
+                        if (elapsed > 0) {
+                            tomatoCountdownTime = Math.max(0, tomatoCountdownTime - elapsed);
+                            updateTomatoTimerDisplay();
+                            if (tomatoCountdownTime <= 0) {
+                                completeTomatoSession();
+                            }
+                        }
+                        tomatoLastTickTime = now;
+                    }
+                }
+            });
+
             setInterval(updateTomatoCurrentTime, 1000);
             updateTomatoCurrentTime();
             updateTomatoTimerDisplay();
+            
+            tomatoIsInitialized = true;
+            console.log('番茄时钟初始化完成');
         }
 
         // ========== 课表程序 ==========
@@ -4220,6 +4931,7 @@
 
         function renderScheduleTable() {
             const tbody = document.getElementById('scheduleBody');
+            if (!tbody) return;
             tbody.innerHTML = '';
             const currentSchedule = getCurrentWeekSchedule();
             scheduleTimeSlots.forEach((time, timeIndex) => {
@@ -4268,6 +4980,7 @@
 
         function renderScheduleColorPicker() {
             const colorPicker = document.getElementById('colorPicker');
+            if (!colorPicker) return;
             colorPicker.innerHTML = '';
             scheduleColors.forEach((color, index) => {
                 const colorOption = document.createElement('div');
@@ -5010,6 +5723,12 @@
         let geometryTempShape = null;
         let geometryShowGrid = true;
         let geometrySelectedShape = null;
+        let geometryIsResizing = false;
+        let geometryIsRotating = false;
+        let geometryResizeHandle = null;
+        let geometryRotationCenter = null;
+        let geometryInitialAngle = 0;
+        let geometryInitialShapeState = null;
 
         function initGeometryDrawing() {
             geometryCanvas = document.getElementById('geometry-canvas');
@@ -5081,6 +5800,16 @@
                 btn.classList.toggle('active', btn.dataset.tool === tool);
             });
             geometryCanvas.style.cursor = tool === 'select' ? 'default' : 'crosshair';
+            
+            // 显示/隐藏正多边形设置面板
+            const polygonSettings = document.getElementById('regular-polygon-settings');
+            if (polygonSettings) {
+                polygonSettings.classList.toggle('hidden', tool !== 'regular-polygon');
+            }
+            
+            // 清除临时图形
+            geometryTempShape = null;
+            redrawGeometryCanvas();
         }
 
         function selectGeometryColor(color) {
@@ -5110,6 +5839,26 @@
             geometryStartPoint = pos;
             
             if (geometryCurrentTool === 'select') {
+                // 检查是否点击了调整大小控制点
+                if (geometrySelectedShape !== null) {
+                    const resizeHandle = getResizeHandleAtPosition(pos, geometryShapes[geometrySelectedShape]);
+                    if (resizeHandle) {
+                        geometryIsResizing = true;
+                        geometryResizeHandle = resizeHandle;
+                        geometryInitialShapeState = JSON.parse(JSON.stringify(geometryShapes[geometrySelectedShape]));
+                        return;
+                    }
+                    
+                    // 检查是否点击了旋转手柄
+                    if (isRotationHandleAtPosition(pos, geometryShapes[geometrySelectedShape])) {
+                        geometryIsRotating = true;
+                        geometryRotationCenter = getShapeCenter(geometryShapes[geometrySelectedShape]);
+                        geometryInitialAngle = Math.atan2(pos.y - geometryRotationCenter.y, pos.x - geometryRotationCenter.x);
+                        geometryInitialShapeState = JSON.parse(JSON.stringify(geometryShapes[geometrySelectedShape]));
+                        return;
+                    }
+                }
+                
                 // 选择工具：尝试选中图形
                 const clickedShapeIndex = findShapeAtPosition(pos);
                 if (clickedShapeIndex !== -1) {
@@ -5144,6 +5893,22 @@
                     geometryTempShape.points.push(pos);
                     redrawGeometryCanvas();
                 }
+            } else if (geometryCurrentTool === 'regular-polygon') {
+                // 正多边形：开始绘制
+                geometryIsDrawing = true;
+                const sidesInput = document.getElementById('polygon-sides');
+                const sides = sidesInput ? parseInt(sidesInput.value) || 5 : 5;
+                geometryTempShape = {
+                    type: 'regular-polygon',
+                    centerX: pos.x,
+                    centerY: pos.y,
+                    radius: 0,
+                    sides: sides,
+                    color: geometryCurrentColor,
+                    fill: geometryCurrentFill,
+                    lineWidth: geometryCurrentLineWidth,
+                    rotation: 0
+                };
             } else {
                 // 其他工具：line, segment, circle, rectangle, triangle
                 geometryIsDrawing = true;
@@ -5162,6 +5927,171 @@
                 }
             }
             return -1;
+        }
+
+        // 获取图形的中心点
+        function getShapeCenter(shape) {
+            switch (shape.type) {
+                case 'point':
+                    return { x: shape.x, y: shape.y };
+                case 'line':
+                case 'segment':
+                    return { x: (shape.x1 + shape.x2) / 2, y: (shape.y1 + shape.y2) / 2 };
+                case 'circle':
+                    return { x: shape.x, y: shape.y };
+                case 'rectangle':
+                    return { x: shape.x + shape.width / 2, y: shape.y + shape.height / 2 };
+                case 'triangle':
+                    return { x: (shape.x1 + shape.x2 + shape.x3) / 3, y: (shape.y1 + shape.y2 + shape.y3) / 3 };
+                case 'polygon':
+                    let sumX = 0, sumY = 0;
+                    shape.points.forEach(p => { sumX += p.x; sumY += p.y; });
+                    return { x: sumX / shape.points.length, y: sumY / shape.points.length };
+                case 'regular-polygon':
+                    return { x: shape.centerX, y: shape.centerY };
+                default:
+                    return { x: 0, y: 0 };
+            }
+        }
+
+        // 获取调整大小控制点位置
+        function getResizeHandles(shape) {
+            const handles = [];
+            switch (shape.type) {
+                case 'point':
+                    handles.push({ x: shape.x, y: shape.y, type: 'move' });
+                    break;
+                case 'line':
+                case 'segment':
+                    handles.push({ x: shape.x1, y: shape.y1, type: 'endpoint1' });
+                    handles.push({ x: shape.x2, y: shape.y2, type: 'endpoint2' });
+                    break;
+                case 'circle':
+                    handles.push({ x: shape.x, y: shape.y, type: 'center' });
+                    handles.push({ x: shape.x + shape.radius, y: shape.y, type: 'radius' });
+                    break;
+                case 'rectangle':
+                    handles.push({ x: shape.x, y: shape.y, type: 'topleft' });
+                    handles.push({ x: shape.x + shape.width / 2, y: shape.y, type: 'top' });
+                    handles.push({ x: shape.x + shape.width, y: shape.y, type: 'topright' });
+                    handles.push({ x: shape.x, y: shape.y + shape.height / 2, type: 'left' });
+                    handles.push({ x: shape.x + shape.width, y: shape.y + shape.height / 2, type: 'right' });
+                    handles.push({ x: shape.x, y: shape.y + shape.height, type: 'bottomleft' });
+                    handles.push({ x: shape.x + shape.width / 2, y: shape.y + shape.height, type: 'bottom' });
+                    handles.push({ x: shape.x + shape.width, y: shape.y + shape.height, type: 'bottomright' });
+                    break;
+                case 'triangle':
+                    handles.push({ x: shape.x1, y: shape.y1, type: 'vertex1' });
+                    handles.push({ x: shape.x2, y: shape.y2, type: 'vertex2' });
+                    handles.push({ x: shape.x3, y: shape.y3, type: 'vertex3' });
+                    break;
+                case 'polygon':
+                    shape.points.forEach((p, i) => {
+                        handles.push({ x: p.x, y: p.y, type: 'vertex' + i });
+                    });
+                    break;
+                case 'regular-polygon':
+                    handles.push({ x: shape.centerX, y: shape.centerY, type: 'center' });
+                    // 外接圆上的点
+                    const angle = shape.rotation || 0;
+                    handles.push({
+                        x: shape.centerX + shape.radius * Math.cos(angle),
+                        y: shape.centerY + shape.radius * Math.sin(angle),
+                        type: 'radius'
+                    });
+                    break;
+            }
+            return handles;
+        }
+
+        // 检查是否点击了调整大小控制点
+        function getResizeHandleAtPosition(pos, shape) {
+            const handles = getResizeHandles(shape);
+            const hitRadius = 8;
+            for (const handle of handles) {
+                const dist = Math.sqrt(Math.pow(pos.x - handle.x, 2) + Math.pow(pos.y - handle.y, 2));
+                if (dist <= hitRadius) {
+                    return handle.type;
+                }
+            }
+            return null;
+        }
+
+        // 获取旋转手柄位置
+        function getRotationHandlePosition(shape) {
+            const center = getShapeCenter(shape);
+            let radius = 30;
+            
+            // 根据图形大小调整旋转手柄距离
+            switch (shape.type) {
+                case 'circle':
+                    radius = shape.radius + 30;
+                    break;
+                case 'rectangle':
+                    radius = Math.max(shape.width, shape.height) / 2 + 30;
+                    break;
+                case 'triangle':
+                case 'polygon':
+                case 'regular-polygon':
+                    // 计算最大距离
+                    const bounds = getShapeBounds(shape);
+                    radius = Math.max(bounds.width, bounds.height) / 2 + 30;
+                    break;
+            }
+            
+            const rotation = shape.rotation || 0;
+            return {
+                x: center.x + radius * Math.cos(rotation - Math.PI / 2),
+                y: center.y + radius * Math.sin(rotation - Math.PI / 2)
+            };
+        }
+
+        // 检查是否点击了旋转手柄
+        function isRotationHandleAtPosition(pos, shape) {
+            const handlePos = getRotationHandlePosition(shape);
+            const dist = Math.sqrt(Math.pow(pos.x - handlePos.x, 2) + Math.pow(pos.y - handlePos.y, 2));
+            return dist <= 10;
+        }
+
+        // 获取图形边界框
+        function getShapeBounds(shape) {
+            let minX, minY, maxX, maxY;
+            
+            switch (shape.type) {
+                case 'point':
+                    return { x: shape.x, y: shape.y, width: 0, height: 0 };
+                case 'line':
+                case 'segment':
+                    minX = Math.min(shape.x1, shape.x2);
+                    maxX = Math.max(shape.x1, shape.x2);
+                    minY = Math.min(shape.y1, shape.y2);
+                    maxY = Math.max(shape.y1, shape.y2);
+                    break;
+                case 'circle':
+                    return { x: shape.x - shape.radius, y: shape.y - shape.radius, width: shape.radius * 2, height: shape.radius * 2 };
+                case 'rectangle':
+                    return { x: shape.x, y: shape.y, width: shape.width, height: shape.height };
+                case 'triangle':
+                    minX = Math.min(shape.x1, shape.x2, shape.x3);
+                    maxX = Math.max(shape.x1, shape.x2, shape.x3);
+                    minY = Math.min(shape.y1, shape.y2, shape.y3);
+                    maxY = Math.max(shape.y1, shape.y2, shape.y3);
+                    break;
+                case 'polygon':
+                    const xs = shape.points.map(p => p.x);
+                    const ys = shape.points.map(p => p.y);
+                    minX = Math.min(...xs);
+                    maxX = Math.max(...xs);
+                    minY = Math.min(...ys);
+                    maxY = Math.max(...ys);
+                    break;
+                case 'regular-polygon':
+                    return { x: shape.centerX - shape.radius, y: shape.centerY - shape.radius, width: shape.radius * 2, height: shape.radius * 2 };
+                default:
+                    return { x: 0, y: 0, width: 0, height: 0 };
+            }
+            
+            return { x: minX, y: minY, width: maxX - minX, height: maxY - minY };
         }
 
         // 判断点是否在图形上
@@ -5190,9 +6120,33 @@
                 case 'polygon':
                     return isPointInPolygon(pos, shape.points);
                 
+                case 'regular-polygon':
+                    return isPointInRegularPolygon(pos, shape);
+                
                 default:
                     return false;
             }
+        }
+
+        // 检测点是否在正多边形内
+        function isPointInRegularPolygon(pos, shape) {
+            const { centerX, centerY, radius, sides, rotation = 0 } = shape;
+            
+            // 首先检查是否在圆形范围内（快速排除）
+            const distToCenter = Math.sqrt(Math.pow(pos.x - centerX, 2) + Math.pow(pos.y - centerY, 2));
+            if (distToCenter > radius) return false;
+            
+            // 使用射线法检测点是否在多边形内
+            const points = [];
+            for (let i = 0; i < sides; i++) {
+                const angle = rotation + (i * 2 * Math.PI / sides);
+                points.push({
+                    x: centerX + radius * Math.cos(angle),
+                    y: centerY + radius * Math.sin(angle)
+                });
+            }
+            
+            return isPointInPolygon(pos, points);
         }
 
         // 计算点到线段的距离
@@ -5296,6 +6250,10 @@
                         p.y += dy;
                     });
                     break;
+                case 'regular-polygon':
+                    shape.centerX += dx;
+                    shape.centerY += dy;
+                    break;
             }
         }
 
@@ -5304,6 +6262,24 @@
             
             // 更新坐标显示
             document.getElementById('geometry-coords').textContent = `坐标: (${Math.round(pos.x)}, ${Math.round(pos.y)})`;
+            
+            // 处理调整大小
+            if (geometryIsResizing && geometrySelectedShape !== null) {
+                const shape = geometryShapes[geometrySelectedShape];
+                resizeShape(shape, geometryResizeHandle, pos, geometryInitialShapeState);
+                redrawGeometryCanvas();
+                return;
+            }
+            
+            // 处理旋转
+            if (geometryIsRotating && geometrySelectedShape !== null) {
+                const shape = geometryShapes[geometrySelectedShape];
+                const currentAngle = Math.atan2(pos.y - geometryRotationCenter.y, pos.x - geometryRotationCenter.x);
+                const deltaAngle = currentAngle - geometryInitialAngle;
+                rotateShape(shape, deltaAngle, geometryRotationCenter, geometryInitialShapeState);
+                redrawGeometryCanvas();
+                return;
+            }
             
             if (!geometryIsDrawing) return;
             
@@ -5364,12 +6340,33 @@
                     fill: geometryCurrentFill,
                     lineWidth: geometryCurrentLineWidth
                 };
+            } else if (geometryCurrentTool === 'regular-polygon') {
+                const radius = Math.sqrt(Math.pow(pos.x - geometryStartPoint.x, 2) + Math.pow(pos.y - geometryStartPoint.y, 2));
+                geometryTempShape.radius = radius;
+                geometryTempShape.rotation = Math.atan2(pos.y - geometryStartPoint.y, pos.x - geometryStartPoint.x);
             }
             
             redrawGeometryCanvas();
         }
 
         function handleGeometryMouseUp(e) {
+            // 处理调整大小结束
+            if (geometryIsResizing) {
+                geometryIsResizing = false;
+                geometryResizeHandle = null;
+                geometryInitialShapeState = null;
+                return;
+            }
+            
+            // 处理旋转结束
+            if (geometryIsRotating) {
+                geometryIsRotating = false;
+                geometryRotationCenter = null;
+                geometryInitialAngle = 0;
+                geometryInitialShapeState = null;
+                return;
+            }
+            
             if (!geometryIsDrawing) return;
             
             geometryIsDrawing = false;
@@ -5399,6 +6396,8 @@
                     return Math.abs(shape.x2 - shape.x1) > 2;
                 case 'polygon':
                     return shape.points.length >= 3;
+                case 'regular-polygon':
+                    return shape.radius > 2;
                 default:
                     return true;
             }
@@ -5429,6 +6428,195 @@
                 redrawGeometryCanvas();
                 showNotification('已取消绘制', 'info');
             }
+        }
+
+        // 调整图形大小
+        function resizeShape(shape, handleType, pos, initialState) {
+            switch (shape.type) {
+                case 'point':
+                    shape.x = pos.x;
+                    shape.y = pos.y;
+                    break;
+                case 'line':
+                case 'segment':
+                    if (handleType === 'endpoint1') {
+                        shape.x1 = pos.x;
+                        shape.y1 = pos.y;
+                    } else if (handleType === 'endpoint2') {
+                        shape.x2 = pos.x;
+                        shape.y2 = pos.y;
+                    }
+                    break;
+                case 'circle':
+                    if (handleType === 'center') {
+                        shape.x = pos.x;
+                        shape.y = pos.y;
+                    } else if (handleType === 'radius') {
+                        shape.radius = Math.sqrt(Math.pow(pos.x - shape.x, 2) + Math.pow(pos.y - shape.y, 2));
+                    }
+                    break;
+                case 'rectangle':
+                    resizeRectangle(shape, handleType, pos, initialState);
+                    break;
+                case 'triangle':
+                    resizeTriangle(shape, handleType, pos);
+                    break;
+                case 'polygon':
+                    resizePolygon(shape, handleType, pos);
+                    break;
+                case 'regular-polygon':
+                    if (handleType === 'center') {
+                        shape.centerX = pos.x;
+                        shape.centerY = pos.y;
+                    } else if (handleType === 'radius') {
+                        shape.radius = Math.sqrt(Math.pow(pos.x - shape.centerX, 2) + Math.pow(pos.y - shape.centerY, 2));
+                        shape.rotation = Math.atan2(pos.y - shape.centerY, pos.x - shape.centerX);
+                    }
+                    break;
+            }
+        }
+
+        // 调整矩形大小
+        function resizeRectangle(shape, handleType, pos, initialState) {
+            const oldX = initialState.x;
+            const oldY = initialState.y;
+            const oldRight = oldX + initialState.width;
+            const oldBottom = oldY + initialState.height;
+            
+            switch (handleType) {
+                case 'topleft':
+                    shape.x = pos.x;
+                    shape.y = pos.y;
+                    shape.width = oldRight - pos.x;
+                    shape.height = oldBottom - pos.y;
+                    break;
+                case 'top':
+                    shape.y = pos.y;
+                    shape.height = oldBottom - pos.y;
+                    break;
+                case 'topright':
+                    shape.y = pos.y;
+                    shape.width = pos.x - oldX;
+                    shape.height = oldBottom - pos.y;
+                    break;
+                case 'left':
+                    shape.x = pos.x;
+                    shape.width = oldRight - pos.x;
+                    break;
+                case 'right':
+                    shape.width = pos.x - oldX;
+                    break;
+                case 'bottomleft':
+                    shape.x = pos.x;
+                    shape.width = oldRight - pos.x;
+                    shape.height = pos.y - oldY;
+                    break;
+                case 'bottom':
+                    shape.height = pos.y - oldY;
+                    break;
+                case 'bottomright':
+                    shape.width = pos.x - oldX;
+                    shape.height = pos.y - oldY;
+                    break;
+            }
+            
+            // 确保宽高为正
+            if (shape.width < 0) {
+                shape.x = oldRight;
+                shape.width = -shape.width;
+            }
+            if (shape.height < 0) {
+                shape.y = oldBottom;
+                shape.height = -shape.height;
+            }
+        }
+
+        // 调整三角形大小
+        function resizeTriangle(shape, handleType, pos) {
+            if (handleType === 'vertex1') {
+                shape.x1 = pos.x;
+                shape.y1 = pos.y;
+            } else if (handleType === 'vertex2') {
+                shape.x2 = pos.x;
+                shape.y2 = pos.y;
+            } else if (handleType === 'vertex3') {
+                shape.x3 = pos.x;
+                shape.y3 = pos.y;
+            }
+        }
+
+        // 调整多边形大小
+        function resizePolygon(shape, handleType, pos) {
+            if (handleType.startsWith('vertex')) {
+                const index = parseInt(handleType.replace('vertex', ''));
+                if (shape.points[index]) {
+                    shape.points[index].x = pos.x;
+                    shape.points[index].y = pos.y;
+                }
+            }
+        }
+
+        // 旋转图形
+        function rotateShape(shape, deltaAngle, center, initialState) {
+            shape.rotation = (initialState.rotation || 0) + deltaAngle;
+            
+            switch (shape.type) {
+                case 'line':
+                case 'segment':
+                    const p1 = rotatePoint(initialState.x1, initialState.y1, center.x, center.y, deltaAngle);
+                    const p2 = rotatePoint(initialState.x2, initialState.y2, center.x, center.y, deltaAngle);
+                    shape.x1 = p1.x;
+                    shape.y1 = p1.y;
+                    shape.x2 = p2.x;
+                    shape.y2 = p2.y;
+                    break;
+                case 'rectangle':
+                    // 矩形的旋转通过四个角的旋转来实现
+                    const corners = [
+                        { x: initialState.x, y: initialState.y },
+                        { x: initialState.x + initialState.width, y: initialState.y },
+                        { x: initialState.x + initialState.width, y: initialState.y + initialState.height },
+                        { x: initialState.x, y: initialState.y + initialState.height }
+                    ];
+                    const rotatedCorners = corners.map(p => rotatePoint(p.x, p.y, center.x, center.y, deltaAngle));
+                    // 计算新的边界框
+                    const xs = rotatedCorners.map(p => p.x);
+                    const ys = rotatedCorners.map(p => p.y);
+                    shape.x = Math.min(...xs);
+                    shape.y = Math.min(...ys);
+                    shape.width = Math.max(...xs) - shape.x;
+                    shape.height = Math.max(...ys) - shape.y;
+                    break;
+                case 'triangle':
+                    const t1 = rotatePoint(initialState.x1, initialState.y1, center.x, center.y, deltaAngle);
+                    const t2 = rotatePoint(initialState.x2, initialState.y2, center.x, center.y, deltaAngle);
+                    const t3 = rotatePoint(initialState.x3, initialState.y3, center.x, center.y, deltaAngle);
+                    shape.x1 = t1.x;
+                    shape.y1 = t1.y;
+                    shape.x2 = t2.x;
+                    shape.y2 = t2.y;
+                    shape.x3 = t3.x;
+                    shape.y3 = t3.y;
+                    break;
+                case 'polygon':
+                    shape.points = initialState.points.map(p => rotatePoint(p.x, p.y, center.x, center.y, deltaAngle));
+                    break;
+                case 'regular-polygon':
+                    // 正多边形的旋转已经通过 rotation 属性处理
+                    break;
+            }
+        }
+
+        // 旋转点
+        function rotatePoint(x, y, cx, cy, angle) {
+            const cos = Math.cos(angle);
+            const sin = Math.sin(angle);
+            const dx = x - cx;
+            const dy = y - cy;
+            return {
+                x: cx + dx * cos - dy * sin,
+                y: cy + dx * sin + dy * cos
+            };
         }
 
         function addGeometryShape(shape) {
@@ -5549,9 +6737,107 @@
                         }
                     }
                     break;
+                case 'regular-polygon':
+                    drawRegularPolygon(shape, isSelected);
+                    break;
+            }
+            
+            // 绘制选中图形的选择框和旋转手柄
+            if (isSelected && shape.type !== 'point') {
+                drawSelectionBox(shape);
+                drawRotationHandle(shape);
             }
             
             geometryCtx.setLineDash([]);
+        }
+
+        // 绘制正多边形
+        function drawRegularPolygon(shape, isSelected) {
+            const { centerX, centerY, radius, sides, rotation = 0 } = shape;
+            
+            geometryCtx.beginPath();
+            for (let i = 0; i < sides; i++) {
+                const angle = rotation + (i * 2 * Math.PI / sides);
+                const x = centerX + radius * Math.cos(angle);
+                const y = centerY + radius * Math.sin(angle);
+                if (i === 0) {
+                    geometryCtx.moveTo(x, y);
+                } else {
+                    geometryCtx.lineTo(x, y);
+                }
+            }
+            geometryCtx.closePath();
+            
+            if (shape.fill && shape.fill !== 'transparent') {
+                geometryCtx.fill();
+            }
+            geometryCtx.stroke();
+            
+            // 绘制中心点和半径控制点
+            if (isSelected) {
+                drawSelectionIndicator(centerX, centerY);
+                const radiusX = centerX + radius * Math.cos(rotation);
+                const radiusY = centerY + radius * Math.sin(rotation);
+                drawSelectionIndicator(radiusX, radiusY);
+            }
+        }
+
+        // 绘制选择框
+        function drawSelectionBox(shape) {
+            const bounds = getShapeBounds(shape);
+            geometryCtx.strokeStyle = '#0071e3';
+            geometryCtx.lineWidth = 1;
+            geometryCtx.setLineDash([3, 3]);
+            geometryCtx.strokeRect(bounds.x - 5, bounds.y - 5, bounds.width + 10, bounds.height + 10);
+            geometryCtx.setLineDash([]);
+            
+            // 绘制调整大小控制点
+            const handles = getResizeHandles(shape);
+            handles.forEach(handle => {
+                drawResizeHandle(handle.x, handle.y);
+            });
+        }
+
+        // 绘制调整大小控制点
+        function drawResizeHandle(x, y) {
+            const size = 8;
+            geometryCtx.fillStyle = '#0071e3';
+            geometryCtx.fillRect(x - size/2, y - size/2, size, size);
+            geometryCtx.strokeStyle = '#ffffff';
+            geometryCtx.lineWidth = 1;
+            geometryCtx.strokeRect(x - size/2, y - size/2, size, size);
+        }
+
+        // 绘制旋转手柄
+        function drawRotationHandle(shape) {
+            const center = getShapeCenter(shape);
+            const handlePos = getRotationHandlePosition(shape);
+            
+            // 绘制连接线
+            geometryCtx.beginPath();
+            geometryCtx.moveTo(center.x, center.y);
+            geometryCtx.lineTo(handlePos.x, handlePos.y);
+            geometryCtx.strokeStyle = '#0071e3';
+            geometryCtx.lineWidth = 1;
+            geometryCtx.setLineDash([3, 3]);
+            geometryCtx.stroke();
+            geometryCtx.setLineDash([]);
+            
+            // 绘制旋转手柄圆圈
+            geometryCtx.beginPath();
+            geometryCtx.arc(handlePos.x, handlePos.y, 8, 0, Math.PI * 2);
+            geometryCtx.fillStyle = '#0071e3';
+            geometryCtx.fill();
+            geometryCtx.strokeStyle = '#ffffff';
+            geometryCtx.lineWidth = 2;
+            geometryCtx.stroke();
+            
+            // 绘制旋转箭头图标
+            geometryCtx.beginPath();
+            geometryCtx.arc(handlePos.x, handlePos.y, 4, 0.5, 2.5);
+            geometryCtx.strokeStyle = '#ffffff';
+            geometryCtx.lineWidth = 1.5;
+            geometryCtx.stroke();
         }
 
         // 绘制选中指示器（小方块）
@@ -5577,9 +6863,30 @@
                 geometryHistory.push([...geometryShapes]);
                 geometryShapes = [];
                 geometryTempShape = null;
+                geometrySelectedShape = null;
                 redrawGeometryCanvas();
                 showNotification('画布已清空', 'success');
             }
+        }
+
+        // 删除选中的几何图形
+        function deleteSelectedGeometryShape() {
+            if (geometrySelectedShape === null || geometrySelectedShape === undefined) return;
+            if (geometrySelectedShape < 0 || geometrySelectedShape >= geometryShapes.length) return;
+            
+            // 保存历史记录
+            geometryHistory.push([...geometryShapes]);
+            
+            // 删除选中的图形
+            geometryShapes.splice(geometrySelectedShape, 1);
+            
+            // 清除选中状态
+            geometrySelectedShape = null;
+            
+            // 重绘画布
+            redrawGeometryCanvas();
+            
+            showNotification('图形已删除', 'success');
         }
 
         function undoGeometry() {
@@ -5676,6 +6983,25 @@
                             tempCtx.stroke();
                         }
                         break;
+                    case 'regular-polygon':
+                        tempCtx.beginPath();
+                        const { centerX, centerY, radius, sides, rotation = 0 } = shape;
+                        for (let i = 0; i < sides; i++) {
+                            const angle = rotation + (i * 2 * Math.PI / sides);
+                            const x = centerX + radius * Math.cos(angle);
+                            const y = centerY + radius * Math.sin(angle);
+                            if (i === 0) {
+                                tempCtx.moveTo(x, y);
+                            } else {
+                                tempCtx.lineTo(x, y);
+                            }
+                        }
+                        tempCtx.closePath();
+                        if (shape.fill && shape.fill !== 'transparent') {
+                            tempCtx.fill();
+                        }
+                        tempCtx.stroke();
+                        break;
                 }
             });
             
@@ -5756,10 +7082,13 @@
             const month = incomeCurrentDate.getMonth();
             
             // 更新标题
-            document.getElementById('income-month-title').textContent = 
-                `${year}年${String(month + 1).padStart(2, '0')}月`;
+            const monthTitle = document.getElementById('income-month-title');
+            if (monthTitle) {
+                monthTitle.textContent = `${year}年${String(month + 1).padStart(2, '0')}月`;
+            }
             
             const grid = document.getElementById('income-calendar-grid');
+            if (!grid) return;
             grid.innerHTML = '';
             
             // 获取月份第一天和最后一天
@@ -5868,10 +7197,15 @@
             
             const grandTotal = totalAmount + totalBonus;
             
-            document.getElementById('income-total-hours').textContent = totalHours.toFixed(1) + 'h';
-            document.getElementById('income-total-amount').textContent = totalAmount.toFixed(1) + '元';
-            document.getElementById('income-total-bonus').textContent = totalBonus.toFixed(1) + '元';
-            document.getElementById('income-grand-total').textContent = grandTotal.toFixed(1) + '元';
+            const totalHoursEl = document.getElementById('income-total-hours');
+            const totalAmountEl = document.getElementById('income-total-amount');
+            const totalBonusEl = document.getElementById('income-total-bonus');
+            const grandTotalEl = document.getElementById('income-grand-total');
+            
+            if (totalHoursEl) totalHoursEl.textContent = totalHours.toFixed(1) + 'h';
+            if (totalAmountEl) totalAmountEl.textContent = totalAmount.toFixed(1) + '元';
+            if (totalBonusEl) totalBonusEl.textContent = totalBonus.toFixed(1) + '元';
+            if (grandTotalEl) grandTotalEl.textContent = grandTotal.toFixed(1) + '元';
         }
 
         function openIncomeModal(dateKey) {
@@ -5897,15 +7231,23 @@
         }
 
         function calculateIncomePreview() {
-            const hours = parseFloat(document.getElementById('income-hours').value) || 0;
-            const rate = parseFloat(document.getElementById('income-rate').value) || 0;
-            const bonus = parseFloat(document.getElementById('income-bonus').value) || 0;
+            const hoursInput = document.getElementById('income-hours');
+            const rateInput = document.getElementById('income-rate');
+            const bonusInput = document.getElementById('income-bonus');
+            const amountEl = document.getElementById('income-calc-amount');
+            const totalEl = document.getElementById('income-calc-total');
+            
+            if (!hoursInput || !rateInput || !bonusInput) return;
+            
+            const hours = parseFloat(hoursInput.value) || 0;
+            const rate = parseFloat(rateInput.value) || 0;
+            const bonus = parseFloat(bonusInput.value) || 0;
             
             const amount = hours * rate;
             const total = amount + bonus;
             
-            document.getElementById('income-calc-amount').textContent = amount.toFixed(1) + '元';
-            document.getElementById('income-calc-total').textContent = total.toFixed(1) + '元';
+            if (amountEl) amountEl.textContent = amount.toFixed(1) + '元';
+            if (totalEl) totalEl.textContent = total.toFixed(1) + '元';
         }
 
         function saveIncomeRecord() {
@@ -6019,6 +7361,519 @@
             showNotification('收入记录已导出Excel', 'success');
         }
 
+        // ========== 课后反馈程序 ==========
+        let feedbackData = [];
+        const FEEDBACK_STORAGE_KEY = 'teacherFeedbackData';
+
+        function initFeedbackModule() {
+            loadFeedbackData();
+            renderFeedbackHistory();
+            setupFeedbackForm();
+            
+            // 设置默认日期为今天
+            const dateInput = document.getElementById('feedbackDate');
+            if (dateInput) {
+                dateInput.valueAsDate = new Date();
+            }
+        }
+
+        function loadFeedbackData() {
+            const saved = localStorage.getItem(FEEDBACK_STORAGE_KEY);
+            if (saved) {
+                feedbackData = JSON.parse(saved);
+            }
+        }
+
+        function saveFeedbackData() {
+            localStorage.setItem(FEEDBACK_STORAGE_KEY, JSON.stringify(feedbackData));
+        }
+
+        function setupFeedbackForm() {
+            const form = document.getElementById('feedbackForm');
+
+            // 表单提交
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    saveFeedback();
+                });
+            }
+        }
+
+        function getFeedbackFormData() {
+            return {
+                id: Date.now(),
+                studentName: document.getElementById('feedbackStudentName')?.value || '',
+                date: document.getElementById('feedbackDate')?.value || '',
+                subject: document.getElementById('feedbackSubject')?.value || '',
+                duration: document.getElementById('feedbackDuration')?.value || '',
+                content: document.getElementById('feedbackContent')?.value || '',
+                understanding: document.getElementById('feedbackUnderstanding')?.value || '',
+                issues: document.getElementById('feedbackIssues')?.value || '',
+                homework: document.getElementById('feedbackHomework')?.value || '',
+                nextPlan: document.getElementById('feedbackNextPlan')?.value || '',
+                comment: document.getElementById('feedbackComment')?.value || '',
+                createdAt: new Date().toISOString()
+            };
+        }
+
+        function validateFeedback(data) {
+            if (!data.studentName.trim()) {
+                showNotification('请输入学生姓名', 'warning');
+                return false;
+            }
+            if (!data.date) {
+                showNotification('请选择课程日期', 'warning');
+                return false;
+            }
+            if (!data.subject) {
+                showNotification('请选择科目', 'warning');
+                return false;
+            }
+            if (!data.content.trim()) {
+                showNotification('请输入教学内容', 'warning');
+                return false;
+            }
+            if (!data.understanding.trim()) {
+                showNotification('请输入学生掌握情况', 'warning');
+                return false;
+            }
+            if (!data.comment.trim()) {
+                showNotification('请输入老师评语', 'warning');
+                return false;
+            }
+            return true;
+        }
+
+        function saveFeedback() {
+            const data = getFeedbackFormData();
+            
+            if (!validateFeedback(data)) {
+                return;
+            }
+            
+            feedbackData.unshift(data);
+            saveFeedbackData();
+            renderFeedbackHistory();
+            clearFeedbackForm();
+            showNotification('反馈保存成功', 'success');
+        }
+
+        function clearFeedbackForm() {
+            const form = document.getElementById('feedbackForm');
+            if (form) {
+                form.reset();
+            }
+
+            // 重置日期为今天
+            const dateInput = document.getElementById('feedbackDate');
+            if (dateInput) {
+                dateInput.valueAsDate = new Date();
+            }
+        }
+
+        function renderFeedbackHistory() {
+            const container = document.getElementById('feedbackHistoryList');
+            if (!container) return;
+            
+            if (feedbackData.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center text-gray-500 py-8">
+                        <i class="fa fa-inbox text-4xl mb-2"></i>
+                        <p>暂无反馈记录</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = feedbackData.map(item => `
+                <div class="bg-gray-50 rounded-xl p-4 hover:bg-gray-100 transition-colors">
+                    <div class="flex justify-between items-start mb-2">
+                        <div>
+                            <h3 class="font-semibold text-gray-900">${escapeHTML(item.studentName)}</h3>
+                            <p class="text-sm text-gray-500">${item.date} · ${item.subject} · ${item.duration}小时</p>
+                        </div>
+                        <button onclick="deleteFeedback(${item.id})" class="text-red-500 hover:text-red-700 p-1">
+                            <i class="fa fa-trash"></i>
+                        </button>
+                    </div>
+                    <p class="text-gray-700 text-sm line-clamp-2">${escapeHTML(item.content)}</p>
+                    <div class="mt-3 flex gap-2">
+                        <button onclick="viewFeedback(${item.id})" class="text-blue-500 hover:text-blue-700 text-sm">
+                            <i class="fa fa-eye mr-1"></i>查看
+                        </button>
+                        <button onclick="editFeedback(${item.id})" class="text-green-500 hover:text-green-700 text-sm">
+                            <i class="fa fa-edit mr-1"></i>编辑
+                        </button>
+                        <button onclick="copyFeedbackById(${item.id})" class="text-gray-500 hover:text-gray-700 text-sm">
+                            <i class="fa fa-copy mr-1"></i>复制
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function deleteFeedback(id) {
+            if (!confirm('确定要删除这条反馈吗？')) return;
+            
+            feedbackData = feedbackData.filter(item => item.id !== id);
+            saveFeedbackData();
+            renderFeedbackHistory();
+            showNotification('反馈已删除', 'success');
+        }
+
+        function viewFeedback(id) {
+            const item = feedbackData.find(f => f.id === id);
+            if (!item) return;
+            
+            loadFeedbackToForm(item);
+            previewFeedback();
+        }
+
+        function editFeedback(id) {
+            const item = feedbackData.find(f => f.id === id);
+            if (!item) return;
+            
+            loadFeedbackToForm(item);
+            
+            // 删除旧记录
+            feedbackData = feedbackData.filter(f => f.id !== id);
+            saveFeedbackData();
+            renderFeedbackHistory();
+            
+            showNotification('已加载到表单，修改后请重新保存', 'info');
+        }
+
+        function loadFeedbackToForm(item) {
+            document.getElementById('feedbackStudentName').value = item.studentName || '';
+            document.getElementById('feedbackDate').value = item.date || '';
+            document.getElementById('feedbackSubject').value = item.subject || '';
+            document.getElementById('feedbackDuration').value = item.duration || '';
+            document.getElementById('feedbackContent').value = item.content || '';
+            document.getElementById('feedbackUnderstanding').value = item.understanding || '';
+            document.getElementById('feedbackIssues').value = item.issues || '';
+            document.getElementById('feedbackHomework').value = item.homework || '';
+            document.getElementById('feedbackNextPlan').value = item.nextPlan || '';
+            document.getElementById('feedbackComment').value = item.comment || '';
+        }
+
+        function generateFeedbackText(data) {
+            let text = `【课后反馈】\n\n`;
+            text += `学生姓名：${data.studentName}\n`;
+            text += `课程日期：${data.date}\n`;
+            text += `科目：${data.subject}\n`;
+            text += `课时：${data.duration}小时\n\n`;
+
+            text += `【本次教学内容】\n${data.content}\n\n`;
+            text += `【学生掌握情况】\n${data.understanding}\n\n`;
+            
+            if (data.issues) {
+                text += `【存在问题】\n${data.issues}\n\n`;
+            }
+            
+            if (data.homework) {
+                text += `【课后作业】\n${data.homework}\n\n`;
+            }
+            
+            if (data.nextPlan) {
+                text += `【下节课计划】\n${data.nextPlan}\n\n`;
+            }
+            
+            text += `【老师评语】\n${data.comment}\n\n`;
+            text += `---\n反馈时间：${new Date().toLocaleString('zh-CN')}`;
+            
+            return text;
+        }
+
+        function generateFeedbackHTML(data) {
+            let html = `
+                <div class="space-y-4">
+                    <div class="grid grid-cols-2 gap-4 text-sm">
+                        <div><strong>学生姓名：</strong>${escapeHTML(data.studentName)}</div>
+                        <div><strong>课程日期：</strong>${data.date}</div>
+                        <div><strong>科目：</strong>${data.subject}</div>
+                        <div><strong>课时：</strong>${data.duration}小时</div>
+                    </div>
+                    
+                    <div class="border-t pt-4">
+                        <h4 class="font-semibold text-gray-900 mb-2">本次教学内容</h4>
+                        <p class="text-gray-700 whitespace-pre-wrap">${escapeHTML(data.content)}</p>
+                    </div>
+                    
+                    <div class="border-t pt-4">
+                        <h4 class="font-semibold text-gray-900 mb-2">学生掌握情况</h4>
+                        <p class="text-gray-700 whitespace-pre-wrap">${escapeHTML(data.understanding)}</p>
+                    </div>
+            `;
+            
+            if (data.issues) {
+                html += `
+                    <div class="border-t pt-4">
+                        <h4 class="font-semibold text-gray-900 mb-2">存在问题</h4>
+                        <p class="text-gray-700 whitespace-pre-wrap">${escapeHTML(data.issues)}</p>
+                    </div>
+                `;
+            }
+            
+            if (data.homework) {
+                html += `
+                    <div class="border-t pt-4">
+                        <h4 class="font-semibold text-gray-900 mb-2">课后作业</h4>
+                        <p class="text-gray-700 whitespace-pre-wrap">${escapeHTML(data.homework)}</p>
+                    </div>
+                `;
+            }
+            
+            if (data.nextPlan) {
+                html += `
+                    <div class="border-t pt-4">
+                        <h4 class="font-semibold text-gray-900 mb-2">下节课计划</h4>
+                        <p class="text-gray-700 whitespace-pre-wrap">${escapeHTML(data.nextPlan)}</p>
+                    </div>
+                `;
+            }
+            
+            html += `
+                    <div class="border-t pt-4">
+                        <h4 class="font-semibold text-gray-900 mb-2">老师评语</h4>
+                        <p class="text-gray-700 whitespace-pre-wrap">${escapeHTML(data.comment)}</p>
+                    </div>
+                </div>
+            `;
+            
+            return html;
+        }
+
+        function previewFeedback() {
+            const data = getFeedbackFormData();
+            
+            if (!data.studentName || !data.content) {
+                showNotification('请至少填写学生姓名和教学内容', 'warning');
+                return;
+            }
+            
+            const modal = document.getElementById('feedbackPreviewModal');
+            const content = document.getElementById('feedbackPreviewContent');
+            
+            if (content) {
+                content.innerHTML = generateFeedbackHTML(data);
+            }
+            
+            if (modal) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            }
+        }
+
+        function closeFeedbackPreview() {
+            const modal = document.getElementById('feedbackPreviewModal');
+            if (modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+        }
+
+        function copyFeedback() {
+            const data = getFeedbackFormData();
+            
+            if (!data.studentName || !data.content) {
+                showNotification('请至少填写学生姓名和教学内容', 'warning');
+                return;
+            }
+            
+            const text = generateFeedbackText(data);
+            
+            navigator.clipboard.writeText(text).then(() => {
+                showNotification('反馈已复制到剪贴板', 'success');
+            }).catch(() => {
+                showNotification('复制失败，请手动复制', 'error');
+            });
+        }
+
+        function copyFeedbackById(id) {
+            const item = feedbackData.find(f => f.id === id);
+            if (!item) return;
+            
+            const text = generateFeedbackText(item);
+            
+            navigator.clipboard.writeText(text).then(() => {
+                showNotification('反馈已复制到剪贴板', 'success');
+            }).catch(() => {
+                showNotification('复制失败，请手动复制', 'error');
+            });
+        }
+
+        function copyFeedbackFromPreview() {
+            const data = getFeedbackFormData();
+            const text = generateFeedbackText(data);
+            
+            navigator.clipboard.writeText(text).then(() => {
+                showNotification('反馈已复制到剪贴板', 'success');
+                closeFeedbackPreview();
+            }).catch(() => {
+                showNotification('复制失败，请手动复制', 'error');
+            });
+        }
+
+        // 导出当前反馈为Word
+        function exportFeedbackToWord() {
+            const data = getFeedbackFormData();
+            
+            if (!data.studentName || !data.content) {
+                showNotification('请至少填写学生姓名和教学内容', 'warning');
+                return;
+            }
+            
+            const html = `
+                <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+                <head>
+                    <meta charset="utf-8">
+                    <title>课后反馈</title>
+                    <style>
+                        body { font-family: 'Microsoft YaHei', SimSun, sans-serif; line-height: 1.8; }
+                        .header { text-align: center; margin-bottom: 30px; }
+                        .header h1 { font-size: 24px; color: #333; }
+                        .info { margin-bottom: 20px; }
+                        .info-item { margin: 10px 0; }
+                        .section { margin: 20px 0; }
+                        .section-title { font-size: 16px; font-weight: bold; color: #333; margin-bottom: 10px; }
+                        .section-content { text-indent: 2em; }
+                    </style>
+                </head>
+                <body>
+                    <div class="header">
+                        <h1>课后反馈</h1>
+                    </div>
+                    <div class="info">
+                        <div class="info-item"><strong>学生姓名：</strong>${escapeHTML(data.studentName)}</div>
+                        <div class="info-item"><strong>课程日期：</strong>${data.date}</div>
+                        <div class="info-item"><strong>科目：</strong>${data.subject}</div>
+                        <div class="info-item"><strong>课时：</strong>${data.duration}小时</div>
+                    </div>
+                    <div class="section">
+                        <div class="section-title">本次教学内容</div>
+                        <div class="section-content">${escapeHTML(data.content).replace(/\n/g, '<br>')}</div>
+                    </div>
+                    <div class="section">
+                        <div class="section-title">学生掌握情况</div>
+                        <div class="section-content">${escapeHTML(data.understanding).replace(/\n/g, '<br>')}</div>
+                    </div>
+                    ${data.issues ? `
+                    <div class="section">
+                        <div class="section-title">存在问题</div>
+                        <div class="section-content">${escapeHTML(data.issues).replace(/\n/g, '<br>')}</div>
+                    </div>` : ''}
+                    ${data.homework ? `
+                    <div class="section">
+                        <div class="section-title">课后作业</div>
+                        <div class="section-content">${escapeHTML(data.homework).replace(/\n/g, '<br>')}</div>
+                    </div>` : ''}
+                    ${data.nextPlan ? `
+                    <div class="section">
+                        <div class="section-title">下节课计划</div>
+                        <div class="section-content">${escapeHTML(data.nextPlan).replace(/\n/g, '<br>')}</div>
+                    </div>` : ''}
+                    <div class="section">
+                        <div class="section-title">老师评语</div>
+                        <div class="section-content">${escapeHTML(data.comment).replace(/\n/g, '<br>')}</div>
+                    </div>
+                    <div style="margin-top: 40px; text-align: right; color: #999; font-size: 12px;">
+                        反馈时间：${new Date().toLocaleString('zh-CN')}
+                    </div>
+                </body>
+                </html>
+            `;
+            
+            const blob = new Blob(['\ufeff', html], { type: 'application/msword' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `课后反馈_${data.studentName}_${data.date}.doc`;
+            link.click();
+            URL.revokeObjectURL(link.href);
+            
+            showNotification('Word文档已导出', 'success');
+        }
+
+        // 导出当前反馈为Excel
+        function exportFeedbackToExcel() {
+            const data = getFeedbackFormData();
+            
+            if (!data.studentName || !data.content) {
+                showNotification('请至少填写学生姓名和教学内容', 'warning');
+                return;
+            }
+            
+            const csvContent = [
+                ['课后反馈'],
+                [],
+                ['学生姓名', data.studentName],
+                ['课程日期', data.date],
+                ['科目', data.subject],
+                ['课时', data.duration + '小时'],
+                [],
+                ['本次教学内容'],
+                [data.content],
+                [],
+                ['学生掌握情况'],
+                [data.understanding],
+                [],
+                ['存在问题', data.issues || '无'],
+                ['课后作业', data.homework || '无'],
+                ['下节课计划', data.nextPlan || '无'],
+                [],
+                ['老师评语'],
+                [data.comment],
+                [],
+                ['反馈时间', new Date().toLocaleString('zh-CN')]
+            ].map(row => row.map(cell => `"${(cell || '').toString().replace(/"/g, '""')}"`).join(',')).join('\n');
+            
+            const blob = new Blob(['\ufeff' + csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `课后反馈_${data.studentName}_${data.date}.csv`;
+            link.click();
+            URL.revokeObjectURL(link.href);
+            
+            showNotification('Excel文件已导出', 'success');
+        }
+
+        // 导出所有反馈为Excel
+        function exportAllFeedbackToExcel() {
+            if (feedbackData.length === 0) {
+                showNotification('没有反馈记录可导出', 'warning');
+                return;
+            }
+            
+            const headers = ['学生姓名', '课程日期', '科目', '课时', '教学内容', '掌握情况', '存在问题', '课后作业', '下节课计划', '老师评语', '创建时间'];
+
+            const rows = feedbackData.map(item => [
+                item.studentName,
+                item.date,
+                item.subject,
+                item.duration,
+                item.content,
+                item.understanding,
+                item.issues || '',
+                item.homework || '',
+                item.nextPlan || '',
+                item.comment,
+                new Date(item.createdAt).toLocaleString('zh-CN')
+            ]);
+            
+            const csvContent = [headers, ...rows]
+                .map(row => row.map(cell => `"${(cell || '').toString().replace(/"/g, '""')}"`).join(','))
+                .join('\n');
+            
+            const blob = new Blob(['\ufeff' + csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `课后反馈汇总_${new Date().toISOString().slice(0, 10)}.csv`;
+            link.click();
+            URL.revokeObjectURL(link.href);
+            
+            showNotification(`已导出 ${feedbackData.length} 条反馈记录`, 'success');
+        }
+
         // ========== 学生管理程序 ==========
         let studentsData = [];
         let currentStudentId = null;
@@ -6051,15 +7906,22 @@
                 return sum + (hours * rate);
             }, 0);
 
-            document.getElementById('student-total-count').textContent = totalCount;
-            document.getElementById('student-active-count').textContent = activeCount;
-            document.getElementById('student-total-hours').textContent = totalHours.toFixed(1) + 'h';
-            document.getElementById('student-total-income').textContent = totalIncome.toFixed(0) + '元';
+            const totalCountEl = document.getElementById('student-total-count');
+            const activeCountEl = document.getElementById('student-active-count');
+            const totalHoursEl = document.getElementById('student-total-hours');
+            const totalIncomeEl = document.getElementById('student-total-income');
+
+            if (totalCountEl) totalCountEl.textContent = totalCount;
+            if (activeCountEl) activeCountEl.textContent = activeCount;
+            if (totalHoursEl) totalHoursEl.textContent = totalHours.toFixed(1) + 'h';
+            if (totalIncomeEl) totalIncomeEl.textContent = totalIncome.toFixed(0) + '元';
         }
 
         function renderStudentList() {
             const tbody = document.getElementById('student-list-body');
             const emptyState = document.getElementById('student-empty-state');
+
+            if (!tbody || !emptyState) return;
 
             if (studentsData.length === 0) {
                 tbody.innerHTML = '';
@@ -6504,6 +8366,8 @@
             const moduleGraph = document.getElementById('module-graph');
             const moduleEquation = document.getElementById('module-equation');
 
+            if (!tabGraph || !tabEquation || !moduleGraph || !moduleEquation) return;
+
             tabGraph.addEventListener('click', function() {
                 tabGraph.classList.add('tab-active');
                 tabEquation.classList.remove('tab-active');
@@ -6534,6 +8398,8 @@
         // 2. 函数类型选择切换
         function initFunctionTypeSwitch() {
             const functionType = document.getElementById('function-type');
+            if (!functionType) return;
+
             const coeffBoxes = [
                 'direct', 'linear', 'quadratic', 'hyperbola', 'power',
                 'exponential', 'logarithmic', 'sine', 'cosine', 'ellipse', 'conic-hyperbola'
@@ -6542,9 +8408,11 @@
             functionType.addEventListener('change', function() {
                 const value = this.value;
                 coeffBoxes.forEach(type => {
-                    document.getElementById(`coeff-${type}`).classList.add('hidden');
+                    const el = document.getElementById(`coeff-${type}`);
+                    if (el) el.classList.add('hidden');
                 });
-                document.getElementById(`coeff-${value}`).classList.remove('hidden');
+                const activeEl = document.getElementById(`coeff-${value}`);
+                if (activeEl) activeEl.classList.remove('hidden');
             });
         }
 
@@ -6556,44 +8424,50 @@
             const singleEquation = document.getElementById('single-equation');
             const systemEquation = document.getElementById('system-equation');
 
-            tabSingle.addEventListener('click', function() {
-                tabSingle.classList.add('tab-active');
-                tabSystem.classList.remove('tab-active');
-                singleEquation.classList.remove('hidden');
-                singleEquation.classList.add('block');
-                systemEquation.classList.add('hidden');
-                systemEquation.classList.remove('block');
-                resetSolutionResult();
-            });
+            if (tabSingle && tabSystem && singleEquation && systemEquation) {
+                tabSingle.addEventListener('click', function() {
+                    tabSingle.classList.add('tab-active');
+                    tabSystem.classList.remove('tab-active');
+                    singleEquation.classList.remove('hidden');
+                    singleEquation.classList.add('block');
+                    systemEquation.classList.add('hidden');
+                    systemEquation.classList.remove('block');
+                    resetSolutionResult();
+                });
 
-            tabSystem.addEventListener('click', function() {
-                tabSystem.classList.add('tab-active');
-                tabSingle.classList.remove('tab-active');
-                systemEquation.classList.remove('hidden');
-                systemEquation.classList.add('block');
-                singleEquation.classList.add('hidden');
-                singleEquation.classList.remove('block');
-                resetSolutionResult();
-            });
+                tabSystem.addEventListener('click', function() {
+                    tabSystem.classList.add('tab-active');
+                    tabSingle.classList.remove('tab-active');
+                    systemEquation.classList.remove('hidden');
+                    systemEquation.classList.add('block');
+                    singleEquation.classList.add('hidden');
+                    singleEquation.classList.remove('block');
+                    resetSolutionResult();
+                });
+            }
 
             // 一元方程子类型（一次/二次）
             const singleType = document.getElementById('single-type');
             const singleOneCoeff = document.getElementById('single-one-coeff');
             const singleTwoCoeff = document.getElementById('single-two-coeff');
 
-            singleType.addEventListener('change', function() {
-                const value = this.value;
-                singleOneCoeff.classList.add('hidden');
-                singleTwoCoeff.classList.add('hidden');
-                if (value === 'one') singleOneCoeff.classList.remove('hidden');
-                else if (value === 'two') singleTwoCoeff.classList.remove('hidden');
-                resetSolutionResult();
-            });
+            if (singleType && singleOneCoeff && singleTwoCoeff) {
+                singleType.addEventListener('change', function() {
+                    const value = this.value;
+                    singleOneCoeff.classList.add('hidden');
+                    singleTwoCoeff.classList.add('hidden');
+                    if (value === 'one') singleOneCoeff.classList.remove('hidden');
+                    else if (value === 'two') singleTwoCoeff.classList.remove('hidden');
+                    resetSolutionResult();
+                });
+            }
         }
 
         // 4. 初始化函数绘图画布 - 不限制坐标轴范围
         function initChart() {
-            const ctx = document.getElementById('function-chart').getContext('2d');
+            const chartCanvas = document.getElementById('function-chart');
+            if (!chartCanvas) return;
+            const ctx = chartCanvas.getContext('2d');
             functionChart = new Chart(ctx, {
                 type: 'line',
                 data: { datasets: [] },
@@ -7237,28 +9111,61 @@
             // 绘制范围滑块
             const xStart = document.getElementById('x-start');
             const xStartSlider = document.getElementById('x-start-slider');
-            xStart.addEventListener('input', function() {
-                xStartSlider.value = this.value;
-            });
-            xStartSlider.addEventListener('input', function() {
-                xStart.value = this.value;
-            });
+            if (xStart && xStartSlider) {
+                xStart.addEventListener('input', function() {
+                    xStartSlider.value = this.value;
+                });
+                xStartSlider.addEventListener('input', function() {
+                    xStart.value = this.value;
+                });
+            }
             
             const xEnd = document.getElementById('x-end');
             const xEndSlider = document.getElementById('x-end-slider');
-            xEnd.addEventListener('input', function() {
-                xEndSlider.value = this.value;
-            });
-            xEndSlider.addEventListener('input', function() {
-                xEnd.value = this.value;
-            });
+            if (xEnd && xEndSlider) {
+                xEnd.addEventListener('input', function() {
+                    xEndSlider.value = this.value;
+                });
+                xEndSlider.addEventListener('input', function() {
+                    xEnd.value = this.value;
+                });
+            }
             
             // 其他滑块...
         }
 
-        // 初始化函数绘制功能
+        // 初始化所有模块
         window.addEventListener('load', function() {
-            initFunctionDrawing();
+            try {
+                // 首先绑定导航标签点击事件
+                const navTabs = document.querySelectorAll('.nav-tab');
+                console.log('找到导航标签数量:', navTabs.length);
+                navTabs.forEach(tab => {
+                    tab.addEventListener('click', function() {
+                        console.log('点击导航标签:', this.dataset.tab);
+                        switchToTab(this.dataset.tab);
+                    });
+                });
+                
+                // 然后初始化各模块
+                initBaiduAnalytics();
+                initVisitCounter();
+                initTheme();
+                initTomato();
+                initSchedule();
+                initGeometryDrawing();
+                initIncomeModule();
+                initStudentsModule();
+                initFunctionDrawing();
+                initFeedbackModule();
+
+                // 更新百度统计状态显示
+                updateBaiduStatus();
+
+                console.log('所有模块初始化完成');
+            } catch (error) {
+                console.error('初始化错误:', error);
+            }
         });
     </script>
 </body>
