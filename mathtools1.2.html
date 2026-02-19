@@ -16,6 +16,18 @@
     <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+    <!-- 百度统计 -->
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?5d0914528f74ad1ba2153b4ecc0310a8";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
     <style>
         /* ========== CSS变量和主题系统 ========== */
         :root {
@@ -1937,6 +1949,29 @@
         <button class="nav-tab" data-tab="feedback" role="tab" aria-selected="false">📝 课后反馈</button>
     </div>
 
+    <!-- 天气模块 -->
+    <div id="weatherWidget" class="fixed top-20 right-4 z-40 bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg p-4 min-w-[200px] border border-gray-200">
+        <div class="flex items-center justify-between mb-2">
+            <span class="text-sm font-medium text-gray-600">📍 <span id="weatherCity">定位中...</span></span>
+            <button onclick="refreshWeather()" class="text-gray-400 hover:text-blue-500 transition-colors" title="刷新天气">
+                <i class="fa fa-refresh text-sm"></i>
+            </button>
+        </div>
+        <div id="weatherContent" class="text-center">
+            <div class="text-4xl mb-2" id="weatherIcon">🌤️</div>
+            <div class="text-2xl font-bold text-gray-800" id="weatherTemp">--°</div>
+            <div class="text-sm text-gray-600" id="weatherDesc">加载中...</div>
+            <div class="flex justify-center gap-4 mt-2 text-xs text-gray-500">
+                <span>💧 <span id="weatherHumidity">--%</span></span>
+                <span>💨 <span id="weatherWind">--级</span></span>
+            </div>
+        </div>
+        <div id="weatherError" class="hidden text-center text-sm text-red-500">
+            获取天气失败
+            <button onclick="initWeather()" class="block mx-auto mt-2 text-blue-500 hover:underline">重试</button>
+        </div>
+    </div>
+
     <!-- 主页 -->
     <div class="tab-content active" id="home">
         <!-- 苹果风格的hero区域 -->
@@ -1971,6 +2006,9 @@
                     </button>
                     <button onclick="switchTab('income')" class="text-sm bg-white/80 hover:bg-white px-4 py-2 rounded-full transition-colors border border-gray-200">
                         💰 收入记录
+                    </button>
+                    <button onclick="switchTab('feedback')" class="text-sm bg-white/80 hover:bg-white px-4 py-2 rounded-full transition-colors border border-gray-200">
+                        📝 课后反馈
                     </button>
                 </div>
             </div>
@@ -2029,10 +2067,10 @@
         <div id="features" class="py-20 bg-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <h2 class="text-3xl md:text-4xl font-semibold text-center text-gray-900 mb-6">
-                    八大核心功能，助力独立教学
+                    九大核心功能，助力独立教学
                 </h2>
                 <p class="text-center text-gray-600 mb-16 max-w-3xl mx-auto">
-                    从备课到授课，从时间管理到财务统计，一站式解决独立数学老师的所有需求
+                    从备课到授课，从时间管理到财务统计，再到课后反馈，一站式解决独立数学老师的所有需求
                 </p>
 
                 <!-- 第一行：教学工具 -->
@@ -2135,14 +2173,16 @@
                             </button>
                         </div>
 
-                        <!-- 更多功能 -->
-                        <div class="bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl p-6 text-center border border-gray-200 border-dashed">
+                        <!-- 课后反馈 -->
+                        <div class="bg-gradient-to-br from-cyan-50 to-cyan-100 rounded-2xl p-6 text-center hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-cyan-200">
                             <div class="bg-white rounded-full w-14 h-14 flex items-center justify-center mx-auto mb-4 shadow-md">
-                                <i class="fa fa-plus text-2xl text-gray-400"></i>
+                                <i class="fa fa-commenting-o text-2xl text-cyan-600"></i>
                             </div>
-                            <h3 class="text-lg font-bold text-gray-700 mb-2">更多功能</h3>
-                            <p class="text-gray-500 text-sm mb-4">持续更新中，敬请期待...</p>
-                            <span class="text-gray-400 text-sm">即将推出</span>
+                            <h3 class="text-lg font-bold text-gray-900 mb-2">课后反馈</h3>
+                            <p class="text-gray-600 text-sm mb-4">记录每节课的教学情况，生成专业的课后反馈文档</p>
+                            <button onclick="switchTab('feedback')" class="bg-cyan-500 hover:bg-cyan-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                                开始使用
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -2207,6 +2247,7 @@
                             <li><button onclick="switchTab('tomato')" class="text-gray-400 hover:text-white transition-colors duration-300">番茄时钟</button></li>
                             <li><button onclick="switchTab('schedule')" class="text-gray-400 hover:text-white transition-colors duration-300">课表程序</button></li>
                             <li><button onclick="switchTab('function')" class="text-gray-400 hover:text-white transition-colors duration-300">函数绘制</button></li>
+                            <li><button onclick="switchTab('feedback')" class="text-gray-400 hover:text-white transition-colors duration-300">课后反馈</button></li>
                         </ul>
                     </div>
                 </div>
@@ -3904,6 +3945,201 @@
                 sessionStorage.removeItem('visitCounted');
                 location.reload();
             }
+        }
+
+        // ========== 天气模块 ==========
+        // 使用 Open-Meteo API（免费，无需API Key）
+        const WEATHER_API_URL = 'https://api.open-meteo.com/v1/forecast';
+        const GEOCODING_API_URL = 'https://geocoding-api.open-meteo.com/v1/search';
+
+        // 天气图标映射
+        const weatherIcons = {
+            0: '☀️', // 晴天
+            1: '🌤️', //  mainly clear
+            2: '⛅', // partly cloudy
+            3: '☁️', // overcast
+            45: '🌫️', // fog
+            48: '🌫️', // depositing rime fog
+            51: '🌧️', // light drizzle
+            53: '🌧️', // moderate drizzle
+            55: '🌧️', // dense drizzle
+            61: '🌧️', // slight rain
+            63: '🌧️', // moderate rain
+            65: '🌧️', // heavy rain
+            71: '🌨️', // slight snow
+            73: '🌨️', // moderate snow
+            75: '🌨️', // heavy snow
+            77: '🌨️', // snow grains
+            80: '🌦️', // slight rain showers
+            81: '🌦️', // moderate rain showers
+            82: '🌦️', // violent rain showers
+            85: '🌨️', // slight snow showers
+            86: '🌨️', // heavy snow showers
+            95: '⛈️', // thunderstorm
+            96: '⛈️', // thunderstorm with slight hail
+            99: '⛈️', // thunderstorm with heavy hail
+        };
+
+        // 天气描述映射
+        const weatherDescriptions = {
+            0: '晴朗',
+            1: ' mainly clear',
+            2: '多云',
+            3: '阴天',
+            45: '雾',
+            48: '雾凇',
+            51: '毛毛雨',
+            53: '中雨',
+            55: '大雨',
+            61: '小雨',
+            63: '中雨',
+            65: '大雨',
+            71: '小雪',
+            73: '中雪',
+            75: '大雪',
+            77: '雪粒',
+            80: '阵雨',
+            81: '中阵雨',
+            82: '强阵雨',
+            85: '阵雪',
+            86: '强阵雪',
+            95: '雷雨',
+            96: '雷雨伴冰雹',
+            99: '强雷雨伴冰雹',
+        };
+
+        let currentWeatherData = null;
+
+        async function initWeather() {
+            const widget = document.getElementById('weatherWidget');
+            const content = document.getElementById('weatherContent');
+            const error = document.getElementById('weatherError');
+
+            if (!widget) return;
+
+            // 显示加载状态
+            if (content) content.classList.remove('hidden');
+            if (error) error.classList.add('hidden');
+
+            try {
+                // 尝试获取用户位置
+                let lat, lon, cityName;
+
+                // 先尝试从本地存储获取之前的位置
+                const savedLocation = localStorage.getItem('weatherLocation');
+                if (savedLocation) {
+                    const location = JSON.parse(savedLocation);
+                    lat = location.lat;
+                    lon = location.lon;
+                    cityName = location.city;
+                } else {
+                    // 尝试通过IP获取位置（使用 ipapi.co）
+                    try {
+                        const ipResponse = await fetch('https://ipapi.co/json/');
+                        const ipData = await ipResponse.json();
+                        lat = ipData.latitude;
+                        lon = ipData.longitude;
+                        cityName = ipData.city;
+
+                        // 保存位置信息
+                        localStorage.setItem('weatherLocation', JSON.stringify({
+                            lat, lon, city, city: cityName,
+                            timestamp: Date.now()
+                        }));
+                    } catch (ipError) {
+                        console.log('IP定位失败，使用默认位置（北京）');
+                        // 使用北京作为默认位置
+                        lat = 39.9042;
+                        lon = 116.4074;
+                        cityName = '北京';
+                    }
+                }
+
+                // 获取天气数据
+                await fetchWeatherData(lat, lon, cityName);
+
+            } catch (error) {
+                console.error('天气初始化失败:', error);
+                showWeatherError();
+            }
+        }
+
+        async function fetchWeatherData(lat, lon, cityName) {
+            try {
+                // Open-Meteo API 请求
+                const url = `${WEATHER_API_URL}?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m&timezone=auto`;
+
+                const response = await fetch(url);
+                if (!response.ok) throw new Error('天气数据获取失败');
+
+                const data = await response.json();
+                currentWeatherData = data;
+
+                // 更新UI
+                updateWeatherUI(data, cityName);
+
+            } catch (error) {
+                console.error('获取天气数据失败:', error);
+                showWeatherError();
+            }
+        }
+
+        function updateWeatherUI(data, cityName) {
+            const cityEl = document.getElementById('weatherCity');
+            const iconEl = document.getElementById('weatherIcon');
+            const tempEl = document.getElementById('weatherTemp');
+            const descEl = document.getElementById('weatherDesc');
+            const humidityEl = document.getElementById('weatherHumidity');
+            const windEl = document.getElementById('weatherWind');
+
+            if (!data || !data.current) {
+                showWeatherError();
+                return;
+            }
+
+            const current = data.current;
+            const weatherCode = current.weather_code;
+
+            // 更新城市名称
+            if (cityEl) cityEl.textContent = cityName || '本地';
+
+            // 更新天气图标
+            if (iconEl) iconEl.textContent = weatherIcons[weatherCode] || '🌡️';
+
+            // 更新温度
+            if (tempEl) tempEl.textContent = `${Math.round(current.temperature_2m)}°`;
+
+            // 更新天气描述
+            if (descEl) descEl.textContent = weatherDescriptions[weatherCode] || '未知';
+
+            // 更新湿度
+            if (humidityEl) humidityEl.textContent = `${current.relative_humidity_2m}%`;
+
+            // 更新风速（转换为风力等级，简化处理）
+            const windSpeed = current.wind_speed_10m;
+            const windLevel = Math.min(Math.ceil(windSpeed / 2), 12);
+            if (windEl) windEl.textContent = `${windLevel}级`;
+        }
+
+        function showWeatherError() {
+            const content = document.getElementById('weatherContent');
+            const error = document.getElementById('weatherError');
+
+            if (content) content.classList.add('hidden');
+            if (error) error.classList.remove('hidden');
+        }
+
+        async function refreshWeather() {
+            // 清除保存的位置，重新获取
+            localStorage.removeItem('weatherLocation');
+            await initWeather();
+        }
+
+        // 每小时自动刷新天气
+        function startWeatherAutoRefresh() {
+            setInterval(() => {
+                initWeather();
+            }, 3600000); // 每小时刷新一次
         }
 
         // ========== 主题系统 ==========
@@ -9013,6 +9249,8 @@
                 // 然后初始化各模块
                 initVisitCounter();
                 initTheme();
+                initWeather();
+                startWeatherAutoRefresh();
                 initTomato();
                 initSchedule();
                 initGeometryDrawing();
