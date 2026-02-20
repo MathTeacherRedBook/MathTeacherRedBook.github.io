@@ -794,6 +794,47 @@
             border-color: #0071e3;
         }
 
+        .schedule-time-container {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            padding: 4px;
+        }
+
+        .schedule-time-select {
+            width: 100%;
+            padding: 4px 18px 4px 4px;
+            border: 1px solid #d2d2d7;
+            border-radius: 4px;
+            font-size: 11px;
+            text-align: center;
+            background-color: white;
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 12 12'%3E%3Cpath fill='%23666' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 4px center;
+        }
+
+        .schedule-time-select:focus {
+            outline: none;
+            border-color: #0071e3;
+        }
+
+        .schedule-time-select:hover {
+            border-color: #0071e3;
+        }
+
+        .schedule-time-start {
+            border-left: 3px solid #34c759;
+        }
+
+        .schedule-time-end {
+            border-left: 3px solid #ff3b30;
+        }
+
         .schedule-date-subtitle {
             font-size: 12px;
             color: #86868b;
@@ -818,11 +859,19 @@
 
         .schedule-course-name {
             font-weight: 600;
-            margin-bottom: 4px;
+            margin-bottom: 2px;
+            font-size: 13px;
+        }
+
+        .schedule-course-student {
+            font-size: 11px;
+            font-weight: 500;
+            margin-bottom: 2px;
+            opacity: 0.95;
         }
 
         .schedule-course-location {
-            font-size: 11px;
+            font-size: 10px;
             opacity: 0.9;
         }
 
@@ -1268,6 +1317,8 @@
         .income-stat-icon.green { background: #e8f5e9; color: #34c759; }
         .income-stat-icon.orange { background: #fff3e0; color: #ff9500; }
         .income-stat-icon.teal { background: #e0f2f1; color: #009688; }
+        .income-stat-icon.purple { background: #f3e5f5; color: #9c27b0; }
+        .income-stat-icon.red { background: #ffebee; color: #f44336; }
 
         .income-stat-content {
             flex: 1;
@@ -1446,8 +1497,91 @@
 
         .income-modal-body {
             padding: 20px;
-            max-height: 60vh;
+            max-height: 70vh;
             overflow-y: auto;
+        }
+
+        /* 年度统计柱状图样式 */
+        .yearly-chart-container {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            height: 200px;
+            padding: 20px 10px 30px 10px;
+            border-bottom: 2px solid #e5e7eb;
+            position: relative;
+        }
+
+        .yearly-chart-bar-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            height: 100%;
+            margin: 0 2px;
+            position: relative;
+        }
+
+        .yearly-chart-bar {
+            width: 100%;
+            max-width: 40px;
+            border-radius: 4px 4px 0 0;
+            transition: all 0.3s ease;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .yearly-chart-bar:hover {
+            opacity: 0.8;
+            transform: scaleY(1.02);
+        }
+
+        .yearly-chart-bar-value {
+            position: absolute;
+            top: -18px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 10px;
+            font-weight: 600;
+            color: #374151;
+            white-space: nowrap;
+        }
+
+        .yearly-chart-bar-label {
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 11px;
+            color: #6b7280;
+            white-space: nowrap;
+        }
+
+        .yearly-chart-bar.income-bar {
+            background: linear-gradient(to top, #10b981, #34d399);
+        }
+
+        .yearly-chart-bar.hours-bar {
+            background: linear-gradient(to top, #3b82f6, #60a5fa);
+        }
+
+        .yearly-chart-tooltip {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            pointer-events: none;
+            z-index: 100;
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .yearly-chart-bar-wrapper:hover .yearly-chart-tooltip {
+            opacity: 1;
         }
 
         .income-form-group {
@@ -1867,15 +2001,17 @@
         }
 
         .calendar-day {
-            aspect-ratio: 1;
+            min-height: 80px;
             border-radius: 12px;
-            padding: 8px;
+            padding: 6px 4px;
             cursor: pointer;
             transition: all 0.2s ease;
             background: var(--bg-color);
             border: 2px solid transparent;
             position: relative;
             overflow: hidden;
+            display: flex;
+            flex-direction: column;
         }
 
         .calendar-day:hover {
@@ -1929,6 +2065,40 @@
             border-radius: 50%;
         }
 
+        /* 日历计划内容显示 */
+        .calendar-plans {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            margin-top: 2px;
+            overflow: hidden;
+        }
+
+        .calendar-plan-item {
+            font-size: 10px;
+            padding: 1px 4px;
+            border-radius: 2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            line-height: 1.3;
+        }
+
+        .calendar-more {
+            font-size: 9px;
+            color: var(--text-secondary);
+            text-align: center;
+            margin-top: 1px;
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            .calendar-plan-item {
+                font-size: 9px;
+                padding: 0 2px;
+            }
+        }
+
         /* 月计划详情模态框 - 复用现有样式 */
     </style>
 </head>
@@ -1949,53 +2119,104 @@
         <button class="nav-tab" data-tab="feedback" role="tab" aria-selected="false">📝 课后反馈</button>
     </div>
 
-    <!-- 天气模块 -->
-    <div id="weatherWidget" class="fixed top-20 right-4 z-40 bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg p-4 min-w-[200px] border border-gray-200">
-        <div class="flex items-center justify-between mb-2">
-            <span class="text-sm font-medium text-gray-600 flex items-center gap-1">
-                📍 <span id="weatherCity">定位中...</span>
-                <button onclick="requestLocationPermission()" class="text-blue-500 hover:text-blue-700 text-xs" title="重新定位">
-                    <i class="fa fa-location-arrow"></i>
-                </button>
-            </span>
-            <button onclick="refreshWeather()" class="text-gray-400 hover:text-blue-500 transition-colors" title="刷新天气">
-                <i class="fa fa-refresh text-sm"></i>
-            </button>
-        </div>
-        <div id="weatherContent" class="text-center">
-            <div class="text-4xl mb-2" id="weatherIcon">🌤️</div>
-            <div class="text-2xl font-bold text-gray-800" id="weatherTemp">--°</div>
-            <div class="text-sm text-gray-600" id="weatherDesc">加载中...</div>
-            <div class="flex justify-center gap-4 mt-2 text-xs text-gray-500">
-                <span>💧 <span id="weatherHumidity">--%</span></span>
-                <span>💨 <span id="weatherWind">--级</span></span>
+    <!-- 主页 -->
+    <div class="tab-content active" id="home" style="position: relative; min-height: 100vh;">
+        <!-- 天气模块 - 只在主页显示，可拖拽 -->
+        <div id="weatherWidget" class="draggable-widget" style="position: fixed; top: 100px; right: 20px; z-index: 100; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); padding: 12px; min-width: 160px; border: 1px solid rgba(0,0,0,0.1); user-select: none;">
+            <div class="drag-handle" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; cursor: grab; padding: 4px; border-radius: 8px;" title="按住拖拽移动">
+                <span style="font-size: 12px; font-weight: 500; color: #666; display: flex; align-items: center; gap: 4px;">
+                    📍 <span id="weatherCity">定位中...</span>
+                    <button onclick="event.stopPropagation(); requestLocationPermission()" style="color: #3b82f6; font-size: 12px; cursor: pointer; background: none; border: none; padding: 2px;" title="重新定位">
+                        <i class="fa fa-location-arrow"></i>
+                    </button>
+                </span>
+                <div style="display: flex; align-items: center; gap: 4px;">
+                    <button onclick="event.stopPropagation(); refreshWeather()" style="color: #999; font-size: 12px; cursor: pointer; background: none; border: none; padding: 2px;" title="刷新天气">
+                        <i class="fa fa-refresh"></i>
+                    </button>
+                    <span style="color: #ccc; font-size: 12px; cursor: grab;">⋮⋮</span>
+                </div>
+            </div>
+            <div id="weatherContent" style="text-align: center; pointer-events: none;">
+                <div style="font-size: 28px; margin-bottom: 4px;" id="weatherIcon">🌤️</div>
+                <div style="font-size: 22px; font-weight: bold; color: #333;" id="weatherTemp">--°</div>
+                <div style="font-size: 12px; color: #666;" id="weatherDesc">加载中...</div>
+                <div style="display: flex; justify-content: center; gap: 12px; margin-top: 6px; font-size: 11px; color: #888;">
+                    <span>💧 <span id="weatherHumidity">--%</span></span>
+                    <span>💨 <span id="weatherWind">--级</span></span>
+                </div>
+            </div>
+            <div id="weatherError" style="display: none; text-align: center; font-size: 12px; color: #ef4444;">
+                获取天气失败
+                <button onclick="event.stopPropagation(); initWeather()" style="display: block; margin: 4px auto 0; color: #3b82f6; text-decoration: underline; background: none; border: none; cursor: pointer; pointer-events: auto;">重试</button>
+            </div>
+            <div id="weatherLocationPrompt" style="display: none; text-align: center; font-size: 12px; color: #666; margin-top: 8px; padding: 8px; background: #f9fafb; border-radius: 8px; pointer-events: auto;">
+                <p style="margin-bottom: 8px;">需要获取您的位置</p>
+                <button onclick="event.stopPropagation(); requestLocationPermission()" style="background: #3b82f6; color: white; padding: 4px 12px; border-radius: 6px; font-size: 12px; border: none; cursor: pointer;">允许定位</button>
+                <button onclick="event.stopPropagation(); useDefaultLocation()" style="color: #666; padding: 4px 8px; font-size: 12px; background: none; border: none; cursor: pointer; margin-left: 4px;">使用默认</button>
             </div>
         </div>
-        <div id="weatherError" class="hidden text-center text-sm text-red-500">
-            获取天气失败
-            <button onclick="initWeather()" class="block mx-auto mt-2 text-blue-500 hover:underline">重试</button>
-        </div>
-        <div id="weatherLocationPrompt" class="hidden text-center text-sm text-gray-600 mt-2 p-2 bg-gray-50 rounded-lg">
-            <p class="mb-2">需要获取您的位置来显示当地天气</p>
-            <button onclick="requestLocationPermission()" class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-xs">
-                允许定位
-            </button>
-            <button onclick="useDefaultLocation()" class="text-gray-500 hover:text-gray-700 px-2 py-1 text-xs">
-                使用默认
-            </button>
-        </div>
-    </div>
 
-    <!-- 主页 -->
-    <div class="tab-content active" id="home">
+        <!-- 倒数日模块 - 只在主页显示，可拖拽 -->
+        <div id="countdownWidget" class="draggable-widget" style="position: fixed; top: 100px; left: 20px; z-index: 100; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); padding: 12px; min-width: 180px; border: 1px solid rgba(0,0,0,0.1); user-select: none;">
+            <div class="drag-handle" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; cursor: grab; padding: 4px; border-radius: 8px;" title="按住拖拽移动">
+                <span style="font-size: 12px; font-weight: 500; color: #666; display: flex; align-items: center; gap: 4px;">
+                    <i class="fa fa-calendar-check-o" style="color: #ec4899;"></i>
+                    倒数日
+                </span>
+                <div style="display: flex; align-items: center; gap: 4px;">
+                    <button onclick="event.stopPropagation(); showCountdownModal()" style="color: #999; font-size: 12px; cursor: pointer; background: none; border: none; padding: 2px;" title="添加事件">
+                        <i class="fa fa-plus"></i>
+                    </button>
+                    <span style="color: #ccc; font-size: 12px; cursor: grab;">⋮⋮</span>
+                </div>
+            </div>
+            <div id="countdownList" style="max-height: 200px; overflow-y: auto;">
+                <!-- 倒数日列表将在这里动态生成 -->
+                <div style="text-align: center; font-size: 12px; color: #999; padding: 8px 0;">
+                    点击 + 添加倒数日
+                </div>
+            </div>
+        </div>
+
+        <!-- 倒数日添加/编辑模态框 -->
+        <div id="countdownModal" class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center">
+            <div class="bg-white rounded-2xl p-6 w-full max-w-sm mx-4 shadow-2xl">
+                <h3 class="text-lg font-semibold text-gray-900 mb-4" id="countdownModalTitle">添加倒数日</h3>
+                <input type="hidden" id="countdownId">
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">事件名称</label>
+                        <input type="text" id="countdownTitle" placeholder="例如：期末考试" class="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-pink-500 text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">目标日期</label>
+                        <input type="date" id="countdownDate" class="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-pink-500 text-sm">
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <input type="checkbox" id="countdownRepeat" class="rounded border-gray-300 text-pink-500 focus:ring-pink-500">
+                        <label for="countdownRepeat" class="text-sm text-gray-600">每年重复</label>
+                    </div>
+                </div>
+                <div class="flex gap-3 mt-6">
+                    <button onclick="closeCountdownModal()" class="flex-1 bg-gray-100 text-gray-700 py-2 rounded-lg text-sm font-medium hover:bg-gray-200 transition-colors">
+                        取消
+                    </button>
+                    <button onclick="saveCountdown()" class="flex-1 bg-pink-500 text-white py-2 rounded-lg text-sm font-medium hover:bg-pink-600 transition-colors">
+                        保存
+                    </button>
+                </div>
+            </div>
+        </div>
+
         <!-- 苹果风格的hero区域 -->
-        <div class="bg-gradient-to-b from-gray-50 to-gray-100 py-20 md:py-32">
+        <div class="bg-gradient-to-b from-gray-50 to-gray-100 py-20 md:py-32 relative">
             <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                 <h1 class="text-4xl md:text-5xl lg:text-6xl font-semibold text-gray-900 mb-6">
                     独立数学老师辅助工具
                 </h1>
                 <p class="text-xl md:text-2xl text-gray-600 mb-10 max-w-3xl mx-auto">
-                    专为独立数学老师打造的免费辅助工具集<br>
+                    专为独立数学老师打造的辅助工具集<br>
                     <span class="text-lg">涵盖答题卡生成、函数绘制、几何绘图、课表管理、学生管理、收入统计等8大功能</span>
                 </p>
                 <div class="flex flex-wrap justify-center gap-4">
@@ -2145,7 +2366,7 @@
                 </div>
 
                 <!-- 第二行：管理工具 -->
-                <div>
+                <div class="mb-8">
                     <h3 class="text-lg font-semibold text-gray-700 mb-6 flex items-center gap-2">
                         <i class="fa fa-briefcase text-green-500"></i>
                         管理工具
@@ -2197,6 +2418,53 @@
                             <button onclick="switchTab('feedback')" class="bg-cyan-500 hover:bg-cyan-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
                                 开始使用
                             </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 第三行：数据管理 -->
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-700 mb-6 flex items-center gap-2">
+                        <i class="fa fa-database text-red-500"></i>
+                        数据管理
+                        <span class="text-xs text-gray-500 font-normal">（建议定期备份）</span>
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- 数据备份 -->
+                        <div class="bg-gradient-to-br from-red-50 to-red-100 rounded-2xl p-6 border border-red-200">
+                            <div class="flex items-start gap-4">
+                                <div class="bg-white rounded-full w-14 h-14 flex items-center justify-center shadow-md flex-shrink-0">
+                                    <i class="fa fa-download text-2xl text-red-600"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <h3 class="text-lg font-bold text-gray-900 mb-2">数据备份</h3>
+                                    <p class="text-gray-600 text-sm mb-4">将所有数据导出为JSON文件，保存到安全位置。重装系统或更换电脑前请务必备份！</p>
+                                    <div class="flex gap-2">
+                                        <button onclick="exportAllData()" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2">
+                                            <i class="fa fa-file-archive-o"></i>导出全部数据
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 数据恢复 -->
+                        <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-6 border border-blue-200">
+                            <div class="flex items-start gap-4">
+                                <div class="bg-white rounded-full w-14 h-14 flex items-center justify-center shadow-md flex-shrink-0">
+                                    <i class="fa fa-upload text-2xl text-blue-600"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <h3 class="text-lg font-bold text-gray-900 mb-2">数据恢复</h3>
+                                    <p class="text-gray-600 text-sm mb-4">从备份文件恢复数据。注意：恢复数据将覆盖当前所有数据，请谨慎操作！</p>
+                                    <div class="flex gap-2">
+                                        <button onclick="document.getElementById('data-restore-file').click()" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2">
+                                            <i class="fa fa-file-o"></i>导入备份文件
+                                        </button>
+                                        <input type="file" id="data-restore-file" accept=".json" style="display:none" onchange="importAllData(event)">
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -2526,8 +2794,9 @@
                 <div class="schedule-controls-bar">
                     <button class="schedule-btn schedule-btn-success" onclick="addScheduleRow()">➕ 添加行</button>
                     <button class="schedule-btn schedule-btn-danger" onclick="deleteScheduleRow()">🗑️ 删除行</button>
-                    <button class="schedule-btn schedule-btn-secondary" onclick="resetSchedule()">🔄 重置</button>
-                    <button class="schedule-btn" onclick="exportToPDF()">导出 PDF</button>
+                    <button class="schedule-btn schedule-btn-secondary" onclick="resetTimeSlots()">⏰ 重置时间</button>
+                    <button class="schedule-btn" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;" onclick="openSmartScheduleModal()">🤖 智能排课</button>
+                    <button class="schedule-btn" onclick="exportScheduleToPDF()">导出 PDF</button>
                     <button class="schedule-btn schedule-btn-success" onclick="exportToExcel()">导出 Excel</button>
                     <button class="schedule-btn schedule-btn-secondary" onclick="clearAllCourses()">清空全部</button>
                 </div>
@@ -2588,8 +2857,19 @@
             <div class="schedule-modal-content">
                 <h2 id="modalTitle">添加课程</h2>
                 <div class="schedule-form-group">
-                    <label>课程名称</label>
+                    <label>选择学生</label>
+                    <select id="courseStudentSelect" style="width: 100%; padding: 10px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 14px;">
+                        <option value="">-- 请选择学生（可选）--</option>
+                    </select>
+                    <p style="font-size: 12px; color: #999; margin-top: 5px;">选择学生后自动填充学校信息</p>
+                </div>
+                <div class="schedule-form-group">
+                    <label>课程名称 <span style="color: red;">*</span></label>
                     <input type="text" id="courseName" placeholder="请输入课程名称">
+                </div>
+                <div class="schedule-form-group" id="studentNameDisplay" style="display: none;">
+                    <label>已选学生</label>
+                    <div id="courseStudentName" style="padding: 10px; background: #f5f5f7; border-radius: 8px; font-weight: 500; color: #333;"></div>
                 </div>
                 <div class="schedule-form-group">
                     <label>上课地点</label>
@@ -2644,6 +2924,92 @@
                 </div>
             </div>
         </div>
+        
+        <!-- 智能排课模态框 -->
+        <div class="schedule-modal" id="smartScheduleModal">
+            <div class="schedule-modal-content" style="max-width: 600px; max-height: 80vh; overflow-y: auto;">
+                <h2>🤖 智能排课</h2>
+                <p style="color: #666; font-size: 14px; margin-bottom: 20px;">根据学生信息和可用时间段，自动安排课程</p>
+                
+                <div class="schedule-form-group">
+                    <label>选择学生 <span style="color: red;">*</span></label>
+                    <select id="smartScheduleStudent" style="width: 100%; padding: 10px; border: 1px solid var(--border-color); border-radius: 8px;">
+                        <option value="">-- 请选择学生 --</option>
+                    </select>
+                    <p style="font-size: 12px; color: #999; margin-top: 5px;">从学生管理中选择，自动获取课时费信息</p>
+                </div>
+                
+                <div class="schedule-form-group">
+                    <label>课程名称 <span style="color: red;">*</span></label>
+                    <input type="text" id="smartScheduleCourseName" placeholder="例如：数学提高班" style="width: 100%; padding: 10px; border: 1px solid var(--border-color); border-radius: 8px;">
+                </div>
+                
+                <div class="schedule-form-group">
+                    <label>每周上课次数 <span style="color: red;">*</span></label>
+                    <select id="smartScheduleFrequency" style="width: 100%; padding: 10px; border: 1px solid var(--border-color); border-radius: 8px;">
+                        <option value="1">每周 1 次</option>
+                        <option value="2">每周 2 次</option>
+                        <option value="3">每周 3 次</option>
+                        <option value="4">每周 4 次</option>
+                        <option value="5">每周 5 次</option>
+                    </select>
+                </div>
+                
+                <div class="schedule-form-group">
+                    <label>优先安排星期</label>
+                    <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px;">
+                        <label style="display: flex; align-items: center; gap: 5px; cursor: pointer;">
+                            <input type="checkbox" class="smart-schedule-day" value="0" checked> 周一
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 5px; cursor: pointer;">
+                            <input type="checkbox" class="smart-schedule-day" value="1" checked> 周二
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 5px; cursor: pointer;">
+                            <input type="checkbox" class="smart-schedule-day" value="2" checked> 周三
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 5px; cursor: pointer;">
+                            <input type="checkbox" class="smart-schedule-day" value="3" checked> 周四
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 5px; cursor: pointer;">
+                            <input type="checkbox" class="smart-schedule-day" value="4" checked> 周五
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 5px; cursor: pointer;">
+                            <input type="checkbox" class="smart-schedule-day" value="5"> 周六
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 5px; cursor: pointer;">
+                            <input type="checkbox" class="smart-schedule-day" value="6"> 周日
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="schedule-form-group">
+                    <label>优先时间段</label>
+                    <select id="smartScheduleTimePreference" style="width: 100%; padding: 10px; border: 1px solid var(--border-color); border-radius: 8px;">
+                        <option value="any">任意时间</option>
+                        <option value="morning">上午 (8:00-12:00)</option>
+                        <option value="afternoon">下午 (14:00-17:00)</option>
+                        <option value="evening">晚上 (19:00-21:00)</option>
+                    </select>
+                </div>
+                
+                <div class="schedule-form-group">
+                    <label>选择颜色</label>
+                    <div class="schedule-color-picker" id="smartScheduleColorPicker">
+                    </div>
+                </div>
+                
+                <div id="smartSchedulePreview" style="background: #f5f5f7; border-radius: 12px; padding: 15px; margin: 15px 0; display: none;">
+                    <h4 style="margin: 0 0 10px 0; font-size: 14px; color: #333;">预览排课结果：</h4>
+                    <div id="smartSchedulePreviewContent" style="font-size: 13px; color: #666;"></div>
+                </div>
+                
+                <div class="schedule-modal-buttons">
+                    <button class="schedule-btn schedule-btn-secondary" onclick="closeSmartScheduleModal()">取消</button>
+                    <button class="schedule-btn" style="background: #667eea; color: white;" onclick="previewSmartSchedule()">预览</button>
+                    <button class="schedule-btn" onclick="applySmartSchedule()">应用排课</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- 收入记录 -->
@@ -2655,15 +3021,32 @@
             </button>
         </div>
         <main class="container mx-auto px-4 md:px-6 py-6 md:py-8">
-            <!-- 月份切换 -->
+            <!-- 顶部标题栏 -->
             <div class="flex items-center justify-between mb-6">
-                <button onclick="changeIncomeMonth(-1)" class="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors">
-                    <i class="fa fa-chevron-left text-gray-600"></i>
-                </button>
-                <h2 class="text-2xl font-bold text-gray-800" id="income-month-title">2025年01月</h2>
-                <button onclick="changeIncomeMonth(1)" class="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors">
-                    <i class="fa fa-chevron-right text-gray-600"></i>
-                </button>
+                <div class="flex items-center gap-4">
+                    <button onclick="changeIncomeMonth(-1)" class="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors">
+                        <i class="fa fa-chevron-left text-gray-600"></i>
+                    </button>
+                    <h2 class="text-2xl font-bold text-gray-800" id="income-month-title">2025年01月</h2>
+                    <button onclick="changeIncomeMonth(1)" class="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors">
+                        <i class="fa fa-chevron-right text-gray-600"></i>
+                    </button>
+                    <button onclick="goToCurrentMonth()" class="py-1.5 px-3 bg-blue-100 text-blue-600 rounded-lg hover:bg-blue-200 transition-colors text-sm font-medium flex items-center gap-1">
+                        <i class="fa fa-calendar-o"></i>本月
+                    </button>
+                </div>
+                <!-- 右侧操作按钮 -->
+                <div class="flex items-center gap-3">
+                    <button onclick="showIncomeSettings()" class="py-2 px-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors flex items-center gap-2 text-sm">
+                        <i class="fa fa-cog"></i>设置课时费
+                    </button>
+                    <button onclick="exportIncomeToExcel()" class="py-2 px-4 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors flex items-center gap-2 text-sm">
+                        <i class="fa fa-file-excel-o"></i>导出Excel
+                    </button>
+                    <button onclick="showYearlyStats()" class="py-2 px-4 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition-colors flex items-center gap-2 text-sm">
+                        <i class="fa fa-bar-chart"></i>年度统计
+                    </button>
+                </div>
             </div>
 
             <!-- 统计卡片 - 苹果风格 -->
@@ -2673,7 +3056,7 @@
                         <i class="fa fa-clock-o"></i>
                     </div>
                     <div class="income-stat-content">
-                        <div class="income-stat-label">总课时</div>
+                        <div class="income-stat-label">本月课时</div>
                         <div class="income-stat-value" id="income-total-hours">0h</div>
                     </div>
                 </div>
@@ -2700,8 +3083,26 @@
                         <i class="fa fa-yen"></i>
                     </div>
                     <div class="income-stat-content">
-                        <div class="income-stat-label">总收入</div>
+                        <div class="income-stat-label">本月总收入</div>
                         <div class="income-stat-value" id="income-grand-total">0元</div>
+                    </div>
+                </div>
+                <div class="income-stat-item">
+                    <div class="income-stat-icon purple">
+                        <i class="fa fa-calendar-check-o"></i>
+                    </div>
+                    <div class="income-stat-content">
+                        <div class="income-stat-label">工作天数</div>
+                        <div class="income-stat-value" id="income-work-days">0天</div>
+                    </div>
+                </div>
+                <div class="income-stat-item">
+                    <div class="income-stat-icon red">
+                        <i class="fa fa-line-chart"></i>
+                    </div>
+                    <div class="income-stat-content">
+                        <div class="income-stat-label">日均收入</div>
+                        <div class="income-stat-value" id="income-daily-avg">0元</div>
                     </div>
                 </div>
             </div>
@@ -2722,16 +3123,6 @@
                 <div class="income-calendar-grid" id="income-calendar-grid">
                     <!-- 动态生成 -->
                 </div>
-            </div>
-
-            <!-- 操作按钮 -->
-            <div class="flex gap-4 mt-6">
-                <button onclick="exportIncomeToExcel()" class="flex-1 py-3 px-4 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors flex items-center justify-center gap-2">
-                    <i class="fa fa-file-excel-o"></i>导出Excel
-                </button>
-                <button onclick="showIncomeSettings()" class="flex-1 py-3 px-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors flex items-center justify-center gap-2">
-                    <i class="fa fa-cog"></i>设置课时费
-                </button>
             </div>
         </main>
 
@@ -2783,6 +3174,108 @@
                     <div class="income-modal-actions">
                         <button onclick="closeIncomeModal()" class="income-btn-cancel">取消</button>
                         <button onclick="saveIncomeRecord()" class="income-btn-save">保存</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 年度统计模态框 -->
+        <div class="income-modal" id="yearly-stats-modal">
+            <div class="income-modal-content" style="max-width: 800px; max-height: 90vh; overflow-y: auto;">
+                <div class="income-modal-header">
+                    <div class="flex items-center gap-3">
+                        <button onclick="changeYearlyStatsYear(-1)" class="p-1.5 rounded-lg hover:bg-gray-100 transition-colors" title="上一年">
+                            <i class="fa fa-chevron-left text-gray-600"></i>
+                        </button>
+                        <h3 id="yearly-stats-title">2025年度统计</h3>
+                        <button onclick="changeYearlyStatsYear(1)" class="p-1.5 rounded-lg hover:bg-gray-100 transition-colors" title="下一年">
+                            <i class="fa fa-chevron-right text-gray-600"></i>
+                        </button>
+                        <button onclick="goToCurrentYearStats()" class="py-1 px-2 bg-blue-100 text-blue-600 rounded-lg hover:bg-blue-200 transition-colors text-xs font-medium flex items-center gap-1">
+                            <i class="fa fa-calendar-o"></i>今年
+                        </button>
+                    </div>
+                    <button onclick="closeYearlyStats()" class="income-modal-close">
+                        <i class="fa fa-times"></i>
+                    </button>
+                </div>
+                <div class="income-modal-body">
+                    <!-- 年度总览 -->
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                        <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-4 text-center">
+                            <div class="text-2xl font-bold text-blue-600" id="yearly-total-hours">0h</div>
+                            <div class="text-sm text-gray-600">年度总课时</div>
+                        </div>
+                        <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-4 text-center">
+                            <div class="text-2xl font-bold text-green-600" id="yearly-total-income">0元</div>
+                            <div class="text-sm text-gray-600">年度总收入</div>
+                        </div>
+                        <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl p-4 text-center">
+                            <div class="text-2xl font-bold text-purple-600" id="yearly-work-days">0天</div>
+                            <div class="text-sm text-gray-600">工作天数</div>
+                        </div>
+                        <div class="bg-gradient-to-br from-orange-50 to-orange-100 rounded-xl p-4 text-center">
+                            <div class="text-2xl font-bold text-orange-600" id="yearly-monthly-avg">0元</div>
+                            <div class="text-sm text-gray-600">月均收入</div>
+                        </div>
+                    </div>
+                    
+                    <!-- 月度收入柱状图 -->
+                    <div class="mb-6 bg-white rounded-xl p-4 border border-gray-200">
+                        <h4 class="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
+                            <i class="fa fa-bar-chart text-purple-500"></i>
+                            月度收入趋势图
+                        </h4>
+                        <div class="yearly-chart-container" id="yearly-income-chart">
+                            <!-- 动态生成柱状图 -->
+                        </div>
+                    </div>
+                    
+                    <!-- 月度课时柱状图 -->
+                    <div class="mb-6 bg-white rounded-xl p-4 border border-gray-200">
+                        <h4 class="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
+                            <i class="fa fa-clock-o text-blue-500"></i>
+                            月度课时趋势图
+                        </h4>
+                        <div class="yearly-chart-container" id="yearly-hours-chart">
+                            <!-- 动态生成柱状图 -->
+                        </div>
+                    </div>
+                    
+                    <!-- 月度明细表格 -->
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm">
+                            <thead>
+                                <tr class="bg-gray-50">
+                                    <th class="px-4 py-3 text-left font-semibold text-gray-700">月份</th>
+                                    <th class="px-4 py-3 text-center font-semibold text-gray-700">工作天数</th>
+                                    <th class="px-4 py-3 text-center font-semibold text-gray-700">总课时</th>
+                                    <th class="px-4 py-3 text-center font-semibold text-gray-700">课时收入</th>
+                                    <th class="px-4 py-3 text-center font-semibold text-gray-700">补贴其他</th>
+                                    <th class="px-4 py-3 text-right font-semibold text-gray-700">月收入</th>
+                                </tr>
+                            </thead>
+                            <tbody id="yearly-stats-tbody">
+                                <!-- 动态生成 -->
+                            </tbody>
+                            <tfoot class="bg-gray-50 font-semibold">
+                                <tr>
+                                    <td class="px-4 py-3">年度合计</td>
+                                    <td class="px-4 py-3 text-center" id="yearly-footer-days">0</td>
+                                    <td class="px-4 py-3 text-center" id="yearly-footer-hours">0h</td>
+                                    <td class="px-4 py-3 text-center" id="yearly-footer-amount">0元</td>
+                                    <td class="px-4 py-3 text-center" id="yearly-footer-bonus">0元</td>
+                                    <td class="px-4 py-3 text-right text-blue-600" id="yearly-footer-total">0元</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    
+                    <!-- 年度导出按钮 -->
+                    <div class="mt-6 flex justify-end">
+                        <button onclick="exportYearlyStatsToExcel()" class="py-2 px-4 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors flex items-center gap-2">
+                            <i class="fa fa-file-excel-o"></i>导出年度统计
+                        </button>
                     </div>
                 </div>
             </div>
@@ -2869,35 +3362,105 @@
                 </div>
             </div>
 
-            <!-- 操作栏 - 苹果风格 -->
-            <div class="flex flex-wrap gap-3 mb-6">
-                <button onclick="openStudentModal()" class="apple-btn apple-btn-primary">
-                    <i class="fa fa-plus"></i>添加学生
-                </button>
-                <button onclick="exportStudentsData()" class="apple-btn apple-btn-secondary">
-                    <i class="fa fa-download"></i>导出
-                </button>
-                <button onclick="importStudentsData()" class="apple-btn apple-btn-secondary">
-                    <i class="fa fa-upload"></i>导入
-                </button>
-                <input type="file" id="student-import-file" accept=".xlsx,.xls" style="display:none" onchange="handleStudentImport(event)">
+            <!-- 数据分析图表 -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                <!-- 年级分布图 -->
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
+                        <i class="fa fa-pie-chart text-blue-500"></i>
+                        年级分布
+                    </h3>
+                    <div id="student-grade-chart" class="h-48 flex items-end justify-around gap-2">
+                        <!-- 动态生成 -->
+                    </div>
+                </div>
+                <!-- 状态分布图 -->
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
+                        <i class="fa fa-bar-chart text-green-500"></i>
+                        学生状态分布
+                    </h3>
+                    <div id="student-status-chart" class="h-48 flex items-center justify-center">
+                        <!-- 动态生成 -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- 搜索和筛选栏 -->
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 mb-6">
+                <div class="flex flex-wrap gap-4 items-center">
+                    <!-- 搜索框 -->
+                    <div class="flex-1 min-w-[200px]">
+                        <div class="relative">
+                            <i class="fa fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                            <input type="text" id="student-search-input" placeholder="搜索学生姓名、学校..." 
+                                class="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-500"
+                                oninput="filterStudents()">
+                        </div>
+                    </div>
+                    <!-- 年级筛选 -->
+                    <select id="student-filter-grade" class="px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-500" onchange="filterStudents()">
+                        <option value="">全部年级</option>
+                        <option value="初一">初一</option>
+                        <option value="初二">初二</option>
+                        <option value="初三">初三</option>
+                        <option value="高一">高一</option>
+                        <option value="高二">高二</option>
+                        <option value="高三">高三</option>
+                        <option value="小学">小学</option>
+                        <option value="其他">其他</option>
+                    </select>
+                    <!-- 状态筛选 -->
+                    <select id="student-filter-status" class="px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-500" onchange="filterStudents()">
+                        <option value="">全部状态</option>
+                        <option value="active">在读</option>
+                        <option value="paused">暂停</option>
+                        <option value="graduated">结课</option>
+                    </select>
+                    <!-- 右侧操作按钮 -->
+                    <div class="flex gap-2 ml-auto">
+                        <button onclick="openStudentModal()" class="apple-btn apple-btn-primary">
+                            <i class="fa fa-plus"></i>添加
+                        </button>
+                        <button onclick="exportStudentsData()" class="apple-btn apple-btn-secondary">
+                            <i class="fa fa-download"></i>导出
+                        </button>
+                        <button onclick="importStudentsData()" class="apple-btn apple-btn-secondary">
+                            <i class="fa fa-upload"></i>导入
+                        </button>
+                        <input type="file" id="student-import-file" accept=".xlsx,.xls" style="display:none" onchange="handleStudentImport(event)">
+                    </div>
+                </div>
             </div>
 
             <!-- 学生列表 -->
             <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
-                <div class="p-6 border-b border-gray-100">
+                <div class="p-6 border-b border-gray-100 flex items-center justify-between">
                     <h2 class="text-xl font-bold text-gray-800">学生列表</h2>
+                    <span class="text-sm text-gray-500" id="student-list-count">共 0 名学生</span>
                 </div>
                 <div class="overflow-x-auto">
                     <table class="w-full">
                         <thead class="bg-gray-50">
                             <tr>
-                                <th class="px-6 py-4 text-left text-sm font-semibold text-gray-600">学生信息</th>
-                                <th class="px-6 py-4 text-left text-sm font-semibold text-gray-600">年级/学校</th>
-                                <th class="px-6 py-4 text-center text-sm font-semibold text-gray-600">课时情况</th>
-                                <th class="px-6 py-4 text-center text-sm font-semibold text-gray-600">课时费</th>
-                                <th class="px-6 py-4 text-center text-sm font-semibold text-gray-600">状态</th>
-                                <th class="px-6 py-4 text-center text-sm font-semibold text-gray-600">操作</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-gray-600 cursor-pointer hover:bg-gray-100" onclick="sortStudents('name')">
+                                    学生信息 <i class="fa fa-sort text-gray-400"></i>
+                                </th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold text-gray-600 cursor-pointer hover:bg-gray-100" onclick="sortStudents('grade')">
+                                    年级/学校 <i class="fa fa-sort text-gray-400"></i>
+                                </th>
+                                <th class="px-6 py-4 text-center text-sm font-semibold text-gray-600 cursor-pointer hover:bg-gray-100" onclick="sortStudents('hours')">
+                                    课时进度 <i class="fa fa-sort text-gray-400"></i>
+                                </th>
+                                <th class="px-6 py-4 text-center text-sm font-semibold text-gray-600">
+                                    课时费
+                                </th>
+                                <th class="px-6 py-4 text-center text-sm font-semibold text-gray-600">
+                                    状态
+                                </th>
+                                <th class="px-6 py-4 text-center text-sm font-semibold text-gray-600">
+                                    操作
+                                </th>
                             </tr>
                         </thead>
                         <tbody id="student-list-body" class="divide-y divide-gray-100">
@@ -3033,129 +3596,170 @@
             </button>
         </div>
         <main class="container mx-auto px-4 md:px-6 py-6 md:py-8">
-            <div class="max-w-4xl mx-auto">
-                <!-- 页面标题 -->
-                <div class="text-center mb-8">
-                    <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-2">课后反馈</h1>
-                    <p class="text-gray-600">记录每节课的教学情况，生成专业的课后反馈</p>
+            <!-- 页面标题 -->
+            <div class="text-center mb-8">
+                <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-2">课后反馈</h1>
+                <p class="text-gray-600">记录每节课的教学情况，生成专业的课后反馈</p>
+            </div>
+
+            <!-- 左右分布布局 -->
+            <div class="flex flex-col lg:flex-row gap-6">
+                <!-- 左侧：按钮和快捷操作 -->
+                <div class="lg:w-1/4 space-y-4">
+                    <!-- 操作按钮卡片 -->
+                    <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 sticky top-4">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                            <i class="fa fa-cogs text-blue-500"></i>
+                            操作
+                        </h3>
+                        
+                        <div class="space-y-3">
+                            <button type="button" onclick="saveFeedback()" class="w-full bg-blue-500 text-white py-3 px-4 rounded-lg font-medium hover:bg-blue-600 transition-colors flex items-center justify-center gap-2">
+                                <i class="fa fa-save"></i>
+                                <span>保存反馈</span>
+                            </button>
+                            
+                            <button type="button" onclick="previewFeedback()" class="w-full bg-gray-100 text-gray-700 py-3 px-4 rounded-lg font-medium hover:bg-gray-200 transition-colors flex items-center justify-center gap-2">
+                                <i class="fa fa-eye"></i>
+                                <span>预览反馈</span>
+                            </button>
+                            
+                            <button type="button" onclick="copyFeedback()" class="w-full bg-green-500 text-white py-3 px-4 rounded-lg font-medium hover:bg-green-600 transition-colors flex items-center justify-center gap-2">
+                                <i class="fa fa-copy"></i>
+                                <span>复制文本</span>
+                            </button>
+                            
+                            <div class="border-t border-gray-200 my-3"></div>
+                            
+                            <button type="button" onclick="exportFeedbackToWord()" class="w-full bg-indigo-500 text-white py-3 px-4 rounded-lg font-medium hover:bg-indigo-600 transition-colors flex items-center justify-center gap-2">
+                                <i class="fa fa-file-word-o"></i>
+                                <span>导出Word</span>
+                            </button>
+                            
+                            <button type="button" onclick="exportFeedbackToExcel()" class="w-full bg-emerald-500 text-white py-3 px-4 rounded-lg font-medium hover:bg-emerald-600 transition-colors flex items-center justify-center gap-2">
+                                <i class="fa fa-file-excel-o"></i>
+                                <span>导出Excel</span>
+                            </button>
+                            
+                            <button type="button" onclick="exportAllFeedbackToExcel()" class="w-full bg-orange-500 text-white py-3 px-4 rounded-lg font-medium hover:bg-orange-600 transition-colors flex items-center justify-center gap-2">
+                                <i class="fa fa-download"></i>
+                                <span>导出全部</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 快捷模板 -->
+                    <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                            <i class="fa fa-magic text-purple-500"></i>
+                            快捷模板
+                        </h3>
+                        <div class="space-y-2">
+                            <button onclick="insertTemplate('content', '本次课程主要讲解了')" class="w-full text-left px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 rounded-lg transition-colors">
+                                📚 教学内容模板
+                            </button>
+                            <button onclick="insertTemplate('understanding', '学生掌握情况良好')" class="w-full text-left px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 rounded-lg transition-colors">
+                                ✨ 掌握情况模板
+                            </button>
+                            <button onclick="insertTemplate('comment', '整体表现优秀')" class="w-full text-left px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 rounded-lg transition-colors">
+                                📝 评语模板
+                            </button>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- 反馈表单 -->
-                <div class="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-gray-100 mb-6">
-                    <h2 class="text-xl font-semibold text-gray-900 mb-6 flex items-center gap-2">
-                        <i class="fa fa-edit text-blue-500"></i>
-                        填写反馈
-                    </h2>
-                    
-                    <form id="feedbackForm" class="space-y-6">
-                        <!-- 基本信息 -->
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">学生姓名</label>
-                                <input type="text" id="feedbackStudentName" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-500" placeholder="请输入学生姓名">
+                <!-- 右侧：输入表单 -->
+                <div class="lg:w-3/4">
+                    <div class="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-gray-100">
+                        <h2 class="text-xl font-semibold text-gray-900 mb-6 flex items-center gap-2">
+                            <i class="fa fa-edit text-blue-500"></i>
+                            填写反馈
+                        </h2>
+                        
+                        <form id="feedbackForm" class="space-y-6">
+                            <!-- 基本信息 -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">学生姓名 <span class="text-red-500">*</span></label>
+                                    <input type="text" id="feedbackStudentName" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-500" placeholder="请输入学生姓名">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">课程日期 <span class="text-red-500">*</span></label>
+                                    <input type="date" id="feedbackDate" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-500">
+                                </div>
                             </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">课程日期</label>
-                                <input type="date" id="feedbackDate" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-500">
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">科目 <span class="text-red-500">*</span></label>
+                                    <select id="feedbackSubject" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-500">
+                                        <option value="">请选择科目</option>
+                                        <option value="数学">数学</option>
+                                        <option value="语文">语文</option>
+                                        <option value="英语">英语</option>
+                                        <option value="物理">物理</option>
+                                        <option value="化学">化学</option>
+                                        <option value="生物">生物</option>
+                                        <option value="其他">其他</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">课时 <span class="text-red-500">*</span></label>
+                                    <input type="number" id="feedbackDuration" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-500" placeholder="课时（小时）" step="0.5" min="0.5">
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <!-- 教学内容 -->
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">科目</label>
-                                <select id="feedbackSubject" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-500">
-                                    <option value="">请选择科目</option>
-                                    <option value="数学">数学</option>
-                                    <option value="语文">语文</option>
-                                    <option value="英语">英语</option>
-                                    <option value="物理">物理</option>
-                                    <option value="化学">化学</option>
-                                    <option value="生物">生物</option>
-                                    <option value="其他">其他</option>
-                                </select>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">本次教学内容 <span class="text-red-500">*</span></label>
+                                <textarea id="feedbackContent" rows="3" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 resize-none" placeholder="请描述本次课教授的主要内容..."></textarea>
                             </div>
+
+                            <!-- 学生掌握情况 -->
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-2">课时</label>
-                                <input type="number" id="feedbackDuration" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-500" placeholder="课时（小时）" step="0.5" min="0.5">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">学生掌握情况 <span class="text-red-500">*</span></label>
+                                <textarea id="feedbackUnderstanding" rows="3" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 resize-none" placeholder="请描述学生对知识点的掌握情况..."></textarea>
                             </div>
-                        </div>
 
-                        <!-- 教学内容 -->
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">本次教学内容</label>
-                            <textarea id="feedbackContent" rows="3" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 resize-none" placeholder="请描述本次课教授的主要内容..."></textarea>
-                        </div>
+                            <!-- 存在问题 -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">存在问题</label>
+                                <textarea id="feedbackIssues" rows="2" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 resize-none" placeholder="请描述学生在学习中存在的问题（可选）..."></textarea>
+                            </div>
 
-                        <!-- 学生掌握情况 -->
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">学生掌握情况</label>
-                            <textarea id="feedbackUnderstanding" rows="3" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 resize-none" placeholder="请描述学生对知识点的掌握情况..."></textarea>
-                        </div>
+                            <!-- 课后作业 -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">课后作业</label>
+                                <textarea id="feedbackHomework" rows="2" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 resize-none" placeholder="请布置课后作业（可选）..."></textarea>
+                            </div>
 
-                        <!-- 存在问题 -->
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">存在问题</label>
-                            <textarea id="feedbackIssues" rows="2" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 resize-none" placeholder="请描述学生在学习中存在的问题（可选）..."></textarea>
-                        </div>
+                            <!-- 下节课计划 -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">下节课计划</label>
+                                <textarea id="feedbackNextPlan" rows="2" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 resize-none" placeholder="请描述下节课的教学计划（可选）..."></textarea>
+                            </div>
 
-                        <!-- 课后作业 -->
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">课后作业</label>
-                            <textarea id="feedbackHomework" rows="2" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 resize-none" placeholder="请布置课后作业（可选）..."></textarea>
-                        </div>
-
-                        <!-- 下节课计划 -->
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">下节课计划</label>
-                            <textarea id="feedbackNextPlan" rows="2" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 resize-none" placeholder="请描述下节课的教学计划（可选）..."></textarea>
-                        </div>
-
-                        <!-- 老师评语 -->
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-2">老师评语</label>
-                            <textarea id="feedbackComment" rows="3" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 resize-none" placeholder="请给出综合评语..."></textarea>
-                        </div>
-
-                        <!-- 按钮 -->
-                        <div class="flex gap-4 pt-4">
-                            <button type="button" onclick="saveFeedback()" class="flex-1 bg-blue-500 text-white py-3 rounded-lg font-medium hover:bg-blue-600 transition-colors">
-                                <i class="fa fa-save mr-2"></i>保存反馈
-                            </button>
-                            <button type="button" onclick="previewFeedback()" class="flex-1 bg-gray-100 text-gray-700 py-3 rounded-lg font-medium hover:bg-gray-200 transition-colors">
-                                <i class="fa fa-eye mr-2"></i>预览
-                            </button>
-                            <button type="button" onclick="copyFeedback()" class="flex-1 bg-green-500 text-white py-3 rounded-lg font-medium hover:bg-green-600 transition-colors">
-                                <i class="fa fa-copy mr-2"></i>复制文本
-                            </button>
-                        </div>
-
-                        <!-- 导出按钮 -->
-                        <div class="flex gap-4 pt-2">
-                            <button type="button" onclick="exportFeedbackToWord()" class="flex-1 bg-indigo-500 text-white py-3 rounded-lg font-medium hover:bg-indigo-600 transition-colors">
-                                <i class="fa fa-file-word-o mr-2"></i>导出Word
-                            </button>
-                            <button type="button" onclick="exportFeedbackToExcel()" class="flex-1 bg-emerald-500 text-white py-3 rounded-lg font-medium hover:bg-emerald-600 transition-colors">
-                                <i class="fa fa-file-excel-o mr-2"></i>导出Excel
-                            </button>
-                            <button type="button" onclick="exportAllFeedbackToExcel()" class="flex-1 bg-orange-500 text-white py-3 rounded-lg font-medium hover:bg-orange-600 transition-colors">
-                                <i class="fa fa-download mr-2"></i>导出全部
-                            </button>
-                        </div>
-                    </form>
+                            <!-- 老师评语 -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">老师评语 <span class="text-red-500">*</span></label>
+                                <textarea id="feedbackComment" rows="3" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 resize-none" placeholder="请给出综合评语..."></textarea>
+                            </div>
+                        </form>
+                    </div>
                 </div>
+            </div>
 
-                <!-- 历史反馈列表 -->
-                <div class="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-gray-100">
-                    <h2 class="text-xl font-semibold text-gray-900 mb-6 flex items-center gap-2">
-                        <i class="fa fa-history text-blue-500"></i>
-                        历史反馈
-                    </h2>
-                    <div id="feedbackHistoryList" class="space-y-4">
-                        <!-- 动态生成 -->
-                        <div class="text-center text-gray-500 py-8">
-                            <i class="fa fa-inbox text-4xl mb-2"></i>
-                            <p>暂无反馈记录</p>
-                        </div>
+            <!-- 历史反馈列表 -->
+            <div class="mt-8 bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-gray-100">
+                <h2 class="text-xl font-semibold text-gray-900 mb-6 flex items-center gap-2">
+                    <i class="fa fa-history text-blue-500"></i>
+                    历史反馈
+                </h2>
+                <div id="feedbackHistoryList" class="space-y-4">
+                    <!-- 动态生成 -->
+                    <div class="text-center text-gray-500 py-8">
+                        <i class="fa fa-inbox text-4xl mb-2"></i>
+                        <p>暂无反馈记录</p>
                     </div>
                 </div>
             </div>
@@ -3690,6 +4294,18 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+
+                    <!-- 辅助功能 -->
+                    <div class="mb-4 p-3 bg-purple-50 rounded-md">
+                        <h3 class="text-sm font-medium text-purple-700 mb-2">辅助功能</h3>
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs text-purple-600">关键点提示</span>
+                            <button id="geometry-snap-toggle" class="relative inline-flex h-6 w-11 items-center rounded-full bg-gray-200 transition-colors focus:outline-none">
+                                <span id="geometry-snap-indicator" class="inline-block h-4 w-4 transform rounded-full bg-white transition-transform translate-x-1"></span>
+                            </button>
+                        </div>
+                        <p class="text-xs text-purple-500 mt-1">开启后，鼠标靠近圆心、端点等关键点时会自动吸附提示</p>
                     </div>
 
                     <!-- 操作按钮 -->
@@ -4255,6 +4871,493 @@
             setInterval(() => {
                 initWeather();
             }, 3600000); // 每小时刷新一次
+        }
+
+        // ========== 拖拽功能 ==========
+        function initDraggableWidgets() {
+            // 延迟初始化，确保DOM完全加载
+            setTimeout(() => {
+                makeDraggable('weatherWidget');
+                makeDraggable('countdownWidget');
+            }, 100);
+        }
+
+        function makeDraggable(elementId) {
+            const element = document.getElementById(elementId);
+            if (!element) {
+                console.log(`元素 ${elementId} 未找到`);
+                return;
+            }
+
+            const handle = element.querySelector('.drag-handle') || element;
+            let isDragging = false;
+            let startX, startY;
+            let initialLeft, initialTop;
+
+            // 从本地存储读取位置
+            const savedPosition = localStorage.getItem(`${elementId}Position`);
+            if (savedPosition) {
+                try {
+                    const pos = JSON.parse(savedPosition);
+                    if (pos.left !== undefined && pos.top !== undefined) {
+                        element.style.left = pos.left + 'px';
+                        element.style.top = pos.top + 'px';
+                        element.style.right = 'auto';
+                    }
+                } catch (e) {
+                    console.log('读取位置失败:', e);
+                }
+            }
+
+            // 鼠标事件
+            handle.addEventListener('mousedown', startDrag);
+            // 触摸事件
+            handle.addEventListener('touchstart', startDrag, { passive: false });
+
+            function startDrag(e) {
+                // 如果点击的是按钮，不触发拖拽
+                if (e.target.tagName === 'BUTTON' || e.target.closest('button')) {
+                    return;
+                }
+
+                e.preventDefault();
+                e.stopPropagation();
+
+                isDragging = true;
+
+                // 获取当前位置
+                const rect = element.getBoundingClientRect();
+                initialLeft = rect.left;
+                initialTop = rect.top;
+
+                // 设置初始位置
+                element.style.left = initialLeft + 'px';
+                element.style.top = initialTop + 'px';
+                element.style.right = 'auto';
+
+                // 获取起始坐标
+                if (e.type === 'touchstart') {
+                    startX = e.touches[0].clientX;
+                    startY = e.touches[0].clientY;
+                } else {
+                    startX = e.clientX;
+                    startY = e.clientY;
+                }
+
+                // 提升层级
+                element.style.zIndex = '1000';
+                handle.style.cursor = 'grabbing';
+
+                // 添加全局事件监听
+                document.addEventListener('mousemove', doDrag);
+                document.addEventListener('touchmove', doDrag, { passive: false });
+                document.addEventListener('mouseup', stopDrag);
+                document.addEventListener('touchend', stopDrag);
+            }
+
+            function doDrag(e) {
+                if (!isDragging) return;
+
+                e.preventDefault();
+
+                let clientX, clientY;
+                if (e.type === 'touchmove') {
+                    clientX = e.touches[0].clientX;
+                    clientY = e.touches[0].clientY;
+                } else {
+                    clientX = e.clientX;
+                    clientY = e.clientY;
+                }
+
+                const dx = clientX - startX;
+                const dy = clientY - startY;
+
+                const newLeft = initialLeft + dx;
+                const newTop = initialTop + dy;
+
+                // 边界检查
+                const maxX = window.innerWidth - element.offsetWidth;
+                const maxY = window.innerHeight - element.offsetHeight;
+
+                element.style.left = Math.max(0, Math.min(newLeft, maxX)) + 'px';
+                element.style.top = Math.max(0, Math.min(newTop, maxY)) + 'px';
+            }
+
+            function stopDrag(e) {
+                if (!isDragging) return;
+
+                isDragging = false;
+                handle.style.cursor = 'grab';
+                element.style.zIndex = '100';
+
+                // 保存位置
+                const rect = element.getBoundingClientRect();
+                localStorage.setItem(`${elementId}Position`, JSON.stringify({
+                    left: rect.left,
+                    top: rect.top
+                }));
+
+                // 移除全局事件监听
+                document.removeEventListener('mousemove', doDrag);
+                document.removeEventListener('touchmove', doDrag);
+                document.removeEventListener('mouseup', stopDrag);
+                document.removeEventListener('touchend', stopDrag);
+            }
+        }
+
+        // ========== 倒数日功能 ==========
+        const COUNTDOWN_STORAGE_KEY = 'teacherToolsCountdowns';
+
+        function initCountdown() {
+            renderCountdownList();
+        }
+
+        function getCountdowns() {
+            const saved = localStorage.getItem(COUNTDOWN_STORAGE_KEY);
+            return saved ? JSON.parse(saved) : [];
+        }
+
+        function saveCountdowns(countdowns) {
+            localStorage.setItem(COUNTDOWN_STORAGE_KEY, JSON.stringify(countdowns));
+        }
+
+        function renderCountdownList() {
+            const listEl = document.getElementById('countdownList');
+            if (!listEl) return;
+
+            const countdowns = getCountdowns();
+
+            if (countdowns.length === 0) {
+                listEl.innerHTML = `
+                    <div class="text-center text-xs text-gray-400 py-2">
+                        点击 + 添加倒数日
+                    </div>
+                `;
+                return;
+            }
+
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            // 按日期排序
+            const sortedCountdowns = countdowns.map(item => {
+                let targetDate = new Date(item.date);
+                targetDate.setHours(0, 0, 0, 0);
+
+                // 如果是重复事件且日期已过，计算下一个日期
+                if (item.repeat && targetDate < today) {
+                    while (targetDate < today) {
+                        targetDate.setFullYear(targetDate.getFullYear() + 1);
+                    }
+                }
+
+                const diffTime = targetDate - today;
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+                return { ...item, diffDays, targetDate };
+            }).sort((a, b) => a.diffDays - b.diffDays);
+
+            listEl.innerHTML = sortedCountdowns.map(item => {
+                const isToday = item.diffDays === 0;
+                const isPast = item.diffDays < 0;
+                const daysText = isToday ? '今天' : isPast ? `已过 ${Math.abs(item.diffDays)} 天` : `还有 ${item.diffDays} 天`;
+                const bgColor = isToday ? 'bg-pink-100 text-pink-700' : isPast ? 'bg-gray-100 text-gray-500' : 'bg-blue-50 text-blue-700';
+
+                return `
+                    <div class="flex items-center justify-between p-2 rounded-lg ${bgColor} cursor-pointer hover:opacity-80 transition-opacity" onclick="event.stopPropagation(); editCountdown('${item.id}')">
+                        <div class="flex-1 min-w-0">
+                            <div class="text-xs font-medium truncate">${escapeHTML(item.title)}</div>
+                            <div class="text-[10px] opacity-75">${formatDate(item.date)}</div>
+                        </div>
+                        <div class="text-xs font-bold ml-2 whitespace-nowrap">${daysText}</div>
+                        <button onclick="event.stopPropagation(); deleteCountdown('${item.id}')" class="ml-2 text-gray-400 hover:text-red-500 transition-colors">
+                            <i class="fa fa-times text-xs"></i>
+                        </button>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function showCountdownModal(id = null) {
+            const modal = document.getElementById('countdownModal');
+            const titleEl = document.getElementById('countdownModalTitle');
+            const idEl = document.getElementById('countdownId');
+            const titleInput = document.getElementById('countdownTitle');
+            const dateInput = document.getElementById('countdownDate');
+            const repeatInput = document.getElementById('countdownRepeat');
+
+            if (!modal) return;
+
+            if (id) {
+                const countdowns = getCountdowns();
+                const item = countdowns.find(c => c.id === id);
+                if (item) {
+                    titleEl.textContent = '编辑倒数日';
+                    idEl.value = id;
+                    titleInput.value = item.title;
+                    dateInput.value = item.date;
+                    repeatInput.checked = item.repeat || false;
+                }
+            } else {
+                titleEl.textContent = '添加倒数日';
+                idEl.value = '';
+                titleInput.value = '';
+                dateInput.value = '';
+                repeatInput.checked = false;
+            }
+
+            modal.classList.remove('hidden');
+        }
+
+        function closeCountdownModal() {
+            const modal = document.getElementById('countdownModal');
+            if (modal) modal.classList.add('hidden');
+        }
+
+        function saveCountdown() {
+            const idEl = document.getElementById('countdownId');
+            const titleInput = document.getElementById('countdownTitle');
+            const dateInput = document.getElementById('countdownDate');
+            const repeatInput = document.getElementById('countdownRepeat');
+
+            const title = titleInput.value.trim();
+            const date = dateInput.value;
+            const repeat = repeatInput.checked;
+
+            if (!title || !date) {
+                showNotification('请填写完整信息', 'warning');
+                return;
+            }
+
+            const countdowns = getCountdowns();
+
+            if (idEl.value) {
+                // 编辑
+                const index = countdowns.findIndex(c => c.id === idEl.value);
+                if (index !== -1) {
+                    countdowns[index] = {
+                        ...countdowns[index],
+                        title,
+                        date,
+                        repeat
+                    };
+                    showNotification('倒数日已更新', 'success');
+                }
+            } else {
+                // 添加
+                countdowns.push({
+                    id: Date.now().toString(),
+                    title,
+                    date,
+                    repeat,
+                    createdAt: new Date().toISOString()
+                });
+                showNotification('倒数日已添加', 'success');
+            }
+
+            saveCountdowns(countdowns);
+            renderCountdownList();
+            closeCountdownModal();
+        }
+
+        function editCountdown(id) {
+            showCountdownModal(id);
+        }
+
+        function deleteCountdown(id) {
+            if (!confirm('确定要删除这个倒数日吗？')) return;
+
+            const countdowns = getCountdowns();
+            const filtered = countdowns.filter(c => c.id !== id);
+            saveCountdowns(filtered);
+            renderCountdownList();
+            showNotification('倒数日已删除', 'success');
+        }
+
+        function formatDate(dateStr) {
+            const date = new Date(dateStr);
+            return `${date.getMonth() + 1}月${date.getDate()}日`;
+        }
+
+        // 每天自动刷新倒数日显示
+        function startCountdownAutoRefresh() {
+            setInterval(() => {
+                renderCountdownList();
+            }, 60000); // 每分钟刷新一次
+        }
+
+        // ========== 数据备份与恢复 ==========
+        
+        // 导出所有数据
+        // 存储键名定义（避免依赖后面定义的常量）
+        const BACKUP_KEYS = {
+            INCOME: 'teacherIncomeData',
+            STUDENTS: 'teacherStudentsData',
+            FEEDBACK: 'teacherFeedbackData',
+            COUNTDOWN: 'teacherToolsCountdowns',
+            SCHEDULE: 'scheduleData',
+            SCHEDULE_SLOTS: 'scheduleTimeSlots'
+        };
+
+        function exportAllData() {
+            try {
+                const allData = {
+                    exportDate: new Date().toISOString(),
+                    version: '1.0',
+                    data: {
+                        // 收入记录数据
+                        income: {
+                            data: incomeData || {},
+                            defaultRate: typeof incomeDefaultRate !== 'undefined' ? incomeDefaultRate : 200,
+                            currentDate: typeof incomeCurrentDate !== 'undefined' && incomeCurrentDate ? incomeCurrentDate.toISOString() : new Date().toISOString()
+                        },
+                        // 学生管理数据
+                        students: studentsData || [],
+                        // 课表数据
+                        schedule: scheduleData || {},
+                        scheduleTimeSlots: scheduleTimeSlots || [],
+                        // 课后反馈数据
+                        feedback: feedbackData || [],
+                        // 倒数日数据
+                        countdown: localStorage.getItem(BACKUP_KEYS.COUNTDOWN),
+                        // 番茄时钟数据
+                        tomato: localStorage.getItem(CONFIG.STORAGE_KEYS.TOMATO),
+                        // 主题设置
+                        theme: localStorage.getItem(CONFIG.STORAGE_KEYS.THEME),
+                        // 答题卡设置
+                        answerSheet: localStorage.getItem(CONFIG.STORAGE_KEYS.ANSWER_SHEET),
+                        // 天气和倒数日位置
+                        weatherPosition: localStorage.getItem('weatherWidgetPosition'),
+                        countdownPosition: localStorage.getItem('countdownWidgetPosition')
+                    }
+                };
+                
+                // 转换为JSON字符串
+                const jsonStr = JSON.stringify(allData, null, 2);
+                
+                // 创建下载链接
+                const blob = new Blob([jsonStr], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `教学工具数据备份_${new Date().toLocaleDateString().replace(/\//g, '-')}.json`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                
+                showNotification('数据备份成功！请妥善保存备份文件', 'success');
+            } catch (error) {
+                console.error('数据备份失败:', error);
+                showNotification('数据备份失败：' + error.message, 'error');
+            }
+        }
+        
+        // 导入所有数据
+        function importAllData(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            // 确认对话框
+            if (!confirm('警告：导入数据将覆盖当前所有数据！\n\n请确保已备份当前数据，或确认要导入的数据是正确的。\n\n是否继续？')) {
+                event.target.value = '';
+                return;
+            }
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const backup = JSON.parse(e.target.result);
+                    
+                    // 验证备份文件格式
+                    if (!backup.data || !backup.version) {
+                        throw new Error('无效的备份文件格式');
+                    }
+                    
+                    // 恢复收入记录数据
+                    if (backup.data.income) {
+                        incomeData = backup.data.income.data || {};
+                        incomeDefaultRate = backup.data.income.defaultRate || 200;
+                        if (backup.data.income.currentDate) {
+                            incomeCurrentDate = new Date(backup.data.income.currentDate);
+                        }
+                        localStorage.setItem(BACKUP_KEYS.INCOME, JSON.stringify(incomeData));
+                    }
+                    
+                    // 恢复学生管理数据
+                    if (backup.data.students) {
+                        studentsData = backup.data.students;
+                        localStorage.setItem(BACKUP_KEYS.STUDENTS, JSON.stringify(studentsData));
+                    }
+                    
+                    // 恢复课表数据
+                    if (backup.data.schedule) {
+                        scheduleData = backup.data.schedule;
+                        localStorage.setItem(BACKUP_KEYS.SCHEDULE, JSON.stringify(scheduleData));
+                    }
+                    if (backup.data.scheduleTimeSlots) {
+                        scheduleTimeSlots = backup.data.scheduleTimeSlots;
+                        localStorage.setItem(BACKUP_KEYS.SCHEDULE_SLOTS, JSON.stringify(scheduleTimeSlots));
+                    }
+                    
+                    // 恢复课后反馈数据
+                    if (backup.data.feedback) {
+                        feedbackData = backup.data.feedback;
+                        localStorage.setItem(BACKUP_KEYS.FEEDBACK, JSON.stringify(feedbackData));
+                    }
+                    
+                    // 恢复倒数日数据
+                    if (backup.data.countdown) {
+                        localStorage.setItem(BACKUP_KEYS.COUNTDOWN, backup.data.countdown);
+                    }
+                    
+                    // 恢复番茄时钟数据
+                    if (backup.data.tomato) {
+                        localStorage.setItem(CONFIG.STORAGE_KEYS.TOMATO, backup.data.tomato);
+                    }
+                    
+                    // 恢复主题设置
+                    if (backup.data.theme) {
+                        localStorage.setItem(CONFIG.STORAGE_KEYS.THEME, backup.data.theme);
+                        applyTheme(backup.data.theme);
+                    }
+                    
+                    // 恢复答题卡设置
+                    if (backup.data.answerSheet) {
+                        localStorage.setItem(CONFIG.STORAGE_KEYS.ANSWER_SHEET, backup.data.answerSheet);
+                    }
+                    
+                    // 恢复位置设置
+                    if (backup.data.weatherPosition) {
+                        localStorage.setItem('weatherWidgetPosition', backup.data.weatherPosition);
+                    }
+                    if (backup.data.countdownPosition) {
+                        localStorage.setItem('countdownWidgetPosition', backup.data.countdownPosition);
+                    }
+                    
+                    // 刷新所有界面
+                    renderIncomeCalendar();
+                    updateIncomeStats();
+                    renderStudentList();
+                    updateStudentStats();
+                    updateStudentCharts();
+                    initSchedule();
+                    initCountdown();
+                    
+                    showNotification('数据恢复成功！', 'success');
+                    
+                } catch (error) {
+                    console.error('数据恢复失败:', error);
+                    showNotification('数据恢复失败：' + error.message, 'error');
+                }
+            };
+            reader.onerror = function() {
+                showNotification('文件读取失败', 'error');
+            };
+            reader.readAsText(file);
+            
+            // 清空文件输入
+            event.target.value = '';
         }
 
         // ========== 主题系统 ==========
@@ -5068,9 +6171,7 @@
         ];
         let scheduleData = {};
         let scheduleTimeSlots = [
-            '08:00-08:45', '08:55-09:40', '10:00-10:45', '10:55-11:40',
-            '14:00-14:45', '14:55-15:40', '16:00-16:45', '16:55-17:40',
-            '19:00-19:45', '19:55-20:40'
+            '08:00-10:00', '10:00-12:00', '12:00-14:00', '14:00-16:00', '16:00-18:00', '18:00-20:00', '20:00-22:00'
         ];
         let scheduleCurrentCell = null;
         let scheduleCurrentCourseId = null;
@@ -5143,6 +6244,20 @@
             return scheduleData[weekKey];
         }
 
+        // 生成时间选项（每30分钟一个）
+        function generateTimeOptions(selectedTime = '') {
+            let options = '';
+            for (let hour = 6; hour <= 22; hour++) {
+                for (let minute = 0; minute < 60; minute += 30) {
+                    if (hour === 22 && minute > 0) continue;
+                    const timeStr = `${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}`;
+                    const selected = timeStr === selectedTime ? 'selected' : '';
+                    options += `<option value="${timeStr}" ${selected}>${timeStr}</option>`;
+                }
+            }
+            return options;
+        }
+
         function renderScheduleTable() {
             const tbody = document.getElementById('scheduleBody');
             if (!tbody) return;
@@ -5152,13 +6267,36 @@
                 const tr = document.createElement('tr');
                 const timeTd = document.createElement('td');
                 timeTd.className = 'schedule-time-column';
-                const timeInput = document.createElement('input');
-                timeInput.type = 'text';
-                timeInput.className = 'schedule-time-input';
-                timeInput.value = time;
-                timeInput.dataset.index = timeIndex;
-                timeInput.onchange = (e) => updateScheduleTimeSlot(timeIndex, e.target.value);
-                timeTd.appendChild(timeInput);
+                
+                // 解析当前时间
+                const [startTime, endTime] = time.split('-');
+                
+                // 创建时间选择容器
+                const timeContainer = document.createElement('div');
+                timeContainer.className = 'schedule-time-container';
+                timeContainer.style.display = 'flex';
+                timeContainer.style.flexDirection = 'column';
+                timeContainer.style.gap = '4px';
+                
+                // 开始时间选择
+                const startSelect = document.createElement('select');
+                startSelect.className = 'schedule-time-select schedule-time-start';
+                startSelect.innerHTML = '<option value="">开始</option>' + generateTimeOptions(startTime);
+                startSelect.dataset.index = timeIndex;
+                startSelect.dataset.type = 'start';
+                startSelect.onchange = (e) => updateScheduleTimeSlotRange(timeIndex, 'start', e.target.value);
+                
+                // 结束时间选择
+                const endSelect = document.createElement('select');
+                endSelect.className = 'schedule-time-select schedule-time-end';
+                endSelect.innerHTML = '<option value="">结束</option>' + generateTimeOptions(endTime);
+                endSelect.dataset.index = timeIndex;
+                endSelect.dataset.type = 'end';
+                endSelect.onchange = (e) => updateScheduleTimeSlotRange(timeIndex, 'end', e.target.value);
+                
+                timeContainer.appendChild(startSelect);
+                timeContainer.appendChild(endSelect);
+                timeTd.appendChild(timeContainer);
                 tr.appendChild(timeTd);
                 scheduleDays.forEach((day, dayIndex) => {
                     const td = document.createElement('td');
@@ -5175,8 +6313,10 @@
                             e.stopPropagation();
                             openScheduleModal(dayIndex, timeIndex, courseId);
                         };
+                        const studentName = course.studentName ? `<div class="schedule-course-student">${course.studentName}</div>` : '';
                         courseCard.innerHTML = `
                             <div class="schedule-course-name">${course.name}</div>
+                            ${studentName}
                             <div class="schedule-course-location">${course.location}</div>
                         `;
                         td.appendChild(courseCard);
@@ -5190,6 +6330,65 @@
         function updateScheduleTimeSlot(index, value) {
             scheduleTimeSlots[index] = value;
             saveScheduleData();
+        }
+
+        // 更新时间段范围（开始时间或结束时间）
+        function updateScheduleTimeSlotRange(index, type, value) {
+            if (!value) return;
+            
+            const currentTime = scheduleTimeSlots[index];
+            const [startTime, endTime] = currentTime.split('-');
+            
+            let newStartTime = startTime;
+            let newEndTime = endTime;
+            
+            if (type === 'start') {
+                newStartTime = value;
+                // 如果新的开始时间晚于结束时间，自动调整结束时间
+                if (value >= endTime) {
+                    // 找到下一个可用的时间点
+                    const nextTime = getNextTimeSlot(value);
+                    newEndTime = nextTime;
+                }
+            } else {
+                newEndTime = value;
+                // 如果新的结束时间早于开始时间，自动调整开始时间
+                if (value <= startTime) {
+                    const prevTime = getPrevTimeSlot(value);
+                    newStartTime = prevTime;
+                }
+            }
+            
+            scheduleTimeSlots[index] = `${newStartTime}-${newEndTime}`;
+            saveScheduleData();
+            renderScheduleTable();
+            showNotification('时间段已更新', 'success');
+        }
+
+        // 获取下一个时间点（30分钟后）
+        function getNextTimeSlot(time) {
+            const [hour, minute] = time.split(':').map(Number);
+            let newHour = hour;
+            let newMinute = minute + 30;
+            if (newMinute >= 60) {
+                newHour++;
+                newMinute = 0;
+            }
+            if (newHour > 22) newHour = 22;
+            return `${String(newHour).padStart(2, '0')}:${String(newMinute).padStart(2, '0')}`;
+        }
+
+        // 获取上一个时间点（30分钟前）
+        function getPrevTimeSlot(time) {
+            const [hour, minute] = time.split(':').map(Number);
+            let newHour = hour;
+            let newMinute = minute - 30;
+            if (newMinute < 0) {
+                newHour--;
+                newMinute = 30;
+            }
+            if (newHour < 6) newHour = 6;
+            return `${String(newHour).padStart(2, '0')}:${String(newMinute).padStart(2, '0')}`;
         }
 
         function renderScheduleColorPicker() {
@@ -5217,6 +6416,13 @@
             const currentSchedule = getCurrentWeekSchedule();
             const modalTitle = document.getElementById('modalTitle');
             const deleteButtonContainer = document.getElementById('deleteButtonContainer');
+            const studentNameDisplay = document.getElementById('studentNameDisplay');
+            const courseStudentName = document.getElementById('courseStudentName');
+            const studentSelect = document.getElementById('courseStudentSelect');
+            
+            // 加载学生列表
+            loadStudentSelectForCourse(studentSelect, courseId ? currentSchedule[courseId]?.studentName : null);
+            
             if (courseId && currentSchedule[courseId]) {
                 const course = currentSchedule[courseId];
                 modalTitle.textContent = '编辑课程';
@@ -5225,6 +6431,15 @@
                 document.getElementById('courseTeacher').value = course.teacher;
                 scheduleSelectedColor = course.color;
                 deleteButtonContainer.style.display = 'flex';
+                
+                // 显示学生姓名（如果有）
+                if (course.studentName) {
+                    studentNameDisplay.style.display = 'block';
+                    courseStudentName.textContent = course.studentName;
+                } else {
+                    studentNameDisplay.style.display = 'none';
+                }
+                
                 document.querySelectorAll('.schedule-color-option').forEach(el => {
                     el.classList.toggle('selected', el.style.backgroundColor === course.color);
                 });
@@ -5233,6 +6448,7 @@
                 document.getElementById('courseName').value = '';
                 document.getElementById('courseLocation').value = '';
                 document.getElementById('courseTeacher').value = '';
+                studentNameDisplay.style.display = 'none';
                 scheduleSelectedColor = scheduleColors[0];
                 deleteButtonContainer.style.display = 'none';
                 document.querySelectorAll('.schedule-color-option').forEach((el, index) => {
@@ -5240,6 +6456,33 @@
                 });
             }
             document.getElementById('courseModal').classList.add('show');
+        }
+
+        // 加载学生选择列表
+        function loadStudentSelectForCourse(selectElement, selectedStudentName = null) {
+            selectElement.innerHTML = '<option value="">-- 请选择学生（可选）--</option>';
+            
+            if (studentsData && studentsData.length > 0) {
+                studentsData.forEach(student => {
+                    const option = document.createElement('option');
+                    option.value = student.name;
+                    option.textContent = `${student.name} (${student.grade || '未设置年级'})`;
+                    option.dataset.school = student.school || '';
+                    if (selectedStudentName && student.name === selectedStudentName) {
+                        option.selected = true;
+                    }
+                    selectElement.appendChild(option);
+                });
+            }
+            
+            // 添加选择事件
+            selectElement.onchange = function() {
+                const selectedOption = this.options[this.selectedIndex];
+                const school = selectedOption.dataset.school;
+                if (school) {
+                    document.getElementById('courseLocation').value = school;
+                }
+            };
         }
 
         function closeModal() {
@@ -5252,6 +6495,7 @@
             const name = document.getElementById('courseName').value.trim();
             const location = document.getElementById('courseLocation').value.trim();
             const teacher = document.getElementById('courseTeacher').value.trim();
+            const studentName = document.getElementById('courseStudentSelect').value;
             if (!name) {
                 alert('请输入课程名称');
                 return;
@@ -5261,7 +6505,7 @@
             if (!scheduleData[weekKey]) {
                 scheduleData[weekKey] = {};
             }
-            scheduleData[weekKey][courseId] = {
+            const courseData = {
                 name,
                 location,
                 teacher,
@@ -5269,6 +6513,11 @@
                 day: scheduleCurrentCell.day,
                 time: scheduleCurrentCell.time
             };
+            // 如果有选择学生，添加学生姓名
+            if (studentName) {
+                courseData.studentName = studentName;
+            }
+            scheduleData[weekKey][courseId] = courseData;
             saveScheduleData();
             renderScheduleTable();
             closeModal();
@@ -5292,12 +6541,38 @@
             localStorage.setItem('scheduleData', JSON.stringify(data));
         }
 
+        // 默认时间段配置
+        const DEFAULT_TIME_SLOTS = [
+            '08:00-10:00', '10:00-12:00', '12:00-14:00', '14:00-16:00', '16:00-18:00', '18:00-20:00', '20:00-22:00'
+        ];
+
         function loadScheduleData() {
             const saved = localStorage.getItem('scheduleData');
             if (saved) {
                 const data = JSON.parse(saved);
                 scheduleData = data.schedule || {};
-                scheduleTimeSlots = data.timeSlots || scheduleTimeSlots;
+                // 如果保存的时间段是旧的45分钟制，则使用新的默认时间段
+                if (data.timeSlots && data.timeSlots.length === 10 && data.timeSlots[0].includes('45')) {
+                    // 旧的时间段格式，使用新的默认值
+                    scheduleTimeSlots = [...DEFAULT_TIME_SLOTS];
+                    saveScheduleData();
+                    showNotification('时间段已更新为2小时制', 'success');
+                } else {
+                    scheduleTimeSlots = data.timeSlots || DEFAULT_TIME_SLOTS;
+                }
+            } else {
+                // 没有保存的数据，使用默认时间段
+                scheduleTimeSlots = [...DEFAULT_TIME_SLOTS];
+            }
+        }
+
+        // 重置时间段为默认值
+        function resetTimeSlots() {
+            if (confirm('确定要重置时间段为默认值吗？\n\n当前课程安排将保留，但时间段会变为2小时制。')) {
+                scheduleTimeSlots = [...DEFAULT_TIME_SLOTS];
+                saveScheduleData();
+                renderScheduleTable();
+                showNotification('时间段已重置为默认值', 'success');
             }
         }
 
@@ -5373,45 +6648,141 @@
             }
         }
 
-        function exportToPDF() {
-            const element = document.getElementById('scheduleContainer');
-            
-            // 临时修改样式以优化PDF输出
-            const originalPadding = element.style.padding;
-            const originalMargin = element.style.margin;
-            element.style.padding = '5px';
-            element.style.margin = '0';
-            
-            const opt = {
-                margin: [5, 5, 5, 5],
-                filename: `课表_${getScheduleWeekKey()}.pdf`,
-                image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { 
-                    scale: 2,
-                    useCORS: true,
-                    logging: false,
-                    scrollX: 0,
-                    scrollY: 0
-                },
-                jsPDF: { 
-                    unit: 'mm', 
-                    format: 'a4', 
-                    orientation: 'landscape'
-                },
-                pagebreak: {
-                    mode: ['avoid-all', 'css', 'legacy'],
-                    before: '.page-break-before',
-                    after: '.page-break-after',
-                    avoid: 'tr'
+        function exportScheduleToPDF() {
+            try {
+                const weekKey = getScheduleWeekKey();
+                
+                // 计算当前周的日期
+                const weekDates = [];
+                for (let i = 0; i < 7; i++) {
+                    const date = new Date(scheduleWeekStartDate);
+                    date.setDate(scheduleWeekStartDate.getDate() + i);
+                    weekDates.push(date);
                 }
-            };
-            
-            html2pdf().set(opt).from(element).save().then(() => {
-                // 恢复原始样式
-                element.style.padding = originalPadding;
-                element.style.margin = originalMargin;
-                showNotification('课表已导出PDF', 'success');
-            });
+                
+                const days = ['周一', '周二', '周三', '周四', '周五', '周六', '周日'];
+                
+                // 使用 scheduleTimeSlots 获取实际的时间段（用户可能修改过）
+                const timeSlots = scheduleTimeSlots || [
+                    '08:00-08:45', '08:55-09:40', '10:00-10:45', '10:55-11:40',
+                    '14:00-14:45', '14:55-15:40', '16:00-16:45', '16:55-17:40',
+                    '19:00-19:45', '19:55-20:40'
+                ];
+                
+                // 构建PDF用的HTML
+                let tableHTML = `
+                    <table style="width: 100%; border-collapse: collapse; font-size: 10px; table-layout: fixed;">
+                        <thead>
+                            <tr style="background: #0071e3; color: white;">
+                                <th style="padding: 6px; border: 1px solid #ccc; width: 11%;">时间</th>
+                `;
+                
+                // 添加表头
+                days.forEach((day, index) => {
+                    const date = weekDates[index];
+                    const dateStr = `${date.getMonth() + 1}/${date.getDate()}`;
+                    tableHTML += `<th style="padding: 6px; border: 1px solid #ccc; width: 12.7%;">${day}<br>${dateStr}</th>`;
+                });
+                tableHTML += '</tr></thead><tbody>';
+                
+                // 添加每一行 - 减小行高以适应更多行
+                timeSlots.forEach((timeSlot, timeIndex) => {
+                    tableHTML += `<tr style="height: 45px;"><td style="padding: 4px; border: 1px solid #ccc; text-align: center; font-weight: 600; background: #f5f5f7; font-size: 9px;">${timeSlot}</td>`;
+                    
+                    days.forEach((day, dayIndex) => {
+                        const weekSchedule = scheduleData[weekKey] || {};
+                        const courseId = `${dayIndex}-${timeIndex}`;
+                        const course = weekSchedule[courseId];
+                        let cellContent = '';
+                        
+                        if (course) {
+                            // 显示完整名称，不截断
+                            const displayName = course.name || '';
+                            const displayLocation = course.location || '';
+                            cellContent = `
+                                <div style="background: ${course.color}15; color: #333; padding: 2px 4px; border-radius: 3px; border-left: 3px solid ${course.color}; font-size: 10px; line-height: 1.3;">
+                                    <div style="font-weight: 600; color: ${course.color};">${displayName}</div>
+                                    ${displayLocation ? `<div style="font-size: 9px; color: #666; margin-top: 1px;">${displayLocation}</div>` : ''}
+                                </div>
+                            `;
+                        }
+                        
+                        tableHTML += `<td style="padding: 2px; border: 1px solid #ccc; vertical-align: top; background: white;">${cellContent}</td>`;
+                    });
+                    
+                    tableHTML += '</tr>';
+                });
+                
+                tableHTML += '</tbody></table>';
+                
+                // 创建完整的HTML文档 - 使用更大的画布确保所有内容都能显示
+                const htmlContent = `<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>课表</title>
+</head>
+<body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; padding: 10px; background: white; margin: 0; min-width: 1100px;">
+    <div style="text-align: center; margin-bottom: 10px; border-bottom: 2px solid #0071e3; padding-bottom: 8px;">
+        <h1 style="color: #1d1d1f; margin: 0; font-size: 18px;">周课表</h1>
+        <p style="color: #86868b; margin: 4px 0 0; font-size: 12px;">${weekKey}</p>
+    </div>
+    ${tableHTML}
+    <div style="margin-top: 8px; padding-top: 6px; border-top: 1px solid #e5e5e7; text-align: center; color: #86868b; font-size: 8px;">
+        独立数学老师辅助工具 - 课表导出
+    </div>
+</body>
+</html>`;
+                
+                // 创建iframe来渲染 - 使用更大的尺寸
+                const iframe = document.createElement('iframe');
+                iframe.style.cssText = 'position: fixed; left: -9999px; top: 0; width: 1400px; height: 1000px; border: none;';
+                document.body.appendChild(iframe);
+                
+                const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                iframeDoc.open();
+                iframeDoc.write(htmlContent);
+                iframeDoc.close();
+                
+                setTimeout(() => {
+                    try {
+                        const opt = {
+                            margin: [3, 3, 3, 3],
+                            filename: `课表_${weekKey}.pdf`,
+                            image: { type: 'jpeg', quality: 0.98 },
+                            html2canvas: { 
+                                scale: 1.2,
+                                useCORS: true,
+                                logging: false,
+                                allowTaint: true,
+                                scrollY: 0,
+                                scrollX: 0
+                            },
+                            jsPDF: { 
+                                unit: 'mm', 
+                                format: 'a4', 
+                                orientation: 'landscape'
+                            }
+                        };
+                        
+                        html2pdf().set(opt).from(iframeDoc.body).save().then(() => {
+                            document.body.removeChild(iframe);
+                            showNotification('课表已导出PDF', 'success');
+                        }).catch(err => {
+                            console.error('PDF导出错误:', err);
+                            document.body.removeChild(iframe);
+                            showNotification('PDF导出失败: ' + err.message, 'error');
+                        });
+                    } catch (e) {
+                        console.error('PDF生成错误:', e);
+                        document.body.removeChild(iframe);
+                        showNotification('PDF生成失败', 'error');
+                    }
+                }, 400);
+            } catch (error) {
+                console.error('导出函数错误:', error);
+                showNotification('导出功能出错: ' + error.message, 'error');
+            }
         }
 
         function exportToExcel() {
@@ -5579,9 +6950,14 @@
         }
 
         function renderCalendarDay(day, dateKey, plans, isOtherMonth, isToday = false) {
-            const dots = plans.slice(0, 3).map(p => 
-                `<div class="calendar-dot" style="background-color: ${p.color};"></div>`
-            ).join('');
+            // 显示计划内容（最多显示2个）
+            const planItems = plans.slice(0, 2).map(p => {
+                const shortTitle = p.title.length > 4 ? p.title.substring(0, 4) + '...' : p.title;
+                return `<div class="calendar-plan-item" style="background-color: ${p.color}20; color: ${p.color}; border-left: 2px solid ${p.color};">${shortTitle}</div>`;
+            }).join('');
+            
+            // 如果有更多计划，显示"+n"
+            const moreIndicator = plans.length > 2 ? `<div class="calendar-more">+${plans.length - 2}</div>` : '';
             
             let classes = 'calendar-day';
             if (isOtherMonth) classes += ' other-month';
@@ -5590,7 +6966,7 @@
             return `
                 <div class="${classes}" onclick="selectCalendarDay('${dateKey}')">
                     <div class="calendar-day-number">${day}</div>
-                    ${dots ? `<div class="calendar-dots">${dots}</div>` : ''}
+                    ${planItems ? `<div class="calendar-plans">${planItems}${moreIndicator}</div>` : ''}
                 </div>
             `;
         }
@@ -5772,87 +7148,393 @@
             });
         }
 
+        // ========== 智能排课功能 ==========
+        
+        let smartScheduleSelectedColor = scheduleColors[0];
+        let smartSchedulePreviewData = null;
+
+        function openSmartScheduleModal() {
+            // 加载学生列表
+            const studentSelect = document.getElementById('smartScheduleStudent');
+            studentSelect.innerHTML = '<option value="">-- 请选择学生 --</option>';
+            
+            if (studentsData && studentsData.length > 0) {
+                studentsData.forEach(student => {
+                    if (student.status === 'active') {
+                        const option = document.createElement('option');
+                        option.value = student.id;
+                        option.textContent = `${student.name} (${student.grade || '未设置年级'})`;
+                        studentSelect.appendChild(option);
+                    }
+                });
+            }
+            
+            // 初始化颜色选择器
+            smartScheduleSelectedColor = scheduleColors[0];
+            renderSmartScheduleColorPicker();
+            
+            // 清空表单
+            document.getElementById('smartScheduleCourseName').value = '';
+            document.getElementById('smartScheduleFrequency').value = '2';
+            document.getElementById('smartScheduleTimePreference').value = 'any';
+            document.querySelectorAll('.smart-schedule-day').forEach((cb, index) => {
+                cb.checked = index < 5; // 默认选中周一到周五
+            });
+            
+            // 隐藏预览
+            document.getElementById('smartSchedulePreview').style.display = 'none';
+            smartSchedulePreviewData = null;
+            
+            document.getElementById('smartScheduleModal').classList.add('show');
+        }
+
+        function closeSmartScheduleModal() {
+            document.getElementById('smartScheduleModal').classList.remove('show');
+            smartSchedulePreviewData = null;
+        }
+
+        function renderSmartScheduleColorPicker() {
+            const colorPicker = document.getElementById('smartScheduleColorPicker');
+            if (!colorPicker) return;
+            
+            colorPicker.innerHTML = '';
+            scheduleColors.forEach((color) => {
+                const colorOption = document.createElement('div');
+                colorOption.className = 'schedule-color-option' + (color === smartScheduleSelectedColor ? ' selected' : '');
+                colorOption.style.backgroundColor = color;
+                colorOption.onclick = () => {
+                    smartScheduleSelectedColor = color;
+                    renderSmartScheduleColorPicker();
+                };
+                colorPicker.appendChild(colorOption);
+            });
+        }
+
+        function previewSmartSchedule() {
+            const studentId = document.getElementById('smartScheduleStudent').value;
+            const courseName = document.getElementById('smartScheduleCourseName').value.trim();
+            const frequency = parseInt(document.getElementById('smartScheduleFrequency').value);
+            const timePreference = document.getElementById('smartScheduleTimePreference').value;
+            
+            if (!studentId) {
+                showNotification('请选择学生', 'warning');
+                return;
+            }
+            if (!courseName) {
+                showNotification('请输入课程名称', 'warning');
+                return;
+            }
+            
+            // 获取选中的星期
+            const selectedDays = [];
+            document.querySelectorAll('.smart-schedule-day:checked').forEach(cb => {
+                selectedDays.push(parseInt(cb.value));
+            });
+            
+            if (selectedDays.length === 0) {
+                showNotification('请至少选择一个星期', 'warning');
+                return;
+            }
+            
+            if (selectedDays.length < frequency) {
+                showNotification(`您选择了 ${selectedDays.length} 天，但需要安排 ${frequency} 次课，请增加选择的天数`, 'warning');
+                return;
+            }
+            
+            // 获取学生信息
+            const student = studentsData.find(s => s.id === studentId);
+            
+            // 智能排课算法
+            const schedule = generateSmartSchedule(selectedDays, frequency, timePreference);
+            
+            if (schedule.length === 0) {
+                showNotification('无法找到合适的空闲时间段，请调整条件后重试', 'warning');
+                return;
+            }
+            
+            smartSchedulePreviewData = {
+                student: student,
+                courseName: courseName,
+                schedule: schedule,
+                color: smartScheduleSelectedColor
+            };
+            
+            // 显示预览
+            const previewDiv = document.getElementById('smartSchedulePreview');
+            const previewContent = document.getElementById('smartSchedulePreviewContent');
+            
+            const dayNames = ['周一', '周二', '周三', '周四', '周五', '周六', '周日'];
+            previewContent.innerHTML = `
+                <div style="margin-bottom: 10px;">
+                    <strong>学生：</strong>${student.name} | 
+                    <strong>课程：</strong>${courseName} | 
+                    <strong>每周${frequency}次</strong>
+                </div>
+                <div style="border-top: 1px solid #ddd; padding-top: 10px;">
+                    ${schedule.map((slot, index) => `
+                        <div style="padding: 5px 0; border-bottom: 1px solid #eee;">
+                            <span style="color: ${smartScheduleSelectedColor};">●</span>
+                            <strong>${dayNames[slot.day]}</strong> 
+                            第${slot.row + 1}节 (${scheduleTimeSlots[slot.row] || '未设置时间'})
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            
+            previewDiv.style.display = 'block';
+            showNotification('排课预览已生成，请查看后确认应用', 'success');
+        }
+
+        function generateSmartSchedule(selectedDays, frequency, timePreference) {
+            const schedule = [];
+            const weekKey = getScheduleWeekKey();
+            const weekSchedule = scheduleData[weekKey] || {};
+            
+            // 根据时间偏好确定优先的行范围（7个2小时时间段）
+            let preferredRows = [];
+            switch(timePreference) {
+                case 'morning':
+                    preferredRows = [0, 1]; // 上午 8:00-12:00
+                    break;
+                case 'afternoon':
+                    preferredRows = [3, 4]; // 下午 14:00-18:00
+                    break;
+                case 'evening':
+                    preferredRows = [5, 6]; // 晚上 18:00-22:00
+                    break;
+                default:
+                    preferredRows = [0, 1, 2, 3, 4, 5, 6]; // 全部7个时间段
+            }
+            
+            // 打乱星期顺序，实现随机但均匀的分布
+            const shuffledDays = [...selectedDays].sort(() => Math.random() - 0.5);
+            
+            for (let i = 0; i < frequency && i < shuffledDays.length; i++) {
+                const day = shuffledDays[i];
+                let found = false;
+                
+                // 在优先时间段内寻找空闲位置
+                for (const row of preferredRows) {
+                    const courseId = `${day}-${row}`;
+                    if (!weekSchedule[courseId]) {
+                        schedule.push({ day, row });
+                        found = true;
+                        break;
+                    }
+                }
+                
+                // 如果在优先时间段找不到，尝试其他时间段
+                if (!found) {
+                    for (let row = 0; row < scheduleTimeSlots.length; row++) {
+                        if (!preferredRows.includes(row)) {
+                            const courseId = `${day}-${row}`;
+                            if (!weekSchedule[courseId]) {
+                                schedule.push({ day, row });
+                                found = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            
+            return schedule;
+        }
+
+        function applySmartSchedule() {
+            if (!smartSchedulePreviewData) {
+                showNotification('请先生成排课预览', 'warning');
+                return;
+            }
+            
+            const { student, courseName, schedule, color } = smartSchedulePreviewData;
+            const weekKey = getScheduleWeekKey();
+            
+            if (!scheduleData[weekKey]) {
+                scheduleData[weekKey] = {};
+            }
+            
+            // 应用课程安排
+            let successCount = 0;
+            schedule.forEach(slot => {
+                const courseId = `${slot.day}-${slot.row}`;
+                if (!scheduleData[weekKey][courseId]) {
+                    scheduleData[weekKey][courseId] = {
+                        name: courseName,
+                        studentName: student.name,
+                        location: student.school || '',
+                        teacher: '',
+                        color: color
+                    };
+                    successCount++;
+                }
+            });
+            
+            saveScheduleData();
+            renderScheduleTable();
+            closeSmartScheduleModal();
+            
+            showNotification(`智能排课完成！成功安排 ${successCount} 节课`, 'success');
+        }
+
         function exportMonthPlanToPDF() {
             const year = currentMonthDate.getFullYear();
             const month = currentMonthDate.getMonth();
             const monthKey = `${year}-${String(month + 1).padStart(2, '0')}`;
             
-            const allPlans = [];
-            Object.keys(monthPlans).forEach(dateKey => {
-                const [y, m] = dateKey.split('-').map(Number);
-                if (y === year && m === month + 1) {
-                    monthPlans[dateKey].forEach(plan => {
-                        allPlans.push({
-                            date: dateKey,
-                            ...plan
-                        });
-                    });
-                }
-            });
+            // 获取月历数据
+            const firstDay = new Date(year, month, 1);
+            const lastDay = new Date(year, month + 1, 0);
+            const startDay = firstDay.getDay();
+            const daysInMonth = lastDay.getDate();
+            const today = new Date();
+            const todayKey = getDayKey(today);
+            const prevMonth = new Date(year, month, 0);
+            const prevDays = prevMonth.getDate();
             
-            if (allPlans.length === 0) {
-                showNotification('本月暂无计划可导出', 'warning');
-                return;
+            // 生成表格行
+            let tableRows = '';
+            let currentRow = [];
+            let cellCount = 0;
+            
+            // 上月日期
+            for (let i = startDay - 1; i >= 0; i--) {
+                const day = prevDays - i;
+                currentRow.push({
+                    day: day,
+                    isOtherMonth: true,
+                    isToday: false,
+                    plans: []
+                });
+                cellCount++;
             }
             
-            const container = document.createElement('div');
-            container.style.cssText = 'padding: 40px; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: white;';
-            
-            allPlans.sort((a, b) => a.date.localeCompare(b.date));
-            
-            const groupedPlans = {};
-            allPlans.forEach(plan => {
-                if (!groupedPlans[plan.date]) {
-                    groupedPlans[plan.date] = [];
+            // 当月日期
+            for (let day = 1; day <= daysInMonth; day++) {
+                const date = new Date(year, month, day);
+                const dateKey = getDayKey(date);
+                const isToday = dateKey === todayKey;
+                const plans = getMonthPlansForDate(dateKey);
+                
+                currentRow.push({
+                    day: day,
+                    isOtherMonth: false,
+                    isToday: isToday,
+                    plans: plans || []
+                });
+                cellCount++;
+                
+                if (cellCount % 7 === 0) {
+                    tableRows += generateTableRow(currentRow);
+                    currentRow = [];
                 }
-                groupedPlans[plan.date].push(plan);
+            }
+            
+            // 下月日期
+            const remainingCells = 42 - cellCount;
+            for (let day = 1; day <= remainingCells; day++) {
+                currentRow.push({
+                    day: day,
+                    isOtherMonth: true,
+                    isToday: false,
+                    plans: []
+                });
+                cellCount++;
+                if (cellCount % 7 === 0) {
+                    tableRows += generateTableRow(currentRow);
+                    break;
+                }
+            }
+            
+            const htmlContent = `<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>月计划</title>
+</head>
+<body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; padding: 20px; background: white; margin: 0; width: 1100px;">
+    <div style="text-align: center; margin-bottom: 20px; border-bottom: 2px solid #0071e3; padding-bottom: 15px;">
+        <h1 style="color: #1d1d1f; margin: 0; font-size: 24px;">月计划</h1>
+        <p style="color: #86868b; margin: 8px 0 0; font-size: 16px;">${formatMonthDisplay(currentMonthDate)}</p>
+    </div>
+    <table style="width: 100%; border-collapse: collapse; table-layout: fixed;">
+        <thead>
+            <tr style="background: #0071e3; color: white;">
+                <th style="padding: 12px; text-align: center; font-size: 14px; border: 1px solid #ccc; width: 14.28%;">日</th>
+                <th style="padding: 12px; text-align: center; font-size: 14px; border: 1px solid #ccc; width: 14.28%;">一</th>
+                <th style="padding: 12px; text-align: center; font-size: 14px; border: 1px solid #ccc; width: 14.28%;">二</th>
+                <th style="padding: 12px; text-align: center; font-size: 14px; border: 1px solid #ccc; width: 14.28%;">三</th>
+                <th style="padding: 12px; text-align: center; font-size: 14px; border: 1px solid #ccc; width: 14.28%;">四</th>
+                <th style="padding: 12px; text-align: center; font-size: 14px; border: 1px solid #ccc; width: 14.28%;">五</th>
+                <th style="padding: 12px; text-align: center; font-size: 14px; border: 1px solid #ccc; width: 14.28%;">六</th>
+            </tr>
+        </thead>
+        <tbody>
+            ${tableRows}
+        </tbody>
+    </table>
+    <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid #e5e5e7; text-align: center; color: #86868b; font-size: 11px;">
+        独立数学老师辅助工具 - 月计划导出
+    </div>
+</body>
+</html>`;
+            
+            // 创建iframe来渲染
+            const iframe = document.createElement('iframe');
+            iframe.style.cssText = 'position: fixed; left: -9999px; top: 0; width: 1200px; height: 900px; border: none;';
+            document.body.appendChild(iframe);
+            
+            const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+            iframeDoc.open();
+            iframeDoc.write(htmlContent);
+            iframeDoc.close();
+            
+            setTimeout(() => {
+                const opt = {
+                    margin: [10, 10, 10, 10],
+                    filename: `月计划_${monthKey}.pdf`,
+                    image: { type: 'jpeg', quality: 0.95 },
+                    html2canvas: { 
+                        scale: 1.5,
+                        useCORS: true,
+                        logging: false,
+                        allowTaint: true
+                    },
+                    jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape' }
+                };
+                
+                html2pdf().set(opt).from(iframeDoc.body).save().then(() => {
+                    document.body.removeChild(iframe);
+                    showNotification('月计划已导出PDF', 'success');
+                }).catch(err => {
+                    console.error('PDF导出错误:', err);
+                    document.body.removeChild(iframe);
+                    showNotification('PDF导出失败，请重试', 'error');
+                });
+            }, 300);
+        }
+        
+        function generateTableRow(cells) {
+            let rowHTML = '<tr>';
+            cells.forEach(cell => {
+                const bgStyle = cell.isToday ? 'background: rgba(0, 113, 227, 0.1); border: 2px solid #0071e3;' : (cell.isOtherMonth ? 'background: #f5f5f7; opacity: 0.6;' : 'background: white;');
+                const dayColor = cell.isToday ? 'color: #0071e3;' : '';
+                
+                let plansHTML = '';
+                if (cell.plans && cell.plans.length > 0) {
+                    cell.plans.forEach(plan => {
+                        const shortTitle = plan.title.length > 5 ? plan.title.substring(0, 5) + '...' : plan.title;
+                        plansHTML += `<div style="font-size: 10px; padding: 2px 4px; margin-bottom: 2px; border-radius: 2px; background: ${plan.color}20; color: ${plan.color}; border-left: 2px solid ${plan.color}; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${shortTitle}</div>`;
+                    });
+                }
+                
+                rowHTML += `<td style="${bgStyle} padding: 8px; border: 1px solid #ccc; vertical-align: top; height: 80px; overflow: hidden;">
+                    <div style="font-weight: 600; margin-bottom: 4px; font-size: 13px; ${dayColor}">${cell.day}</div>
+                    ${plansHTML}
+                </td>`;
             });
-            
-            container.innerHTML = `
-                <div style="text-align: center; margin-bottom: 30px; border-bottom: 2px solid #0071e3; padding-bottom: 20px;">
-                    <h1 style="color: #1d1d1f; margin: 0; font-size: 28px;">月计划</h1>
-                    <p style="color: #86868b; margin: 10px 0 0; font-size: 18px;">${formatMonthDisplay(currentMonthDate)}</p>
-                </div>
-                <div style="margin-top: 20px;">
-                    ${Object.keys(groupedPlans).sort().map(dateKey => {
-                        const [y, m, d] = dateKey.split('-').map(Number);
-                        const date = new Date(y, m - 1, d);
-                        const days = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
-                        return `
-                            <div style="margin-bottom: 25px;">
-                                <h3 style="color: #0071e3; font-size: 18px; margin-bottom: 15px; padding-bottom: 8px; border-bottom: 2px solid #e5e5e7;">
-                                    📅 ${m}月${d}日 ${days[date.getDay()]}
-                                </h3>
-                                ${groupedPlans[dateKey].map((plan, index) => `
-                                    <div style="margin-bottom: 12px; padding: 12px; border-left: 4px solid ${plan.color}; background: #f5f5f7; border-radius: 8px; margin-left: 10px;">
-                                        <div style="font-weight: 600; font-size: 15px; color: ${plan.color}; margin-bottom: 6px;">
-                                            ${index + 1}. ${escapeHTML(plan.title)}
-                                        </div>
-                                        ${plan.content ? `<div style="color: #555; font-size: 14px; line-height: 1.5;">${escapeHTML(plan.content)}</div>` : ''}
-                                    </div>
-                                `).join('')}
-                            </div>
-                        `;
-                    }).join('')}
-                </div>
-                <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #e5e5e7; text-align: center; color: #86868b; font-size: 12px;">
-                    独立数学老师辅助工具 - 月计划导出
-                </div>
-            `;
-            
-            const opt = {
-                margin: 10,
-                filename: `月计划_${monthKey}.pdf`,
-                image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 2 },
-                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-            };
-            
-            document.body.appendChild(container);
-            html2pdf().set(opt).from(container).save().then(() => {
-                document.body.removeChild(container);
-                showNotification('月计划已导出PDF', 'success');
-            });
+            rowHTML += '</tr>';
+            return rowHTML;
         }
 
         function exportMonthPlanToExcel() {
@@ -5943,6 +7625,10 @@
         let geometryRotationCenter = null;
         let geometryInitialAngle = 0;
         let geometryInitialShapeState = null;
+        let geometrySnapEnabled = false;
+        let geometrySnapPoints = [];
+        let geometrySnapRadius = 15;
+        let geometryCurrentSnapPoint = null;
 
         function initGeometryDrawing() {
             geometryCanvas = document.getElementById('geometry-canvas');
@@ -5993,6 +7679,9 @@
             document.getElementById('geometry-undo')?.addEventListener('click', undoGeometry);
             document.getElementById('geometry-export')?.addEventListener('click', exportGeometryImage);
             document.getElementById('geometry-grid-toggle')?.addEventListener('click', toggleGeometryGrid);
+            
+            // 绑定关键点提示开关
+            document.getElementById('geometry-snap-toggle')?.addEventListener('click', toggleGeometrySnap);
             
             // 窗口大小改变时重新调整画布
             window.addEventListener('resize', () => {
@@ -6477,10 +8166,20 @@
             // 更新坐标显示
             document.getElementById('geometry-coords').textContent = `坐标: (${Math.round(pos.x)}, ${Math.round(pos.y)})`;
             
+            // 收集关键点并查找最近的吸附点
+            if (geometrySnapEnabled) {
+                collectSnapPoints();
+                geometryCurrentSnapPoint = findNearestSnapPoint(pos);
+                redrawGeometryCanvas();
+            }
+            
+            // 使用吸附点位置（如果有）
+            const drawPos = geometryCurrentSnapPoint || pos;
+            
             // 处理调整大小
             if (geometryIsResizing && geometrySelectedShape !== null) {
                 const shape = geometryShapes[geometrySelectedShape];
-                resizeShape(shape, geometryResizeHandle, pos, geometryInitialShapeState);
+                resizeShape(shape, geometryResizeHandle, drawPos, geometryInitialShapeState);
                 redrawGeometryCanvas();
                 return;
             }
@@ -6488,7 +8187,7 @@
             // 处理旋转
             if (geometryIsRotating && geometrySelectedShape !== null) {
                 const shape = geometryShapes[geometrySelectedShape];
-                const currentAngle = Math.atan2(pos.y - geometryRotationCenter.y, pos.x - geometryRotationCenter.x);
+                const currentAngle = Math.atan2(drawPos.y - geometryRotationCenter.y, drawPos.x - geometryRotationCenter.x);
                 const deltaAngle = currentAngle - geometryInitialAngle;
                 rotateShape(shape, deltaAngle, geometryRotationCenter, geometryInitialShapeState);
                 redrawGeometryCanvas();
@@ -6862,6 +8561,11 @@
                     drawGeometryPoint(point.x, point.y, '#0071e3', index === 0 ? 6 : 4);
                 });
             }
+            
+            // 绘制关键点吸附提示
+            if (geometrySnapEnabled && geometryCurrentSnapPoint) {
+                drawSnapHint(geometryCurrentSnapPoint);
+            }
         }
 
         function drawGeometryShape(shape, isTemp = false, isSelected = false) {
@@ -7121,6 +8825,178 @@
             document.querySelector('#geometry-grid-toggle i').classList.toggle('text-primary', !geometryShowGrid);
         }
 
+        // 关键点提示开关
+        function toggleGeometrySnap() {
+            geometrySnapEnabled = !geometrySnapEnabled;
+            const toggleBtn = document.getElementById('geometry-snap-toggle');
+            const indicator = document.getElementById('geometry-snap-indicator');
+            
+            if (geometrySnapEnabled) {
+                toggleBtn.classList.remove('bg-gray-200');
+                toggleBtn.classList.add('bg-purple-500');
+                indicator.classList.remove('translate-x-1');
+                indicator.classList.add('translate-x-6');
+                showNotification('关键点提示已开启', 'success');
+            } else {
+                toggleBtn.classList.add('bg-gray-200');
+                toggleBtn.classList.remove('bg-purple-500');
+                indicator.classList.add('translate-x-1');
+                indicator.classList.remove('translate-x-6');
+                showNotification('关键点提示已关闭', 'info');
+            }
+            
+            redrawGeometryCanvas();
+        }
+
+        // 收集所有关键点
+        function collectSnapPoints() {
+            geometrySnapPoints = [];
+            
+            geometryShapes.forEach(shape => {
+                switch (shape.type) {
+                    case 'point':
+                        geometrySnapPoints.push({
+                            x: shape.x,
+                            y: shape.y,
+                            type: 'point',
+                            label: '点'
+                        });
+                        break;
+                    case 'line':
+                    case 'segment':
+                        geometrySnapPoints.push(
+                            { x: shape.x1, y: shape.y1, type: 'endpoint', label: '端点' },
+                            { x: shape.x2, y: shape.y2, type: 'endpoint', label: '端点' }
+                        );
+                        // 中点
+                        geometrySnapPoints.push({
+                            x: (shape.x1 + shape.x2) / 2,
+                            y: (shape.y1 + shape.y2) / 2,
+                            type: 'midpoint',
+                            label: '中点'
+                        });
+                        break;
+                    case 'circle':
+                        geometrySnapPoints.push(
+                            { x: shape.x, y: shape.y, type: 'center', label: '圆心' },
+                            { x: shape.x + shape.radius, y: shape.y, type: 'edge', label: '边缘' },
+                            { x: shape.x - shape.radius, y: shape.y, type: 'edge', label: '边缘' },
+                            { x: shape.x, y: shape.y + shape.radius, type: 'edge', label: '边缘' },
+                            { x: shape.x, y: shape.y - shape.radius, type: 'edge', label: '边缘' }
+                        );
+                        break;
+                    case 'rectangle':
+                        geometrySnapPoints.push(
+                            { x: shape.x, y: shape.y, type: 'corner', label: '顶点' },
+                            { x: shape.x + shape.width, y: shape.y, type: 'corner', label: '顶点' },
+                            { x: shape.x, y: shape.y + shape.height, type: 'corner', label: '顶点' },
+                            { x: shape.x + shape.width, y: shape.y + shape.height, type: 'corner', label: '顶点' },
+                            { x: shape.x + shape.width / 2, y: shape.y + shape.height / 2, type: 'center', label: '中心' }
+                        );
+                        break;
+                    case 'triangle':
+                        geometrySnapPoints.push(
+                            { x: shape.x1, y: shape.y1, type: 'vertex', label: '顶点' },
+                            { x: shape.x2, y: shape.y2, type: 'vertex', label: '顶点' },
+                            { x: shape.x3, y: shape.y3, type: 'vertex', label: '顶点' }
+                        );
+                        // 重心
+                        geometrySnapPoints.push({
+                            x: (shape.x1 + shape.x2 + shape.x3) / 3,
+                            y: (shape.y1 + shape.y2 + shape.y3) / 3,
+                            type: 'center',
+                            label: '重心'
+                        });
+                        break;
+                    case 'polygon':
+                        if (shape.points) {
+                            shape.points.forEach((p, i) => {
+                                geometrySnapPoints.push({
+                                    x: p.x,
+                                    y: p.y,
+                                    type: 'vertex',
+                                    label: `顶点${i + 1}`
+                                });
+                            });
+                        }
+                        break;
+                    case 'regular-polygon':
+                        geometrySnapPoints.push(
+                            { x: shape.x, y: shape.y, type: 'center', label: '中心' }
+                        );
+                        // 顶点
+                        for (let i = 0; i < shape.sides; i++) {
+                            const angle = (i * 2 * Math.PI / shape.sides) + shape.rotation;
+                            geometrySnapPoints.push({
+                                x: shape.x + shape.radius * Math.cos(angle),
+                                y: shape.y + shape.radius * Math.sin(angle),
+                                type: 'vertex',
+                                label: `顶点${i + 1}`
+                            });
+                        }
+                        break;
+                }
+            });
+        }
+
+        // 查找最近的吸附点
+        function findNearestSnapPoint(pos) {
+            if (!geometrySnapEnabled || geometrySnapPoints.length === 0) {
+                return null;
+            }
+            
+            let nearest = null;
+            let minDist = geometrySnapRadius;
+            
+            for (const point of geometrySnapPoints) {
+                const dist = Math.sqrt(
+                    Math.pow(pos.x - point.x, 2) + 
+                    Math.pow(pos.y - point.y, 2)
+                );
+                
+                if (dist < minDist) {
+                    minDist = dist;
+                    nearest = point;
+                }
+            }
+            
+            return nearest;
+        }
+
+        // 绘制吸附提示
+        function drawSnapHint(point) {
+            if (!point) return;
+            
+            const ctx = geometryCtx;
+            
+            // 绘制高亮圆圈
+            ctx.beginPath();
+            ctx.arc(point.x, point.y, 8, 0, Math.PI * 2);
+            ctx.strokeStyle = '#a855f7';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            
+            // 填充半透明
+            ctx.fillStyle = 'rgba(168, 85, 247, 0.2)';
+            ctx.fill();
+            
+            // 绘制十字线
+            ctx.beginPath();
+            ctx.moveTo(point.x - 12, point.y);
+            ctx.lineTo(point.x + 12, point.y);
+            ctx.moveTo(point.x, point.y - 12);
+            ctx.lineTo(point.x, point.y + 12);
+            ctx.strokeStyle = '#a855f7';
+            ctx.lineWidth = 1;
+            ctx.stroke();
+            
+            // 绘制标签
+            ctx.font = '12px sans-serif';
+            ctx.fillStyle = '#a855f7';
+            ctx.textAlign = 'center';
+            ctx.fillText(point.label, point.x, point.y - 15);
+        }
+
         function exportGeometryImage() {
             if (geometryShapes.length === 0) {
                 showNotification('画布为空，无法导出', 'warning');
@@ -7291,6 +9167,14 @@
             updateIncomeStats();
         }
 
+        // 回到本月
+        function goToCurrentMonth() {
+            incomeCurrentDate = new Date();
+            renderIncomeCalendar();
+            updateIncomeStats();
+            showNotification('已回到本月', 'success');
+        }
+
         function renderIncomeCalendar() {
             const year = incomeCurrentDate.getFullYear();
             const month = incomeCurrentDate.getMonth();
@@ -7398,6 +9282,7 @@
             let totalHours = 0;
             let totalAmount = 0;
             let totalBonus = 0;
+            let workDays = 0;
             
             Object.keys(incomeData).forEach(dateKey => {
                 const [y, m] = dateKey.split('-').map(Number);
@@ -7406,20 +9291,245 @@
                     totalHours += data.hours || 0;
                     totalAmount += (data.hours || 0) * (data.rate || 0);
                     totalBonus += data.bonus || 0;
+                    workDays++;
                 }
             });
             
             const grandTotal = totalAmount + totalBonus;
+            const dailyAvg = workDays > 0 ? grandTotal / workDays : 0;
             
             const totalHoursEl = document.getElementById('income-total-hours');
             const totalAmountEl = document.getElementById('income-total-amount');
             const totalBonusEl = document.getElementById('income-total-bonus');
             const grandTotalEl = document.getElementById('income-grand-total');
+            const workDaysEl = document.getElementById('income-work-days');
+            const dailyAvgEl = document.getElementById('income-daily-avg');
             
             if (totalHoursEl) totalHoursEl.textContent = totalHours.toFixed(1) + 'h';
             if (totalAmountEl) totalAmountEl.textContent = totalAmount.toFixed(1) + '元';
             if (totalBonusEl) totalBonusEl.textContent = totalBonus.toFixed(1) + '元';
             if (grandTotalEl) grandTotalEl.textContent = grandTotal.toFixed(1) + '元';
+            if (workDaysEl) workDaysEl.textContent = workDays + '天';
+            if (dailyAvgEl) dailyAvgEl.textContent = dailyAvg.toFixed(1) + '元';
+        }
+
+        // 当前年度统计显示的年份
+        let yearlyStatsCurrentYear = new Date().getFullYear();
+
+        // 显示年度统计
+        function showYearlyStats() {
+            yearlyStatsCurrentYear = incomeCurrentDate.getFullYear();
+            renderYearlyStats(yearlyStatsCurrentYear);
+            document.getElementById('yearly-stats-modal').classList.add('show');
+        }
+
+        // 渲染年度统计数据
+        function renderYearlyStats(year) {
+            document.getElementById('yearly-stats-title').textContent = year + '年度统计';
+            
+            // 计算年度数据
+            let yearlyTotalHours = 0;
+            let yearlyTotalAmount = 0;
+            let yearlyTotalBonus = 0;
+            let yearlyWorkDays = 0;
+            const monthlyData = [];
+            
+            for (let month = 0; month < 12; month++) {
+                let monthHours = 0;
+                let monthAmount = 0;
+                let monthBonus = 0;
+                let monthDays = 0;
+                
+                Object.keys(incomeData).forEach(dateKey => {
+                    const [y, m] = dateKey.split('-').map(Number);
+                    if (y === year && m === month + 1) {
+                        const data = incomeData[dateKey];
+                        monthHours += data.hours || 0;
+                        monthAmount += (data.hours || 0) * (data.rate || 0);
+                        monthBonus += data.bonus || 0;
+                        monthDays++;
+                    }
+                });
+                
+                monthlyData.push({
+                    month: month + 1,
+                    monthName: month + 1 + '月',
+                    days: monthDays,
+                    hours: monthHours,
+                    amount: monthAmount,
+                    bonus: monthBonus,
+                    total: monthAmount + monthBonus
+                });
+                
+                yearlyTotalHours += monthHours;
+                yearlyTotalAmount += monthAmount;
+                yearlyTotalBonus += monthBonus;
+                yearlyWorkDays += monthDays;
+            }
+            
+            const yearlyTotalIncome = yearlyTotalAmount + yearlyTotalBonus;
+            const monthlyAvg = yearlyTotalIncome / 12;
+            
+            // 更新年度总览
+            document.getElementById('yearly-total-hours').textContent = yearlyTotalHours.toFixed(1) + 'h';
+            document.getElementById('yearly-total-income').textContent = yearlyTotalIncome.toFixed(1) + '元';
+            document.getElementById('yearly-work-days').textContent = yearlyWorkDays + '天';
+            document.getElementById('yearly-monthly-avg').textContent = monthlyAvg.toFixed(1) + '元';
+            
+            // 生成月度明细表格
+            const tbody = document.getElementById('yearly-stats-tbody');
+            tbody.innerHTML = monthlyData.map(data => `
+                <tr class="border-b hover:bg-gray-50">
+                    <td class="px-4 py-3 font-medium">${data.monthName}</td>
+                    <td class="px-4 py-3 text-center">${data.days}天</td>
+                    <td class="px-4 py-3 text-center">${data.hours.toFixed(1)}h</td>
+                    <td class="px-4 py-3 text-center">${data.amount.toFixed(1)}元</td>
+                    <td class="px-4 py-3 text-center">${data.bonus.toFixed(1)}元</td>
+                    <td class="px-4 py-3 text-right font-semibold ${data.total > 0 ? 'text-blue-600' : 'text-gray-400'}">${data.total.toFixed(1)}元</td>
+                </tr>
+            `).join('');
+            
+            // 更新底部合计
+            document.getElementById('yearly-footer-days').textContent = yearlyWorkDays;
+            document.getElementById('yearly-footer-hours').textContent = yearlyTotalHours.toFixed(1) + 'h';
+            document.getElementById('yearly-footer-amount').textContent = yearlyTotalAmount.toFixed(1) + '元';
+            document.getElementById('yearly-footer-bonus').textContent = yearlyTotalBonus.toFixed(1) + '元';
+            document.getElementById('yearly-footer-total').textContent = yearlyTotalIncome.toFixed(1) + '元';
+            
+            // 生成柱状图
+            renderYearlyCharts(monthlyData);
+        }
+
+        // 切换年度统计年份
+        function changeYearlyStatsYear(offset) {
+            yearlyStatsCurrentYear += offset;
+            renderYearlyStats(yearlyStatsCurrentYear);
+        }
+
+        // 回到今年
+        function goToCurrentYearStats() {
+            yearlyStatsCurrentYear = new Date().getFullYear();
+            renderYearlyStats(yearlyStatsCurrentYear);
+            showNotification('已回到今年', 'success');
+        }
+
+        // 渲染年度统计柱状图
+        function renderYearlyCharts(monthlyData) {
+            // 收入柱状图
+            const incomeChart = document.getElementById('yearly-income-chart');
+            const maxIncome = Math.max(...monthlyData.map(d => d.total), 1);
+            
+            incomeChart.innerHTML = monthlyData.map(data => {
+                const height = data.total > 0 ? (data.total / maxIncome * 100) : 0;
+                const displayValue = data.total >= 1000 ? (data.total / 1000).toFixed(1) + 'k' : data.total.toFixed(0);
+                return `
+                    <div class="yearly-chart-bar-wrapper">
+                        <div class="yearly-chart-bar income-bar" style="height: ${height}%;">
+                            ${height > 15 ? `<div class="yearly-chart-bar-value">${displayValue}</div>` : ''}
+                        </div>
+                        <div class="yearly-chart-bar-label">${data.month}月</div>
+                        <div class="yearly-chart-tooltip">
+                            ${data.monthName}<br>
+                            收入: ${data.total.toFixed(1)}元<br>
+                            课时: ${data.hours.toFixed(1)}h<br>
+                            天数: ${data.days}天
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            // 课时柱状图
+            const hoursChart = document.getElementById('yearly-hours-chart');
+            const maxHours = Math.max(...monthlyData.map(d => d.hours), 1);
+            
+            hoursChart.innerHTML = monthlyData.map(data => {
+                const height = data.hours > 0 ? (data.hours / maxHours * 100) : 0;
+                return `
+                    <div class="yearly-chart-bar-wrapper">
+                        <div class="yearly-chart-bar hours-bar" style="height: ${height}%;">
+                            ${height > 15 ? `<div class="yearly-chart-bar-value">${data.hours.toFixed(0)}h</div>` : ''}
+                        </div>
+                        <div class="yearly-chart-bar-label">${data.month}月</div>
+                        <div class="yearly-chart-tooltip">
+                            ${data.monthName}<br>
+                            课时: ${data.hours.toFixed(1)}h<br>
+                            收入: ${data.total.toFixed(1)}元<br>
+                            天数: ${data.days}天
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // 关闭年度统计
+        function closeYearlyStats() {
+            document.getElementById('yearly-stats-modal').classList.remove('show');
+        }
+
+        // 导出年度统计到Excel
+        function exportYearlyStatsToExcel() {
+            const year = incomeCurrentDate.getFullYear();
+            
+            // 准备数据
+            const data = [];
+            data.push(['月份', '工作天数', '总课时', '课时收入', '补贴其他', '月收入']);
+            
+            let yearlyTotalHours = 0;
+            let yearlyTotalAmount = 0;
+            let yearlyTotalBonus = 0;
+            let yearlyWorkDays = 0;
+            
+            for (let month = 0; month < 12; month++) {
+                let monthHours = 0;
+                let monthAmount = 0;
+                let monthBonus = 0;
+                let monthDays = 0;
+                
+                Object.keys(incomeData).forEach(dateKey => {
+                    const [y, m] = dateKey.split('-').map(Number);
+                    if (y === year && m === month + 1) {
+                        const record = incomeData[dateKey];
+                        monthHours += record.hours || 0;
+                        monthAmount += (record.hours || 0) * (record.rate || 0);
+                        monthBonus += record.bonus || 0;
+                        monthDays++;
+                    }
+                });
+                
+                data.push([
+                    month + 1 + '月',
+                    monthDays,
+                    monthHours.toFixed(1),
+                    monthAmount.toFixed(1),
+                    monthBonus.toFixed(1),
+                    (monthAmount + monthBonus).toFixed(1)
+                ]);
+                
+                yearlyTotalHours += monthHours;
+                yearlyTotalAmount += monthAmount;
+                yearlyTotalBonus += monthBonus;
+                yearlyWorkDays += monthDays;
+            }
+            
+            // 添加合计行
+            data.push([
+                '年度合计',
+                yearlyWorkDays,
+                yearlyTotalHours.toFixed(1),
+                yearlyTotalAmount.toFixed(1),
+                yearlyTotalBonus.toFixed(1),
+                (yearlyTotalAmount + yearlyTotalBonus).toFixed(1)
+            ]);
+            
+            // 创建工作簿
+            const ws = XLSX.utils.aoa_to_sheet(data);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, year + '年度统计');
+            
+            // 下载文件
+            XLSX.writeFile(wb, year + '年度收入统计.xlsx');
+            
+            showNotification('年度统计已导出', 'success');
         }
 
         function openIncomeModal(dateKey) {
@@ -7661,16 +9771,37 @@
 
         function saveFeedback() {
             const data = getFeedbackFormData();
-            
+
             if (!validateFeedback(data)) {
                 return;
             }
-            
+
             feedbackData.unshift(data);
             saveFeedbackData();
             renderFeedbackHistory();
             clearFeedbackForm();
             showNotification('反馈保存成功', 'success');
+        }
+
+        // 插入模板文本
+        function insertTemplate(fieldId, templateText) {
+            const textarea = document.getElementById('feedback' + fieldId.charAt(0).toUpperCase() + fieldId.slice(1));
+            if (!textarea) return;
+
+            const start = textarea.selectionStart;
+            const end = textarea.selectionEnd;
+            const currentValue = textarea.value;
+
+            // 在光标位置插入模板
+            const newValue = currentValue.substring(0, start) + templateText + currentValue.substring(end);
+            textarea.value = newValue;
+
+            // 设置光标位置
+            const newCursorPos = start + templateText.length;
+            textarea.setSelectionRange(newCursorPos, newCursorPos);
+            textarea.focus();
+
+            showNotification('模板已插入', 'success');
         }
 
         function clearFeedbackForm() {
@@ -8131,21 +10262,32 @@
             if (totalIncomeEl) totalIncomeEl.textContent = totalIncome.toFixed(0) + '元';
         }
 
+        // 当前筛选后的学生数据
+        let filteredStudentsData = [];
+        let currentSortField = '';
+        let currentSortDirection = 'asc';
+
         function renderStudentList() {
             const tbody = document.getElementById('student-list-body');
             const emptyState = document.getElementById('student-empty-state');
+            const countEl = document.getElementById('student-list-count');
 
             if (!tbody || !emptyState) return;
 
-            if (studentsData.length === 0) {
+            // 使用筛选后的数据或全部数据
+            const dataToRender = filteredStudentsData.length > 0 || isFiltering() ? filteredStudentsData : studentsData;
+
+            if (dataToRender.length === 0) {
                 tbody.innerHTML = '';
                 emptyState.classList.remove('hidden');
+                if (countEl) countEl.textContent = `共 0 名学生`;
                 return;
             }
 
             emptyState.classList.add('hidden');
+            if (countEl) countEl.textContent = `共 ${dataToRender.length} 名学生`;
 
-            tbody.innerHTML = studentsData.map(student => {
+            tbody.innerHTML = dataToRender.map(student => {
                 const totalHours = parseFloat(student.totalHours) || 0;
                 const usedHours = parseFloat(student.usedHours) || 0;
                 const remainingHours = totalHours - usedHours;
@@ -8165,12 +10307,13 @@
                 }[student.status] || '在读';
 
                 const avatarText = student.name ? student.name.charAt(0) : '?';
+                const avatarColor = getAvatarColor(student.name);
 
                 return `
                     <tr class="hover:bg-gray-50 transition-colors">
                         <td class="px-6 py-4">
                             <div class="student-info-cell">
-                                <div class="student-avatar">${avatarText}</div>
+                                <div class="student-avatar" style="background: ${avatarColor};">${avatarText}</div>
                                 <div>
                                     <div class="student-name">${escapeHTML(student.name)}</div>
                                     ${student.phone ? `<div class="student-phone">${escapeHTML(student.phone)}</div>` : ''}
@@ -8185,9 +10328,9 @@
                             <div class="student-hours-info">
                                 <div class="student-hours-text">${usedHours.toFixed(1)} / ${totalHours.toFixed(0)} h</div>
                                 <div class="student-progress-bar">
-                                    <div class="student-progress-fill" style="width: ${Math.min(progressPercent, 100)}%"></div>
+                                    <div class="student-progress-fill ${progressPercent >= 90 ? 'bg-red-500' : progressPercent >= 70 ? 'bg-yellow-500' : 'bg-green-500'}" style="width: ${Math.min(progressPercent, 100)}%"></div>
                                 </div>
-                                <div class="student-hours-remaining">剩余 ${remainingHours.toFixed(1)} h</div>
+                                <div class="student-hours-remaining ${remainingHours < 5 ? 'text-red-500' : 'text-gray-500'}">剩余 ${remainingHours.toFixed(1)} h</div>
                             </div>
                         </td>
                         <td class="px-6 py-4 text-center">
@@ -8197,14 +10340,193 @@
                             <span class="student-status-badge ${statusClass}">${statusText}</span>
                         </td>
                         <td class="px-6 py-4 text-center">
-                            <button class="student-action-btn student-action-view" onclick="viewStudent('${student.id}')">
-                                <i class="fa fa-eye"></i> 查看
+                            <button class="student-action-btn student-action-view" onclick="viewStudent('${student.id}')" title="查看详情">
+                                <i class="fa fa-eye"></i>
                             </button>
-                            <button class="student-action-btn student-action-edit" onclick="editStudent('${student.id}')">
-                                <i class="fa fa-edit"></i> 编辑
+                            <button class="student-action-btn student-action-edit" onclick="editStudent('${student.id}')" title="编辑">
+                                <i class="fa fa-edit"></i>
                             </button>
                         </td>
                     </tr>
+                `;
+            }).join('');
+
+            // 更新图表
+            updateStudentCharts();
+        }
+
+        // 获取头像颜色
+        function getAvatarColor(name) {
+            const colors = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899', '#06b6d4', '#84cc16'];
+            let hash = 0;
+            for (let i = 0; i < name.length; i++) {
+                hash = name.charCodeAt(i) + ((hash << 5) - hash);
+            }
+            return colors[Math.abs(hash) % colors.length];
+        }
+
+        // 检查是否在筛选状态
+        function isFiltering() {
+            const searchValue = document.getElementById('student-search-input')?.value || '';
+            const gradeValue = document.getElementById('student-filter-grade')?.value || '';
+            const statusValue = document.getElementById('student-filter-status')?.value || '';
+            return searchValue || gradeValue || statusValue;
+        }
+
+        // 筛选学生
+        function filterStudents() {
+            const searchValue = (document.getElementById('student-search-input')?.value || '').toLowerCase();
+            const gradeValue = document.getElementById('student-filter-grade')?.value || '';
+            const statusValue = document.getElementById('student-filter-status')?.value || '';
+
+            filteredStudentsData = studentsData.filter(student => {
+                // 搜索筛选
+                const matchSearch = !searchValue || 
+                    (student.name && student.name.toLowerCase().includes(searchValue)) ||
+                    (student.school && student.school.toLowerCase().includes(searchValue)) ||
+                    (student.phone && student.phone.includes(searchValue));
+
+                // 年级筛选
+                const matchGrade = !gradeValue || student.grade === gradeValue;
+
+                // 状态筛选
+                const matchStatus = !statusValue || student.status === statusValue;
+
+                return matchSearch && matchGrade && matchStatus;
+            });
+
+            // 如果有排序，保持排序
+            if (currentSortField) {
+                sortStudentsData(filteredStudentsData, currentSortField, currentSortDirection);
+            }
+
+            renderStudentList();
+        }
+
+        // 排序学生
+        function sortStudents(field) {
+            // 切换排序方向
+            if (currentSortField === field) {
+                currentSortDirection = currentSortDirection === 'asc' ? 'desc' : 'asc';
+            } else {
+                currentSortField = field;
+                currentSortDirection = 'asc';
+            }
+
+            const dataToSort = filteredStudentsData.length > 0 || isFiltering() ? filteredStudentsData : studentsData;
+            sortStudentsData(dataToSort, field, currentSortDirection);
+            renderStudentList();
+        }
+
+        // 排序逻辑
+        function sortStudentsData(data, field, direction) {
+            data.sort((a, b) => {
+                let valueA, valueB;
+
+                switch (field) {
+                    case 'name':
+                        valueA = a.name || '';
+                        valueB = b.name || '';
+                        break;
+                    case 'grade':
+                        valueA = a.grade || '';
+                        valueB = b.grade || '';
+                        break;
+                    case 'hours':
+                        valueA = parseFloat(a.usedHours) || 0;
+                        valueB = parseFloat(b.usedHours) || 0;
+                        break;
+                    default:
+                        return 0;
+                }
+
+                if (direction === 'asc') {
+                    return valueA > valueB ? 1 : valueA < valueB ? -1 : 0;
+                } else {
+                    return valueA < valueB ? 1 : valueA > valueB ? -1 : 0;
+                }
+            });
+        }
+
+        // 更新学生图表
+        function updateStudentCharts() {
+            updateGradeChart();
+            updateStatusChart();
+        }
+
+        // 年级分布图
+        function updateGradeChart() {
+            const chartEl = document.getElementById('student-grade-chart');
+            if (!chartEl) return;
+
+            const gradeCount = {};
+            studentsData.forEach(student => {
+                const grade = student.grade || '未分类';
+                gradeCount[grade] = (gradeCount[grade] || 0) + 1;
+            });
+
+            const grades = Object.keys(gradeCount).sort();
+            const maxCount = Math.max(...Object.values(gradeCount), 1);
+
+            const colors = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899', '#06b6d4'];
+
+            chartEl.innerHTML = grades.map((grade, index) => {
+                const count = gradeCount[grade];
+                const height = (count / maxCount * 100);
+                const color = colors[index % colors.length];
+                return `
+                    <div class="flex flex-col items-center" style="flex: 1;">
+                        <div style="height: ${height}%; background: ${color}; width: 100%; max-width: 60px; border-radius: 4px 4px 0 0; min-height: 20px; position: relative;" title="${grade}: ${count}人">
+                            <span style="position: absolute; top: -20px; left: 50%; transform: translateX(-50%); font-size: 12px; font-weight: 600;">${count}</span>
+                        </div>
+                        <span style="font-size: 11px; margin-top: 4px; color: #666;">${grade}</span>
+                    </div>
+                `;
+            }).join('') || '<div class="text-gray-400 text-sm">暂无数据</div>';
+        }
+
+        // 状态分布图
+        function updateStatusChart() {
+            const chartEl = document.getElementById('student-status-chart');
+            if (!chartEl) return;
+
+            const statusCount = { active: 0, paused: 0, graduated: 0 };
+            studentsData.forEach(student => {
+                if (statusCount[student.status] !== undefined) {
+                    statusCount[student.status]++;
+                }
+            });
+
+            const total = studentsData.length;
+            if (total === 0) {
+                chartEl.innerHTML = '<div class="text-gray-400 text-sm">暂无数据</div>';
+                return;
+            }
+
+            const statusConfig = {
+                active: { label: '在读', color: '#10b981', icon: 'fa-user-check' },
+                paused: { label: '暂停', color: '#f59e0b', icon: 'fa-pause-circle' },
+                graduated: { label: '结课', color: '#6b7280', icon: 'fa-graduation-cap' }
+            };
+
+            chartEl.innerHTML = Object.entries(statusCount).map(([status, count]) => {
+                const config = statusConfig[status];
+                const percent = ((count / total) * 100).toFixed(1);
+                return `
+                    <div class="flex items-center gap-3 mb-3 w-full max-w-[200px]">
+                        <div class="w-10 h-10 rounded-full flex items-center justify-center" style="background: ${config.color}20;">
+                            <i class="fa ${config.icon}" style="color: ${config.color};"></i>
+                        </div>
+                        <div class="flex-1">
+                            <div class="flex justify-between items-center mb-1">
+                                <span class="text-sm font-medium">${config.label}</span>
+                                <span class="text-sm font-bold" style="color: ${config.color};">${count}人 (${percent}%)</span>
+                            </div>
+                            <div style="height: 8px; background: #e5e7eb; border-radius: 4px; overflow: hidden;">
+                                <div style="height: 100%; width: ${percent}%; background: ${config.color}; border-radius: 4px;"></div>
+                            </div>
+                        </div>
+                    </div>
                 `;
             }).join('');
         }
@@ -9363,8 +11685,11 @@
                 
                 // 然后初始化各模块
                 initTheme();
+                initDraggableWidgets();
                 initWeather();
                 startWeatherAutoRefresh();
+                initCountdown();
+                startCountdownAutoRefresh();
                 initTomato();
                 initSchedule();
                 initGeometryDrawing();
