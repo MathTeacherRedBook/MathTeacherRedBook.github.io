@@ -2117,35 +2117,52 @@
         <button class="nav-tab" data-tab="income" role="tab" aria-selected="false">💰 收入记录</button>
         <button class="nav-tab" data-tab="students" role="tab" aria-selected="false">👨‍🎓 学生管理</button>
         <button class="nav-tab" data-tab="feedback" role="tab" aria-selected="false">📝 课后反馈</button>
+        <button class="nav-tab" data-tab="panlinks" role="tab" aria-selected="false">☁️ 网盘链接</button>
     </div>
 
     <!-- 主页 -->
     <div class="tab-content active" id="home" style="position: relative; min-height: 100vh;">
         <!-- 天气模块 - 只在主页显示，可拖拽 -->
-        <div id="weatherWidget" class="draggable-widget" style="position: fixed; top: 100px; right: 20px; z-index: 100; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); padding: 12px; min-width: 160px; border: 1px solid rgba(0,0,0,0.1); user-select: none;">
+        <div id="weatherWidget" class="draggable-widget" style="position: fixed; top: 100px; right: 20px; z-index: 100; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); padding: 12px; min-width: 200px; border: 1px solid rgba(0,0,0,0.1); user-select: none;">
             <div class="drag-handle" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; cursor: grab; padding: 4px; border-radius: 8px;" title="按住拖拽移动">
                 <span style="font-size: 12px; font-weight: 500; color: #666; display: flex; align-items: center; gap: 4px;">
-                    📍 <span id="weatherCity">定位中...</span>
-                    <button onclick="event.stopPropagation(); requestLocationPermission()" style="color: #3b82f6; font-size: 12px; cursor: pointer; background: none; border: none; padding: 2px;" title="重新定位">
-                        <i class="fa fa-location-arrow"></i>
-                    </button>
+                    🌤️ 天气
                 </span>
                 <div style="display: flex; align-items: center; gap: 4px;">
+                    <button onclick="event.stopPropagation(); showCitySelector()" style="color: #3b82f6; font-size: 12px; cursor: pointer; background: none; border: none; padding: 2px;" title="添加城市">
+                        <i class="fa fa-plus"></i>
+                    </button>
                     <button onclick="event.stopPropagation(); refreshWeather()" style="color: #999; font-size: 12px; cursor: pointer; background: none; border: none; padding: 2px;" title="刷新天气">
                         <i class="fa fa-refresh"></i>
                     </button>
                     <span style="color: #ccc; font-size: 12px; cursor: grab;">⋮⋮</span>
                 </div>
             </div>
-            <div id="weatherContent" style="text-align: center; pointer-events: none;">
-                <div style="font-size: 28px; margin-bottom: 4px;" id="weatherIcon">🌤️</div>
-                <div style="font-size: 22px; font-weight: bold; color: #333;" id="weatherTemp">--°</div>
-                <div style="font-size: 12px; color: #666;" id="weatherDesc">加载中...</div>
-                <div style="display: flex; justify-content: center; gap: 12px; margin-top: 6px; font-size: 11px; color: #888;">
-                    <span>💧 <span id="weatherHumidity">--%</span></span>
-                    <span>💨 <span id="weatherWind">--级</span></span>
+            
+            <!-- 城市标签页 -->
+            <div id="weatherTabs" style="display: flex; gap: 4px; margin-bottom: 8px; overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none;">
+                <!-- 动态生成城市标签 -->
+            </div>
+            
+            <!-- 天气内容区域 -->
+            <div id="weatherContentContainer">
+                <div id="weatherContent" style="text-align: center; pointer-events: none;">
+                    <div style="font-size: 12px; font-weight: 500; color: #666; margin-bottom: 4px; display: flex; align-items: center; justify-content: center; gap: 4px;">
+                        📍 <span id="weatherCity">定位中...</span>
+                        <button onclick="event.stopPropagation(); requestLocationPermission()" style="color: #3b82f6; font-size: 10px; cursor: pointer; background: none; border: none; padding: 2px; pointer-events: auto;" title="重新定位">
+                            <i class="fa fa-location-arrow"></i>
+                        </button>
+                    </div>
+                    <div style="font-size: 28px; margin-bottom: 4px;" id="weatherIcon">🌤️</div>
+                    <div style="font-size: 22px; font-weight: bold; color: #333;" id="weatherTemp">--°</div>
+                    <div style="font-size: 12px; color: #666;" id="weatherDesc">加载中...</div>
+                    <div style="display: flex; justify-content: center; gap: 12px; margin-top: 6px; font-size: 11px; color: #888;">
+                        <span>💧 <span id="weatherHumidity">--%</span></span>
+                        <span>💨 <span id="weatherWind">--级</span></span>
+                    </div>
                 </div>
             </div>
+            
             <div id="weatherError" style="display: none; text-align: center; font-size: 12px; color: #ef4444;">
                 获取天气失败
                 <button onclick="event.stopPropagation(); initWeather()" style="display: block; margin: 4px auto 0; color: #3b82f6; text-decoration: underline; background: none; border: none; cursor: pointer; pointer-events: auto;">重试</button>
@@ -2154,6 +2171,52 @@
                 <p style="margin-bottom: 8px;">需要获取您的位置</p>
                 <button onclick="event.stopPropagation(); requestLocationPermission()" style="background: #3b82f6; color: white; padding: 4px 12px; border-radius: 6px; font-size: 12px; border: none; cursor: pointer;">允许定位</button>
                 <button onclick="event.stopPropagation(); useDefaultLocation()" style="color: #666; padding: 4px 8px; font-size: 12px; background: none; border: none; cursor: pointer; margin-left: 4px;">使用默认</button>
+            </div>
+        </div>
+        
+        <!-- 城市选择器模态框 -->
+        <div id="citySelectorModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center;">
+            <div style="background: white; border-radius: 16px; padding: 20px; width: 90%; max-width: 400px; max-height: 80vh; overflow-y: auto;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                    <h3 style="font-size: 16px; font-weight: 600; color: #333;">添加城市</h3>
+                    <button onclick="closeCitySelector()" style="background: none; border: none; font-size: 20px; color: #999; cursor: pointer;">&times;</button>
+                </div>
+                
+                <!-- 搜索框 -->
+                <div style="position: relative; margin-bottom: 16px;">
+                    <input type="text" id="citySearchInput" placeholder="搜索城市..." style="width: 100%; padding: 10px 12px 10px 36px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 14px; outline: none;" oninput="searchCities(this.value)">
+                    <i class="fa fa-search" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #9ca3af;"></i>
+                </div>
+                
+                <!-- 搜索结果 -->
+                <div id="citySearchResults" style="max-height: 200px; overflow-y: auto; margin-bottom: 16px;">
+                    <!-- 动态生成搜索结果 -->
+                </div>
+                
+                <!-- 热门城市 -->
+                <div>
+                    <h4 style="font-size: 12px; color: #9ca3af; margin-bottom: 8px; text-transform: uppercase;">热门城市</h4>
+                    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                        <button onclick="addCityByName('北京')" style="padding: 6px 12px; background: #f3f4f6; border: none; border-radius: 6px; font-size: 13px; cursor: pointer; color: #374151;">北京</button>
+                        <button onclick="addCityByName('上海')" style="padding: 6px 12px; background: #f3f4f6; border: none; border-radius: 6px; font-size: 13px; cursor: pointer; color: #374151;">上海</button>
+                        <button onclick="addCityByName('广州')" style="padding: 6px 12px; background: #f3f4f6; border: none; border-radius: 6px; font-size: 13px; cursor: pointer; color: #374151;">广州</button>
+                        <button onclick="addCityByName('深圳')" style="padding: 6px 12px; background: #f3f4f6; border: none; border-radius: 6px; font-size: 13px; cursor: pointer; color: #374151;">深圳</button>
+                        <button onclick="addCityByName('杭州')" style="padding: 6px 12px; background: #f3f4f6; border: none; border-radius: 6px; font-size: 13px; cursor: pointer; color: #374151;">杭州</button>
+                        <button onclick="addCityByName('南京')" style="padding: 6px 12px; background: #f3f4f6; border: none; border-radius: 6px; font-size: 13px; cursor: pointer; color: #374151;">南京</button>
+                        <button onclick="addCityByName('成都')" style="padding: 6px 12px; background: #f3f4f6; border: none; border-radius: 6px; font-size: 13px; cursor: pointer; color: #374151;">成都</button>
+                        <button onclick="addCityByName('武汉')" style="padding: 6px 12px; background: #f3f4f6; border: none; border-radius: 6px; font-size: 13px; cursor: pointer; color: #374151;">武汉</button>
+                        <button onclick="addCityByName('西安')" style="padding: 6px 12px; background: #f3f4f6; border: none; border-radius: 6px; font-size: 13px; cursor: pointer; color: #374151;">西安</button>
+                        <button onclick="addCityByName('重庆')" style="padding: 6px 12px; background: #f3f4f6; border: none; border-radius: 6px; font-size: 13px; cursor: pointer; color: #374151;">重庆</button>
+                    </div>
+                </div>
+                
+                <!-- 已添加城市列表 -->
+                <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid #e5e7eb;">
+                    <h4 style="font-size: 12px; color: #9ca3af; margin-bottom: 8px; text-transform: uppercase;">我的城市</h4>
+                    <div id="myCitiesList" style="display: flex; flex-direction: column; gap: 8px;">
+                        <!-- 动态生成已添加城市 -->
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -2439,10 +2502,16 @@
                                 <div class="flex-1">
                                     <h3 class="text-lg font-bold text-gray-900 mb-2">数据备份</h3>
                                     <p class="text-gray-600 text-sm mb-4">将所有数据导出为JSON文件，保存到安全位置。重装系统或更换电脑前请务必备份！</p>
-                                    <div class="flex gap-2">
+                                    <div class="flex gap-2 flex-wrap">
                                         <button onclick="exportAllData()" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2">
                                             <i class="fa fa-file-archive-o"></i>导出全部数据
                                         </button>
+                                        <button onclick="checkBackupStatus()" class="bg-white hover:bg-gray-50 text-gray-700 border border-gray-300 px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2">
+                                            <i class="fa fa-info-circle"></i>备份状态
+                                        </button>
+                                    </div>
+                                    <div id="lastBackupInfo" class="mt-3 text-xs text-gray-500">
+                                        <!-- 动态显示上次备份时间 -->
                                     </div>
                                 </div>
                             </div>
@@ -2456,7 +2525,7 @@
                                 </div>
                                 <div class="flex-1">
                                     <h3 class="text-lg font-bold text-gray-900 mb-2">数据恢复</h3>
-                                    <p class="text-gray-600 text-sm mb-4">从备份文件恢复数据。注意：恢复数据将覆盖当前所有数据，请谨慎操作！</p>
+                                    <p class="text-gray-600 text-sm mb-4">从备份文件恢复数据。支持选择性恢复，可以选择只恢复特定类型的数据。</p>
                                     <div class="flex gap-2">
                                         <button onclick="document.getElementById('data-restore-file').click()" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2">
                                             <i class="fa fa-file-o"></i>导入备份文件
@@ -3789,6 +3858,121 @@
         </div>
     </div>
 
+    <!-- 百度网盘链接管理 -->
+    <div class="tab-content" id="panlinks">
+        <div class="max-w-7xl mx-auto px-4 py-4 mb-4">
+            <button onclick="switchToTab('home')" class="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors">
+                <i class="fa fa-arrow-left"></i>
+                返回主页
+            </button>
+        </div>
+        <main class="container mx-auto px-4 md:px-6 py-6 md:py-8">
+            <!-- 页面标题 -->
+            <div class="text-center mb-8">
+                <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-2">☁️ 百度网盘链接管理</h1>
+                <p class="text-gray-600">管理教学资料、试卷等网盘分享链接</p>
+            </div>
+
+            <div class="flex flex-col lg:flex-row gap-6">
+                <!-- 左侧：添加/编辑链接表单 -->
+                <div class="lg:w-1/3">
+                    <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 sticky top-4">
+                        <h2 class="text-xl font-semibold text-gray-900 mb-6 flex items-center gap-2">
+                            <i class="fa fa-plus-circle text-blue-500"></i>
+                            <span id="panFormTitle">添加链接</span>
+                        </h2>
+                        
+                        <form id="panLinkForm" class="space-y-4">
+                            <input type="hidden" id="panLinkId">
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">链接名称 <span class="text-red-500">*</span></label>
+                                <input type="text" id="panLinkName" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-500" placeholder="例如：高一数学期中试卷">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">网盘链接 <span class="text-red-500">*</span></label>
+                                <input type="url" id="panLinkUrl" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-500" placeholder="https://pan.baidu.com/s/...">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">提取码</label>
+                                <input type="text" id="panLinkCode" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-500" placeholder="4位提取码（可选）" maxlength="4">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">分类</label>
+                                <select id="panLinkCategory" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-500">
+                                    <option value="试卷">📄 试卷</option>
+                                    <option value="课件">📚 课件</option>
+                                    <option value="资料">📖 资料</option>
+                                    <option value="视频">🎬 视频</option>
+                                    <option value="其他">📦 其他</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">备注</label>
+                                <textarea id="panLinkNote" rows="2" class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 resize-none" placeholder="可选备注信息..."></textarea>
+                            </div>
+                            
+                            <div class="flex gap-3 pt-2">
+                                <button type="button" onclick="savePanLink()" class="flex-1 bg-blue-500 text-white py-2.5 px-4 rounded-lg font-medium hover:bg-blue-600 transition-colors flex items-center justify-center gap-2">
+                                    <i class="fa fa-save"></i>
+                                    <span id="panSaveBtnText">保存</span>
+                                </button>
+                                <button type="button" onclick="resetPanForm()" class="px-4 py-2.5 bg-gray-100 text-gray-700 rounded-lg font-medium hover:bg-gray-200 transition-colors">
+                                    <i class="fa fa-refresh"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- 右侧：链接列表 -->
+                <div class="lg:w-2/3">
+                    <!-- 搜索和筛选 -->
+                    <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 mb-4">
+                        <div class="flex flex-col sm:flex-row gap-3">
+                            <div class="flex-1 relative">
+                                <i class="fa fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                                <input type="text" id="panSearchInput" oninput="filterPanLinks()" class="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-500" placeholder="搜索链接名称...">
+                            </div>
+                            <select id="panFilterCategory" onchange="filterPanLinks()" class="px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-500">
+                                <option value="">全部分类</option>
+                                <option value="试卷">📄 试卷</option>
+                                <option value="课件">📚 课件</option>
+                                <option value="资料">📖 资料</option>
+                                <option value="视频">🎬 视频</option>
+                                <option value="其他">📦 其他</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- 链接列表 -->
+                    <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+                        <div class="flex justify-between items-center mb-4">
+                            <h2 class="text-xl font-semibold text-gray-900 flex items-center gap-2">
+                                <i class="fa fa-link text-blue-500"></i>
+                                链接列表
+                            </h2>
+                            <span id="panLinkCount" class="text-sm text-gray-500">共 0 条</span>
+                        </div>
+                        
+                        <div id="panLinksList" class="space-y-3">
+                            <!-- 动态生成 -->
+                            <div class="text-center text-gray-500 py-12">
+                                <i class="fa fa-cloud text-5xl mb-3 text-gray-300"></i>
+                                <p>暂无网盘链接</p>
+                                <p class="text-sm mt-1">点击左侧添加新链接</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
     <!-- 函数绘制程序 -->
     <div class="tab-content" id="function">
         <div class="max-w-7xl mx-auto px-4 py-4 mb-4">
@@ -4504,6 +4688,95 @@
         const WEATHER_API_URL = 'https://api.open-meteo.com/v1/forecast';
         const GEOCODING_API_URL = 'https://geocoding-api.open-meteo.com/v1/search';
 
+        // 繁体中文转简体中文映射表
+        const traditionalToSimplified = {
+            '臺': '台', '灣': '湾', '國': '国', '區': '区', '縣': '县',
+            '市': '市', '省': '省', '鄉': '乡', '鎮': '镇', '村': '村',
+            '東': '东', '西': '西', '南': '南', '北': '北', '中': '中',
+            '山': '山', '河': '河', '湖': '湖', '海': '海', '島': '岛',
+            '江': '江', '門': '门', '廣': '广', '州': '州', '長': '长',
+            '沙': '沙', '灘': '滩', '嶼': '屿', '崗': '岗', '巖': '岩',
+            '島': '岛', '峽': '峡', '崑': '昆', '嶺': '岭', '巔': '巅',
+            '廈': '厦', '漳': '漳', '泉': '泉', '莆': '莆', '寧': '宁',
+            '德': '德', '龍': '龙', '巖': '岩', '鷺': '鹭', '門': '门',
+            '廣': '广', '汕': '汕', '頭': '头', '佛': '佛', '山': '山',
+            '莞': '莞', '珠': '珠', '江': '江', '惠': '惠', '肇': '肇',
+            '慶': '庆', '清': '清', '遠': '远', '韶': '韶', '關': '关',
+            '梅': '梅', '汕': '汕', '尾': '尾', '陽': '阳', '茂': '茂',
+            '名': '名', '雲': '云', '浮': '浮', '梧': '梧', '州': '州',
+            '賀': '贺', '玉': '玉', '林': '林', '百': '百', '色': '色',
+            '欽': '钦', '州': '州', '貴': '贵', '港': '港', '防': '防',
+            '城': '城', '崇': '崇', '左': '左', '來': '来', '賓': '宾',
+            '融': '融', '安': '安', '柳': '柳', '州': '州', '桂': '桂',
+            '林': '林', '北': '北', '海': '海', '蘇': '苏', '杭': '杭',
+            '寧': '宁', '溫': '温', '紹': '绍', '興': '兴', '嘉': '嘉',
+            '湖': '湖', '金': '金', '華': '华', '衢': '衢', '舟': '舟',
+            '臺': '台', '麗': '丽', '水': '水', '鹽': '盐', '揚': '扬',
+            '鎮': '镇', '江': '江', '泰': '泰', '州': '州', '宿': '宿',
+            '遷': '迁', '連': '连', '雲': '云', '港': '港', '淮': '淮',
+            '安': '安', '南': '南', '通': '通', '宿': '宿', '遷': '迁',
+            '徐': '徐', '州': '州', '常': '常', '熟': '熟', '昆': '昆',
+            '山': '山', '太': '太', '倉': '仓', '張': '张', '家': '家',
+            '港': '港', '吳': '吴', '江': '江', '義': '义', '烏': '乌',
+            '諸': '诸', '暨': '暨', '嵊': '嵊', '州': '州', '上': '上',
+            '虞': '虞', '海': '海', '寧': '宁', '平': '平', '湖': '湖',
+            '桐': '桐', '鄉': '乡', '蘭': '兰', '溪': '溪', '永': '永',
+            '康': '康', '東': '东', '陽': '阳', '義': '义', '烏': '乌',
+            '臨': '临', '海': '海', '溫': '温', '嶺': '岭', '瑞': '瑞',
+            '安': '安', '樂': '乐', '清': '清', '平': '平', '陽': '阳',
+            '蒼': '苍', '南': '南', '龍': '龙', '港': '港', '江': '江',
+            '陰': '阴', '宜': '宜', '興': '兴', '新': '新', '沂': '沂',
+            '邳': '邳', '州': '州', '溧': '溧', '陽': '阳', '金': '金',
+            '壇': '坛', '武': '武', '進': '进', '溧': '溧', '水': '水',
+            '高': '高', '淳': '淳', '無': '无', '錫': '锡', '江': '江',
+            '陰': '阴', '宜': '宜', '興': '兴', '蘇': '苏', '州': '州',
+            '常': '常', '熟': '熟', '張': '张', '家': '家', '港': '港',
+            '崑': '昆', '山': '山', '太': '太', '倉': '仓', '吳': '吴',
+            '江': '江', '如': '如', '皋': '皋', '海': '海', '門': '门',
+            '啟': '启', '東': '东', '如': '如', '東': '东', '通': '通',
+            '州': '州', '海': '海', '安': '安', '東': '东', '臺': '台',
+            '大': '大', '豐': '丰', '儀': '仪', '徵': '征', '高': '高',
+            '郵': '邮', '寶': '宝', '應': '应', '興': '兴', '化': '化',
+            '靖': '靖', '江': '江', '泰': '泰', '興': '兴', '姜': '姜',
+            '堰': '堰', '句': '句', '容': '容', '揚': '扬', '中': '中',
+            '丹': '丹', '陽': '阳', '句': '句', '容': '容', '丹': '丹',
+            '徒': '徒', '潤': '润', '州': '州', '京': '京', '口': '口',
+            '維': '维', '揚': '扬', '邗': '邗', '江': '江', '廣': '广',
+            '陵': '陵', '江': '江', '都': '都', '邗': '邗', '江': '江',
+            '儀': '仪', '徵': '征', '高': '高', '郵': '邮', '寶': '宝',
+            '應': '应', '江': '江', '都': '都', '邗': '邗', '江': '江',
+            '儀': '仪', '徵': '征', '高': '高', '郵': '邮', '寶': '宝',
+            '應': '应', '興': '兴', '化': '化', '靖': '靖', '江': '江',
+            '泰': '泰', '興': '兴', '姜': '姜', '堰': '堰', '句': '句',
+            '容': '容', '揚': '扬', '中': '中', '丹': '丹', '陽': '阳',
+            '句': '句', '容': '容', '丹': '丹', '徒': '徒', '潤': '润',
+            '州': '州', '京': '京', '口': '口', '維': '维', '揚': '扬',
+            '邗': '邗', '江': '江', '廣': '广', '陵': '陵', '江': '江',
+            '都': '都', '邗': '邗', '江': '江', '儀': '仪', '徵': '征',
+            '高': '高', '郵': '邮', '寶': '宝', '應': '应', '江': '江',
+            '都': '都', '邗': '邗', '江': '江', '儀': '仪', '徵': '征',
+            '高': '高', '郵': '邮', '寶': '宝', '應': '应', '興': '兴',
+            '化': '化', '靖': '靖', '江': '江', '泰': '泰', '興': '兴',
+            '姜': '姜', '堰': '堰', '句': '句', '容': '容', '揚': '扬',
+            '中': '中', '丹': '丹', '陽': '阳', '句': '句', '容': '容',
+            '丹': '丹', '徒': '徒', '潤': '润', '州': '州', '京': '京',
+            '口': '口', '維': '维', '揚': '扬', '邗': '邗', '江': '江',
+            '廣': '广', '陵': '陵', '江': '江', '都': '都', '邗': '邗',
+            '江': '江', '儀': '仪', '徵': '征', '高': '高', '郵': '邮',
+            '寶': '宝', '應': '应', '興': '兴', '化': '化', '靖': '靖',
+            '江': '江', '泰': '泰', '興': '兴', '姜': '姜', '堰': '堰'
+        };
+
+        // 繁体中文转简体中文函数
+        function convertToSimplified(text) {
+            if (!text) return text;
+            let result = text;
+            for (const [trad, simp] of Object.entries(traditionalToSimplified)) {
+                result = result.replace(new RegExp(trad, 'g'), simp);
+            }
+            return result;
+        }
+
         // 天气图标映射
         const weatherIcons = {
             0: '☀️', // 晴天
@@ -4561,89 +4834,324 @@
         };
 
         let currentWeatherData = null;
+        let weatherCities = JSON.parse(localStorage.getItem('weatherCities')) || [];
+        let currentCityIndex = parseInt(localStorage.getItem('currentCityIndex')) || 0;
+        let citySearchResultsCache = [];
 
+        // 初始化天气模块
         async function initWeather() {
-            const widget = document.getElementById('weatherWidget');
-            const content = document.getElementById('weatherContent');
-            const error = document.getElementById('weatherError');
+            // 如果没有城市数据，先尝试定位获取当前位置
+            if (weatherCities.length === 0) {
+                await initLocationWeather();
+            } else {
+                // 渲染城市标签并加载当前选中城市的天气
+                renderWeatherTabs();
+                await loadCurrentCityWeather();
+            }
+        }
+
+        // 初始化定位天气（第一个城市）
+        async function initLocationWeather() {
             const cityEl = document.getElementById('weatherCity');
-
-            if (!widget) return;
-
-            // 显示加载状态
-            if (content) content.classList.remove('hidden');
-            if (error) error.classList.add('hidden');
             if (cityEl) cityEl.textContent = '定位中...';
 
             try {
-                // 尝试获取用户位置
                 let lat, lon, cityName;
 
-                // 先尝试从本地存储获取之前的位置
-                const savedLocation = localStorage.getItem('weatherLocation');
-                if (savedLocation) {
-                    const location = JSON.parse(savedLocation);
-                    // 检查位置是否过期（24小时）
-                    if (Date.now() - location.timestamp < 24 * 60 * 60 * 1000) {
-                        lat = location.lat;
-                        lon = location.lon;
-                        cityName = location.city;
+                // 首先尝试浏览器地理定位
+                if (navigator.geolocation) {
+                    try {
+                        const position = await getCurrentPosition();
+                        lat = position.coords.latitude;
+                        lon = position.coords.longitude;
+                        cityName = await getCityNameFromCoords(lat, lon);
+                    } catch (geoError) {
+                        console.log('浏览器定位失败，尝试IP定位:', geoError.message);
                     }
                 }
 
-                // 如果没有有效缓存，尝试获取新位置
+                // 如果浏览器定位失败，尝试IP定位
                 if (!lat || !lon) {
-                    // 首先尝试浏览器地理定位
-                    if (navigator.geolocation) {
-                        try {
-                            const position = await getCurrentPosition();
-                            lat = position.coords.latitude;
-                            lon = position.coords.longitude;
-
-                            // 通过逆地理编码获取城市名
-                            cityName = await getCityNameFromCoords(lat, lon);
-
-                            // 保存位置信息
-                            localStorage.setItem('weatherLocation', JSON.stringify({
-                                lat, lon, city: cityName,
-                                timestamp: Date.now()
-                            }));
-                        } catch (geoError) {
-                            console.log('浏览器定位失败，尝试IP定位:', geoError.message);
-                        }
-                    }
-
-                    // 如果浏览器定位失败，尝试IP定位
-                    if (!lat || !lon) {
-                        try {
-                            const ipResponse = await fetch('https://ipapi.co/json/');
-                            const ipData = await ipResponse.json();
-                            lat = ipData.latitude;
-                            lon = ipData.longitude;
-                            cityName = ipData.city;
-
-                            // 保存位置信息
-                            localStorage.setItem('weatherLocation', JSON.stringify({
-                                lat, lon, city: cityName,
-                                timestamp: Date.now()
-                            }));
-                        } catch (ipError) {
-                            console.log('IP定位失败，使用默认位置（北京）');
-                            // 使用北京作为默认位置
-                            lat = 39.9042;
-                            lon = 116.4074;
-                            cityName = '北京';
-                        }
+                    try {
+                        const ipResponse = await fetch('https://ipapi.co/json/');
+                        const ipData = await ipResponse.json();
+                        lat = ipData.latitude;
+                        lon = ipData.longitude;
+                        cityName = ipData.city;
+                    } catch (ipError) {
+                        console.log('IP定位失败，使用默认位置（北京）');
+                        lat = 39.9042;
+                        lon = 116.4074;
+                        cityName = '北京';
                     }
                 }
 
-                // 获取天气数据
+                // 添加定位城市到列表
+                const locationCity = {
+                    id: Date.now(),
+                    name: cityName,
+                    lat: lat,
+                    lon: lon,
+                    isLocation: true
+                };
+
+                weatherCities = [locationCity];
+                saveWeatherCities();
+                currentCityIndex = 0;
+                saveCurrentCityIndex();
+
+                renderWeatherTabs();
                 await fetchWeatherData(lat, lon, cityName);
 
             } catch (error) {
                 console.error('天气初始化失败:', error);
                 showWeatherError();
             }
+        }
+
+        // 保存城市列表
+        function saveWeatherCities() {
+            localStorage.setItem('weatherCities', JSON.stringify(weatherCities));
+        }
+
+        // 保存当前选中的城市索引
+        function saveCurrentCityIndex() {
+            localStorage.setItem('currentCityIndex', currentCityIndex.toString());
+        }
+
+        // 渲染城市标签页
+        function renderWeatherTabs() {
+            const tabsContainer = document.getElementById('weatherTabs');
+            if (!tabsContainer) return;
+
+            if (weatherCities.length === 0) {
+                tabsContainer.innerHTML = '';
+                return;
+            }
+
+            tabsContainer.innerHTML = weatherCities.map((city, index) => `
+                <button onclick="switchToCity(${index})" 
+                        style="padding: 4px 10px; border-radius: 6px; font-size: 12px; white-space: nowrap; cursor: pointer; border: none; 
+                               ${index === currentCityIndex ? 'background: #3b82f6; color: white;' : 'background: #f3f4f6; color: #666;'}
+                               display: flex; align-items: center; gap: 4px;">
+                    ${city.isLocation ? '📍' : '🏙️'} ${city.name}
+                    ${!city.isLocation ? `<span onclick="event.stopPropagation(); removeCity(${index})" style="margin-left: 4px; opacity: 0.6;">&times;</span>` : ''}
+                </button>
+            `).join('');
+        }
+
+        // 切换到指定城市
+        async function switchToCity(index) {
+            if (index < 0 || index >= weatherCities.length) return;
+            currentCityIndex = index;
+            saveCurrentCityIndex();
+            renderWeatherTabs();
+            await loadCurrentCityWeather();
+        }
+
+        // 加载当前城市的天气
+        async function loadCurrentCityWeather() {
+            if (weatherCities.length === 0) return;
+
+            const city = weatherCities[currentCityIndex];
+            if (!city) return;
+
+            const content = document.getElementById('weatherContent');
+            const error = document.getElementById('weatherError');
+
+            if (content) content.classList.remove('hidden');
+            if (error) error.classList.add('hidden');
+
+            await fetchWeatherData(city.lat, city.lon, city.name);
+        }
+
+        // 显示城市选择器
+        function showCitySelector() {
+            const modal = document.getElementById('citySelectorModal');
+            if (modal) {
+                modal.style.display = 'flex';
+                renderMyCitiesList();
+                document.getElementById('citySearchInput')?.focus();
+            }
+        }
+
+        // 关闭城市选择器
+        function closeCitySelector() {
+            const modal = document.getElementById('citySelectorModal');
+            if (modal) {
+                modal.style.display = 'none';
+                document.getElementById('citySearchInput').value = '';
+                document.getElementById('citySearchResults').innerHTML = '';
+            }
+        }
+
+        // 搜索城市
+        async function searchCities(query) {
+            const resultsContainer = document.getElementById('citySearchResults');
+            if (!resultsContainer) return;
+
+            if (!query || query.length < 2) {
+                resultsContainer.innerHTML = '';
+                return;
+            }
+
+            try {
+                const response = await fetch(`${GEOCODING_API_URL}?name=${encodeURIComponent(query)}&count=10&language=zh&format=json`);
+                const data = await response.json();
+
+                if (data.results && data.results.length > 0) {
+                    citySearchResultsCache = data.results;
+                    resultsContainer.innerHTML = data.results.map((city, index) => {
+                        const cityName = convertToSimplified(city.name);
+                        const admin1 = city.admin1 ? convertToSimplified(city.admin1) : '';
+                        const country = city.country || '';
+                        return `
+                            <div onclick="addCityFromSearch(${index})" 
+                                 style="padding: 10px 12px; cursor: pointer; border-bottom: 1px solid #f3f4f6; display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <div style="font-weight: 500; color: #374151;">${cityName}</div>
+                                    <div style="font-size: 12px; color: #9ca3af;">${admin1} ${country}</div>
+                                </div>
+                                <i class="fa fa-plus" style="color: #3b82f6;"></i>
+                            </div>
+                        `;
+                    }).join('');
+                } else {
+                    resultsContainer.innerHTML = '<div style="padding: 12px; color: #9ca3af; text-align: center;">未找到相关城市</div>';
+                }
+            } catch (error) {
+                console.error('搜索城市失败:', error);
+                resultsContainer.innerHTML = '<div style="padding: 12px; color: #ef4444; text-align: center;">搜索失败，请重试</div>';
+            }
+        }
+
+        // 从搜索结果添加城市
+        function addCityFromSearch(index) {
+            const city = citySearchResultsCache[index];
+            if (!city) return;
+
+            const cityName = convertToSimplified(city.name);
+
+            // 检查是否已存在
+            if (weatherCities.some(c => c.name === cityName)) {
+                showNotification('该城市已添加', 'warning');
+                return;
+            }
+
+            const newCity = {
+                id: Date.now(),
+                name: cityName,
+                lat: city.latitude,
+                lon: city.longitude,
+                isLocation: false
+            };
+
+            weatherCities.push(newCity);
+            saveWeatherCities();
+            renderWeatherTabs();
+            renderMyCitiesList();
+
+            showNotification(`已添加 ${cityName}`, 'success');
+
+            // 清空搜索
+            document.getElementById('citySearchInput').value = '';
+            document.getElementById('citySearchResults').innerHTML = '';
+        }
+
+        // 通过名称添加城市（热门城市按钮）
+        async function addCityByName(name) {
+            // 检查是否已存在
+            if (weatherCities.some(c => c.name === name)) {
+                showNotification('该城市已添加', 'warning');
+                return;
+            }
+
+            try {
+                const response = await fetch(`${GEOCODING_API_URL}?name=${encodeURIComponent(name)}&count=1&language=zh&format=json`);
+                const data = await response.json();
+
+                if (data.results && data.results.length > 0) {
+                    const city = data.results[0];
+                    const newCity = {
+                        id: Date.now(),
+                        name: name,
+                        lat: city.latitude,
+                        lon: city.longitude,
+                        isLocation: false
+                    };
+
+                    weatherCities.push(newCity);
+                    saveWeatherCities();
+                    renderWeatherTabs();
+                    renderMyCitiesList();
+
+                    showNotification(`已添加 ${name}`, 'success');
+                } else {
+                    showNotification('未找到该城市', 'error');
+                }
+            } catch (error) {
+                console.error('添加城市失败:', error);
+                showNotification('添加失败，请重试', 'error');
+            }
+        }
+
+        // 删除城市
+        function removeCity(index) {
+            if (index < 0 || index >= weatherCities.length) return;
+
+            const city = weatherCities[index];
+            if (city.isLocation) {
+                showNotification('定位城市不能删除', 'warning');
+                return;
+            }
+
+            weatherCities.splice(index, 1);
+
+            // 调整当前选中索引
+            if (currentCityIndex >= weatherCities.length) {
+                currentCityIndex = Math.max(0, weatherCities.length - 1);
+            }
+
+            saveWeatherCities();
+            saveCurrentCityIndex();
+            renderWeatherTabs();
+            renderMyCitiesList();
+            loadCurrentCityWeather();
+
+            showNotification('城市已删除', 'success');
+        }
+
+        // 渲染我的城市列表（在城市选择器中）
+        function renderMyCitiesList() {
+            const container = document.getElementById('myCitiesList');
+            if (!container) return;
+
+            if (weatherCities.length === 0) {
+                container.innerHTML = '<div style="color: #9ca3af; font-size: 13px;">暂无城市</div>';
+                return;
+            }
+
+            container.innerHTML = weatherCities.map((city, index) => `
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: #f9fafb; border-radius: 6px;">
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span>${city.isLocation ? '📍' : '🏙️'}</span>
+                        <span style="font-size: 14px; color: #374151;">${city.name}</span>
+                        ${city.isLocation ? '<span style="font-size: 11px; color: #3b82f6; background: #eff6ff; padding: 2px 6px; border-radius: 4px;">定位</span>' : ''}
+                    </div>
+                    ${!city.isLocation ? `
+                        <button onclick="removeCity(${index})" style="background: none; border: none; color: #ef4444; cursor: pointer; font-size: 12px;">
+                            删除
+                        </button>
+                    ` : '<span style="font-size: 12px; color: #9ca3af;">默认</span>'}
+                </div>
+            `).join('');
+        }
+
+        // 刷新天气
+        async function refreshWeather() {
+            showNotification('正在刷新天气...', 'info');
+            await loadCurrentCityWeather();
+            showNotification('天气已更新', 'success');
         }
 
         // 获取浏览器当前位置
@@ -4691,8 +5199,9 @@
                     // 优先返回县区名称，如果没有则返回城市名称
                     const district = data.locality || data.city || data.principalSubdivision;
                     if (district) {
-                        // 清理名称，移除"市辖区"等后缀
-                        return district.replace(/市辖区$/, '').replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
+                        // 清理名称，移除"市辖区"等后缀，并转换为简体中文
+                        const cleaned = district.replace(/市辖区$/, '').replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
+                        return convertToSimplified(cleaned);
                     }
                 }
 
@@ -4715,7 +5224,9 @@
                     // 优先返回县区名称
                     const district = addr.district || addr.county || addr.city || addr.town || addr.village;
                     if (district) {
-                        return district.replace(/市辖区$/, '').replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
+                        // 清理名称并转换为简体中文
+                        const cleaned = district.replace(/市辖区$/, '').replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
+                        return convertToSimplified(cleaned);
                     }
                 }
 
@@ -4806,9 +5317,6 @@
             if (prompt) prompt.classList.add('hidden');
             if (content) content.classList.remove('hidden');
 
-            // 清除之前的位置缓存
-            localStorage.removeItem('weatherLocation');
-
             // 尝试获取浏览器定位
             if (navigator.geolocation) {
                 try {
@@ -4819,14 +5327,34 @@
                     // 获取城市名
                     const cityName = await getCityNameFromCoords(lat, lon);
 
-                    // 保存位置
-                    localStorage.setItem('weatherLocation', JSON.stringify({
-                        lat, lon, city: cityName,
-                        timestamp: Date.now()
-                    }));
+                    // 查找是否已有定位城市
+                    const locationCityIndex = weatherCities.findIndex(c => c.isLocation);
+
+                    if (locationCityIndex >= 0) {
+                        // 更新现有定位城市
+                        weatherCities[locationCityIndex].lat = lat;
+                        weatherCities[locationCityIndex].lon = lon;
+                        weatherCities[locationCityIndex].name = cityName;
+                    } else {
+                        // 添加新的定位城市到开头
+                        weatherCities.unshift({
+                            id: Date.now(),
+                            name: cityName,
+                            lat: lat,
+                            lon: lon,
+                            isLocation: true
+                        });
+                    }
+
+                    saveWeatherCities();
+                    renderWeatherTabs();
+
+                    // 切换到定位城市
+                    currentCityIndex = weatherCities.findIndex(c => c.isLocation);
+                    saveCurrentCityIndex();
 
                     // 获取天气
-                    await fetchWeatherData(lat, lon, cityName);
+                    await loadCurrentCityWeather();
                     showNotification('定位成功', 'success');
 
                 } catch (error) {
@@ -4856,13 +5384,32 @@
             const lon = 116.4074;
             const cityName = '北京';
 
-            // 保存默认位置
-            localStorage.setItem('weatherLocation', JSON.stringify({
-                lat, lon, city: cityName,
-                timestamp: Date.now()
-            }));
+            // 查找是否已有定位城市
+            const locationCityIndex = weatherCities.findIndex(c => c.isLocation);
 
-            await fetchWeatherData(lat, lon, cityName);
+            if (locationCityIndex >= 0) {
+                // 更新现有定位城市
+                weatherCities[locationCityIndex].lat = lat;
+                weatherCities[locationCityIndex].lon = lon;
+                weatherCities[locationCityIndex].name = cityName;
+            } else {
+                // 添加新的定位城市到开头
+                weatherCities.unshift({
+                    id: Date.now(),
+                    name: cityName,
+                    lat: lat,
+                    lon: lon,
+                    isLocation: true
+                });
+            }
+
+            saveWeatherCities();
+            renderWeatherTabs();
+
+            // 切换到定位城市
+            currentCityIndex = weatherCities.findIndex(c => c.isLocation);
+            saveCurrentCityIndex();
+
             showNotification('已使用默认位置（北京）', 'info');
         }
 
@@ -5187,7 +5734,7 @@
         }
 
         // ========== 数据备份与恢复 ==========
-        
+
         // 导出所有数据
         // 存储键名定义（避免依赖后面定义的常量）
         const BACKUP_KEYS = {
@@ -5196,14 +5743,35 @@
             FEEDBACK: 'teacherFeedbackData',
             COUNTDOWN: 'teacherToolsCountdowns',
             SCHEDULE: 'scheduleData',
-            SCHEDULE_SLOTS: 'scheduleTimeSlots'
+            SCHEDULE_SLOTS: 'scheduleTimeSlots',
+            PAN_LINKS: 'panLinks',
+            WEATHER_CITIES: 'weatherCities',
+            CURRENT_CITY_INDEX: 'currentCityIndex'
         };
+
+        // 获取所有本地存储的数据
+        function getAllLocalStorageData() {
+            const data = {};
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                try {
+                    data[key] = localStorage.getItem(key);
+                } catch (e) {
+                    console.warn(`无法读取本地存储键: ${key}`, e);
+                }
+            }
+            return data;
+        }
 
         function exportAllData() {
             try {
+                // 获取所有localStorage数据
+                const allLocalData = getAllLocalStorageData();
+
                 const allData = {
                     exportDate: new Date().toISOString(),
-                    version: '1.0',
+                    version: '2.0',
+                    appName: '独立数学老师辅助工具',
                     data: {
                         // 收入记录数据
                         income: {
@@ -5218,6 +5786,11 @@
                         scheduleTimeSlots: scheduleTimeSlots || [],
                         // 课后反馈数据
                         feedback: feedbackData || [],
+                        // 网盘链接数据
+                        panLinks: panLinksData || [],
+                        // 天气城市数据
+                        weatherCities: weatherCities || [],
+                        currentCityIndex: currentCityIndex || 0,
                         // 倒数日数据
                         countdown: localStorage.getItem(BACKUP_KEYS.COUNTDOWN),
                         // 番茄时钟数据
@@ -5228,24 +5801,29 @@
                         answerSheet: localStorage.getItem(CONFIG.STORAGE_KEYS.ANSWER_SHEET),
                         // 天气和倒数日位置
                         weatherPosition: localStorage.getItem('weatherWidgetPosition'),
-                        countdownPosition: localStorage.getItem('countdownWidgetPosition')
+                        countdownPosition: localStorage.getItem('countdownWidgetPosition'),
+                        // 其他本地存储数据（完整备份）
+                        localStorage: allLocalData
                     }
                 };
-                
+
                 // 转换为JSON字符串
                 const jsonStr = JSON.stringify(allData, null, 2);
-                
+
                 // 创建下载链接
                 const blob = new Blob([jsonStr], { type: 'application/json' });
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = url;
-                a.download = `教学工具数据备份_${new Date().toLocaleDateString().replace(/\//g, '-')}.json`;
+                a.download = `教学工具数据备份_${new Date().toLocaleDateString().replace(/\//g, '-')}_${new Date().toLocaleTimeString().replace(/:/g, '-')}.json`;
                 document.body.appendChild(a);
                 a.click();
                 document.body.removeChild(a);
                 URL.revokeObjectURL(url);
-                
+
+                // 更新上次备份时间
+                localStorage.setItem('lastBackupTime', Date.now().toString());
+
                 showNotification('数据备份成功！请妥善保存备份文件', 'success');
             } catch (error) {
                 console.error('数据备份失败:', error);
@@ -5257,76 +5835,393 @@
         function importAllData(event) {
             const file = event.target.files[0];
             if (!file) return;
-            
-            // 确认对话框
-            if (!confirm('警告：导入数据将覆盖当前所有数据！\n\n请确保已备份当前数据，或确认要导入的数据是正确的。\n\n是否继续？')) {
-                event.target.value = '';
-                return;
-            }
-            
+
             const reader = new FileReader();
             reader.onload = function(e) {
                 try {
                     const backup = JSON.parse(e.target.result);
-                    
+
                     // 验证备份文件格式
                     if (!backup.data || !backup.version) {
                         throw new Error('无效的备份文件格式');
                     }
-                    
-                    // 恢复收入记录数据
-                    if (backup.data.income) {
-                        incomeData = backup.data.income.data || {};
-                        incomeDefaultRate = backup.data.income.defaultRate || 200;
-                        if (backup.data.income.currentDate) {
-                            incomeCurrentDate = new Date(backup.data.income.currentDate);
-                        }
-                        localStorage.setItem(BACKUP_KEYS.INCOME, JSON.stringify(incomeData));
+
+                    // 显示备份预览和选择对话框
+                    showBackupPreview(backup, file.name);
+
+                } catch (error) {
+                    console.error('数据读取失败:', error);
+                    showNotification('数据读取失败：' + error.message, 'error');
+                }
+            };
+            reader.onerror = function() {
+                showNotification('文件读取失败', 'error');
+            };
+            reader.readAsText(file);
+
+            // 清空文件输入
+            event.target.value = '';
+        }
+
+        // 显示备份预览对话框
+        function showBackupPreview(backup, filename) {
+            // 创建模态框
+            const modal = document.createElement('div');
+            modal.id = 'backupPreviewModal';
+            modal.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 10000; display: flex; justify-content: center; align-items: center; padding: 20px;';
+
+            // 统计数据
+            const stats = {
+                income: backup.data.income ? Object.keys(backup.data.income.data || {}).length : 0,
+                students: backup.data.students ? backup.data.students.length : 0,
+                feedback: backup.data.feedback ? backup.data.feedback.length : 0,
+                panLinks: backup.data.panLinks ? backup.data.panLinks.length : 0,
+                weatherCities: backup.data.weatherCities ? backup.data.weatherCities.length : 0,
+                schedule: backup.data.schedule ? Object.keys(backup.data.schedule).length : 0
+            };
+
+            const exportDate = backup.exportDate ? new Date(backup.exportDate).toLocaleString('zh-CN') : '未知';
+            const version = backup.version || '1.0';
+
+            modal.innerHTML = `
+                <div style="background: white; border-radius: 16px; padding: 24px; width: 100%; max-width: 500px; max-height: 80vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.3);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <h3 style="font-size: 18px; font-weight: 600; color: #333; margin: 0;">📦 备份文件预览</h3>
+                        <button onclick="closeBackupPreview()" style="background: none; border: none; font-size: 24px; color: #999; cursor: pointer;">&times;</button>
+                    </div>
+
+                    <div style="background: #f9fafb; border-radius: 12px; padding: 16px; margin-bottom: 20px;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                            <span style="color: #666; font-size: 13px;">文件名</span>
+                            <span style="color: #333; font-size: 13px; font-weight: 500;">${filename}</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                            <span style="color: #666; font-size: 13px;">备份时间</span>
+                            <span style="color: #333; font-size: 13px;">${exportDate}</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <span style="color: #666; font-size: 13px;">版本</span>
+                            <span style="color: #333; font-size: 13px;">${version}</span>
+                        </div>
+                    </div>
+
+                    <h4 style="font-size: 14px; font-weight: 600; color: #333; margin-bottom: 12px;">选择要恢复的数据</h4>
+
+                    <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px;">
+                        <label style="display: flex; align-items: center; gap: 10px; padding: 12px; background: #f9fafb; border-radius: 8px; cursor: pointer;">
+                            <input type="checkbox" id="restore-income" checked style="width: 18px; height: 18px; accent-color: #3b82f6;">
+                            <span style="flex: 1; font-size: 14px; color: #374151;">💰 收入记录</span>
+                            <span style="font-size: 12px; color: #9ca3af;">${stats.income} 条记录</span>
+                        </label>
+
+                        <label style="display: flex; align-items: center; gap: 10px; padding: 12px; background: #f9fafb; border-radius: 8px; cursor: pointer;">
+                            <input type="checkbox" id="restore-students" checked style="width: 18px; height: 18px; accent-color: #3b82f6;">
+                            <span style="flex: 1; font-size: 14px; color: #374151;">👨‍🎓 学生管理</span>
+                            <span style="font-size: 12px; color: #9ca3af;">${stats.students} 名学生</span>
+                        </label>
+
+                        <label style="display: flex; align-items: center; gap: 10px; padding: 12px; background: #f9fafb; border-radius: 8px; cursor: pointer;">
+                            <input type="checkbox" id="restore-schedule" checked style="width: 18px; height: 18px; accent-color: #3b82f6;">
+                            <span style="flex: 1; font-size: 14px; color: #374151;">📅 课表数据</span>
+                            <span style="font-size: 12px; color: #9ca3af;">${stats.schedule} 个时段</span>
+                        </label>
+
+                        <label style="display: flex; align-items: center; gap: 10px; padding: 12px; background: #f9fafb; border-radius: 8px; cursor: pointer;">
+                            <input type="checkbox" id="restore-feedback" checked style="width: 18px; height: 18px; accent-color: #3b82f6;">
+                            <span style="flex: 1; font-size: 14px; color: #374151;">📝 课后反馈</span>
+                            <span style="font-size: 12px; color: #9ca3af;">${stats.feedback} 条记录</span>
+                        </label>
+
+                        <label style="display: flex; align-items: center; gap: 10px; padding: 12px; background: #f9fafb; border-radius: 8px; cursor: pointer;">
+                            <input type="checkbox" id="restore-panlinks" checked style="width: 18px; height: 18px; accent-color: #3b82f6;">
+                            <span style="flex: 1; font-size: 14px; color: #374151;">☁️ 网盘链接</span>
+                            <span style="font-size: 12px; color: #9ca3af;">${stats.panLinks} 个链接</span>
+                        </label>
+
+                        <label style="display: flex; align-items: center; gap: 10px; padding: 12px; background: #f9fafb; border-radius: 8px; cursor: pointer;">
+                            <input type="checkbox" id="restore-weather" checked style="width: 18px; height: 18px; accent-color: #3b82f6;">
+                            <span style="flex: 1; font-size: 14px; color: #374151;">🌤️ 天气城市</span>
+                            <span style="font-size: 12px; color: #9ca3af;">${stats.weatherCities} 个城市</span>
+                        </label>
+
+                        <label style="display: flex; align-items: center; gap: 10px; padding: 12px; background: #f9fafb; border-radius: 8px; cursor: pointer;">
+                            <input type="checkbox" id="restore-settings" checked style="width: 18px; height: 18px; accent-color: #3b82f6;">
+                            <span style="flex: 1; font-size: 14px; color: #374151;">⚙️ 应用设置</span>
+                            <span style="font-size: 12px; color: #9ca3af;">主题、位置等</span>
+                        </label>
+                    </div>
+
+                    <div style="background: #fef3c7; border-left: 4px solid #f59e0b; padding: 12px; border-radius: 0 8px 8px 0; margin-bottom: 20px;">
+                        <p style="margin: 0; font-size: 13px; color: #92400e;">
+                            <i class="fa fa-exclamation-triangle" style="margin-right: 6px;"></i>
+                            恢复数据将覆盖当前选中的数据类型，请确保已备份当前数据。
+                        </p>
+                    </div>
+
+                    <div style="display: flex; gap: 12px;">
+                        <button onclick="closeBackupPreview()" style="flex: 1; padding: 12px; background: #f3f4f6; border: none; border-radius: 8px; font-size: 14px; color: #666; cursor: pointer; font-weight: 500;">取消</button>
+                        <button onclick="executeRestore(${JSON.stringify(backup).replace(/"/g, '&quot;')})" style="flex: 1; padding: 12px; background: #3b82f6; border: none; border-radius: 8px; font-size: 14px; color: white; cursor: pointer; font-weight: 500;">恢复选中数据</button>
+                    </div>
+                </div>
+            `;
+
+            document.body.appendChild(modal);
+        }
+
+        // 关闭备份预览对话框
+        function closeBackupPreview() {
+            const modal = document.getElementById('backupPreviewModal');
+            if (modal) {
+                modal.remove();
+            }
+        }
+
+        // 检查备份状态
+        function checkBackupStatus() {
+            const lastBackup = localStorage.getItem('lastBackupTime');
+            const modal = document.createElement('div');
+            modal.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 10000; display: flex; justify-content: center; align-items: center; padding: 20px;';
+
+            let statusHtml = '';
+            if (!lastBackup) {
+                statusHtml = `
+                    <div style="background: #fef3c7; border-left: 4px solid #f59e0b; padding: 16px; border-radius: 0 8px 8px 0; margin-bottom: 16px;">
+                        <p style="margin: 0; color: #92400e; font-weight: 500;">⚠️ 尚未进行过数据备份</p>
+                        <p style="margin: 8px 0 0 0; color: #92400e; font-size: 13px;">建议立即备份，以防数据丢失！</p>
+                    </div>
+                `;
+            } else {
+                const lastDate = new Date(parseInt(lastBackup));
+                const daysSince = Math.floor((Date.now() - lastDate) / (1000 * 60 * 60 * 24));
+                const hoursSince = Math.floor((Date.now() - lastDate) / (1000 * 60 * 60));
+
+                let timeText = '';
+                if (daysSince > 0) {
+                    timeText = `${daysSince} 天前`;
+                } else if (hoursSince > 0) {
+                    timeText = `${hoursSince} 小时前`;
+                } else {
+                    timeText = '刚刚';
+                }
+
+                let statusColor = '#10b981';
+                let statusBg = '#d1fae5';
+                let statusText = '#065f46';
+                let warningText = '';
+
+                if (daysSince >= 30) {
+                    statusColor = '#ef4444';
+                    statusBg = '#fee2e2';
+                    statusText = '#991b1b';
+                    warningText = '<p style="margin: 8px 0 0 0; font-size: 13px;">⚠️ 已超过30天未备份，建议立即备份！</p>';
+                } else if (daysSince >= 7) {
+                    statusColor = '#f59e0b';
+                    statusBg = '#fef3c7';
+                    statusText = '#92400e';
+                    warningText = '<p style="margin: 8px 0 0 0; font-size: 13px;">⚠️ 已超过7天未备份</p>';
+                }
+
+                statusHtml = `
+                    <div style="background: ${statusBg}; border-left: 4px solid ${statusColor}; padding: 16px; border-radius: 0 8px 8px 0; margin-bottom: 16px;">
+                        <p style="margin: 0; color: ${statusText}; font-weight: 500;">上次备份时间：${lastDate.toLocaleString('zh-CN')}</p>
+                        <p style="margin: 4px 0 0 0; color: ${statusText}; font-size: 13px;">(${timeText})</p>
+                        ${warningText}
+                    </div>
+                `;
+            }
+
+            // 统计当前数据
+            const dataStats = {
+                income: Object.keys(incomeData || {}).length,
+                students: (studentsData || []).length,
+                feedback: (feedbackData || []).length,
+                panLinks: (panLinksData || []).length,
+                weatherCities: (weatherCities || []).length
+            };
+
+            modal.innerHTML = `
+                <div style="background: white; border-radius: 16px; padding: 24px; width: 100%; max-width: 400px; box-shadow: 0 20px 60px rgba(0,0,0,0.3);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <h3 style="font-size: 18px; font-weight: 600; color: #333; margin: 0;">📊 备份状态</h3>
+                        <button onclick="this.closest('.fixed').remove()" style="background: none; border: none; font-size: 24px; color: #999; cursor: pointer;">&times;</button>
+                    </div>
+
+                    ${statusHtml}
+
+                    <h4 style="font-size: 14px; font-weight: 600; color: #333; margin-bottom: 12px;">当前数据量</h4>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 20px;">
+                        <div style="background: #f9fafb; padding: 12px; border-radius: 8px; text-align: center;">
+                            <div style="font-size: 20px; font-weight: 600; color: #3b82f6;">${dataStats.income}</div>
+                            <div style="font-size: 12px; color: #666;">收入记录</div>
+                        </div>
+                        <div style="background: #f9fafb; padding: 12px; border-radius: 8px; text-align: center;">
+                            <div style="font-size: 20px; font-weight: 600; color: #3b82f6;">${dataStats.students}</div>
+                            <div style="font-size: 12px; color: #666;">学生</div>
+                        </div>
+                        <div style="background: #f9fafb; padding: 12px; border-radius: 8px; text-align: center;">
+                            <div style="font-size: 20px; font-weight: 600; color: #3b82f6;">${dataStats.feedback}</div>
+                            <div style="font-size: 12px; color: #666;">课后反馈</div>
+                        </div>
+                        <div style="background: #f9fafb; padding: 12px; border-radius: 8px; text-align: center;">
+                            <div style="font-size: 20px; font-weight: 600; color: #3b82f6;">${dataStats.panLinks}</div>
+                            <div style="font-size: 12px; color: #666;">网盘链接</div>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 12px;">
+                        <button onclick="this.closest('.fixed').remove()" style="flex: 1; padding: 12px; background: #f3f4f6; border: none; border-radius: 8px; font-size: 14px; color: #666; cursor: pointer; font-weight: 500;">关闭</button>
+                        <button onclick="this.closest('.fixed').remove(); exportAllData();" style="flex: 1; padding: 12px; background: #3b82f6; border: none; border-radius: 8px; font-size: 14px; color: white; cursor: pointer; font-weight: 500;">立即备份</button>
+                    </div>
+                </div>
+            `;
+
+            document.body.appendChild(modal);
+        }
+
+        // 更新上次备份信息显示
+        function updateLastBackupInfo() {
+            const infoDiv = document.getElementById('lastBackupInfo');
+            if (!infoDiv) return;
+
+            const lastBackup = localStorage.getItem('lastBackupTime');
+            if (!lastBackup) {
+                infoDiv.innerHTML = '<span style="color: #ef4444;">⚠️ 尚未备份</span>';
+                return;
+            }
+
+            const lastDate = new Date(parseInt(lastBackup));
+            const daysSince = Math.floor((Date.now() - lastDate) / (1000 * 60 * 60 * 24));
+
+            let color = '#10b981';
+            let text = '';
+
+            if (daysSince >= 30) {
+                color = '#ef4444';
+                text = `⚠️ 上次备份：${daysSince}天前，建议立即备份`;
+            } else if (daysSince >= 7) {
+                color = '#f59e0b';
+                text = `上次备份：${daysSince}天前`;
+            } else if (daysSince > 0) {
+                text = `上次备份：${daysSince}天前`;
+            } else {
+                text = '上次备份：今天';
+            }
+
+            infoDiv.innerHTML = `<span style="color: ${color};">${text}</span>`;
+        }
+
+        // 检查是否需要提醒备份（每7天提醒一次）
+        function checkBackupReminder() {
+            const lastBackup = localStorage.getItem('lastBackupTime');
+            const lastReminder = localStorage.getItem('lastBackupReminder');
+            const now = Date.now();
+
+            // 如果7天内已经提醒过，不再提醒
+            if (lastReminder && (now - parseInt(lastReminder)) < 7 * 24 * 60 * 60 * 1000) {
+                return;
+            }
+
+            // 如果没有备份或超过7天未备份
+            if (!lastBackup || (now - parseInt(lastBackup)) > 7 * 24 * 60 * 60 * 1000) {
+                const daysSince = lastBackup ? Math.floor((now - parseInt(lastBackup)) / (1000 * 60 * 60 * 24)) : null;
+                const message = daysSince
+                    ? `您已经 ${daysSince} 天没有备份数据了，建议定期备份以防数据丢失！`
+                    : '您尚未进行过数据备份，建议立即备份以防数据丢失！';
+
+                // 延迟显示提醒，避免页面加载时弹出
+                setTimeout(() => {
+                    if (confirm(`${message}\n\n是否立即备份？`)) {
+                        exportAllData();
                     }
-                    
-                    // 恢复学生管理数据
-                    if (backup.data.students) {
-                        studentsData = backup.data.students;
-                        localStorage.setItem(BACKUP_KEYS.STUDENTS, JSON.stringify(studentsData));
+                    localStorage.setItem('lastBackupReminder', now.toString());
+                }, 3000);
+            }
+        }
+
+        // 执行数据恢复
+        function executeRestore(backup) {
+            try {
+                const restoreIncome = document.getElementById('restore-income')?.checked;
+                const restoreStudents = document.getElementById('restore-students')?.checked;
+                const restoreSchedule = document.getElementById('restore-schedule')?.checked;
+                const restoreFeedback = document.getElementById('restore-feedback')?.checked;
+                const restorePanLinks = document.getElementById('restore-panlinks')?.checked;
+                const restoreWeather = document.getElementById('restore-weather')?.checked;
+                const restoreSettings = document.getElementById('restore-settings')?.checked;
+
+                let restoredCount = 0;
+
+                // 恢复收入记录数据
+                if (restoreIncome && backup.data.income) {
+                    incomeData = backup.data.income.data || {};
+                    incomeDefaultRate = backup.data.income.defaultRate || 200;
+                    if (backup.data.income.currentDate) {
+                        incomeCurrentDate = new Date(backup.data.income.currentDate);
                     }
-                    
-                    // 恢复课表数据
-                    if (backup.data.schedule) {
-                        scheduleData = backup.data.schedule;
-                        localStorage.setItem(BACKUP_KEYS.SCHEDULE, JSON.stringify(scheduleData));
-                    }
-                    if (backup.data.scheduleTimeSlots) {
-                        scheduleTimeSlots = backup.data.scheduleTimeSlots;
-                        localStorage.setItem(BACKUP_KEYS.SCHEDULE_SLOTS, JSON.stringify(scheduleTimeSlots));
-                    }
-                    
-                    // 恢复课后反馈数据
-                    if (backup.data.feedback) {
-                        feedbackData = backup.data.feedback;
-                        localStorage.setItem(BACKUP_KEYS.FEEDBACK, JSON.stringify(feedbackData));
-                    }
-                    
+                    localStorage.setItem(BACKUP_KEYS.INCOME, JSON.stringify(incomeData));
+                    restoredCount++;
+                }
+
+                // 恢复学生管理数据
+                if (restoreStudents && backup.data.students) {
+                    studentsData = backup.data.students;
+                    localStorage.setItem(BACKUP_KEYS.STUDENTS, JSON.stringify(studentsData));
+                    restoredCount++;
+                }
+
+                // 恢复课表数据
+                if (restoreSchedule && backup.data.schedule) {
+                    scheduleData = backup.data.schedule;
+                    localStorage.setItem(BACKUP_KEYS.SCHEDULE, JSON.stringify(scheduleData));
+                }
+                if (restoreSchedule && backup.data.scheduleTimeSlots) {
+                    scheduleTimeSlots = backup.data.scheduleTimeSlots;
+                    localStorage.setItem(BACKUP_KEYS.SCHEDULE_SLOTS, JSON.stringify(scheduleTimeSlots));
+                    restoredCount++;
+                }
+
+                // 恢复课后反馈数据
+                if (restoreFeedback && backup.data.feedback) {
+                    feedbackData = backup.data.feedback;
+                    localStorage.setItem(BACKUP_KEYS.FEEDBACK, JSON.stringify(feedbackData));
+                    restoredCount++;
+                }
+
+                // 恢复网盘链接数据
+                if (restorePanLinks && backup.data.panLinks) {
+                    panLinksData = backup.data.panLinks;
+                    localStorage.setItem(BACKUP_KEYS.PAN_LINKS, JSON.stringify(panLinksData));
+                    restoredCount++;
+                }
+
+                // 恢复天气城市数据
+                if (restoreWeather && backup.data.weatherCities) {
+                    weatherCities = backup.data.weatherCities;
+                    currentCityIndex = backup.data.currentCityIndex || 0;
+                    localStorage.setItem(BACKUP_KEYS.WEATHER_CITIES, JSON.stringify(weatherCities));
+                    localStorage.setItem(BACKUP_KEYS.CURRENT_CITY_INDEX, currentCityIndex.toString());
+                    restoredCount++;
+                }
+
+                // 恢复设置
+                if (restoreSettings) {
                     // 恢复倒数日数据
                     if (backup.data.countdown) {
                         localStorage.setItem(BACKUP_KEYS.COUNTDOWN, backup.data.countdown);
                     }
-                    
                     // 恢复番茄时钟数据
                     if (backup.data.tomato) {
                         localStorage.setItem(CONFIG.STORAGE_KEYS.TOMATO, backup.data.tomato);
                     }
-                    
                     // 恢复主题设置
                     if (backup.data.theme) {
                         localStorage.setItem(CONFIG.STORAGE_KEYS.THEME, backup.data.theme);
                         applyTheme(backup.data.theme);
                     }
-                    
                     // 恢复答题卡设置
                     if (backup.data.answerSheet) {
                         localStorage.setItem(CONFIG.STORAGE_KEYS.ANSWER_SHEET, backup.data.answerSheet);
                     }
-                    
                     // 恢复位置设置
                     if (backup.data.weatherPosition) {
                         localStorage.setItem('weatherWidgetPosition', backup.data.weatherPosition);
@@ -5334,30 +6229,52 @@
                     if (backup.data.countdownPosition) {
                         localStorage.setItem('countdownWidgetPosition', backup.data.countdownPosition);
                     }
-                    
-                    // 刷新所有界面
+                    restoredCount++;
+                }
+
+                // 如果备份版本是2.0+且有完整的localStorage备份，选择性恢复其他数据
+                if (backup.version >= '2.0' && backup.data.localStorage && restoreSettings) {
+                    Object.entries(backup.data.localStorage).forEach(([key, value]) => {
+                        // 避免覆盖已恢复的特定数据
+                        if (!Object.values(BACKUP_KEYS).includes(key) &&
+                            !Object.values(CONFIG.STORAGE_KEYS).includes(key)) {
+                            localStorage.setItem(key, value);
+                        }
+                    });
+                }
+
+                // 刷新所有界面
+                if (restoreIncome) {
                     renderIncomeCalendar();
                     updateIncomeStats();
+                }
+                if (restoreStudents) {
                     renderStudentList();
                     updateStudentStats();
                     updateStudentCharts();
-                    initSchedule();
-                    initCountdown();
-                    
-                    showNotification('数据恢复成功！', 'success');
-                    
-                } catch (error) {
-                    console.error('数据恢复失败:', error);
-                    showNotification('数据恢复失败：' + error.message, 'error');
                 }
-            };
-            reader.onerror = function() {
-                showNotification('文件读取失败', 'error');
-            };
-            reader.readAsText(file);
-            
-            // 清空文件输入
-            event.target.value = '';
+                if (restoreSchedule) {
+                    initSchedule();
+                }
+                if (restoreFeedback) {
+                    renderFeedbackHistory();
+                }
+                if (restorePanLinks) {
+                    renderPanLinksList();
+                }
+                if (restoreWeather) {
+                    renderWeatherTabs();
+                    loadCurrentCityWeather();
+                }
+                initCountdown();
+
+                closeBackupPreview();
+                showNotification(`成功恢复 ${restoredCount} 类数据！`, 'success');
+
+            } catch (error) {
+                console.error('数据恢复失败:', error);
+                showNotification('数据恢复失败：' + error.message, 'error');
+            }
         }
 
         // ========== 主题系统 ==========
@@ -5586,13 +6503,13 @@
             try {
                 initTheme();
                 loadAnswerSheetSettings();
-                
+
                 const allInputs = document.querySelectorAll('#answer-sheet input, #answer-sheet select');
                 allInputs.forEach(input => {
                     input.addEventListener('input', debouncedAnswerSheetUpdate);
                     input.addEventListener('change', debouncedAnswerSheetUpdate);
                 });
-                
+
                 generateAnswerSheet();
                 initTomato();
                 initSchedule();
@@ -5600,12 +6517,19 @@
                 initGeometryDrawing();
                 initIncomeModule();
                 initStudentsModule();
+                initPanLinks();
+
+                // 更新备份信息显示
+                updateLastBackupInfo();
+
+                // 检查是否需要提醒备份
+                checkBackupReminder();
 
                 console.log('✅ 独立数学老师辅助工具加载完成');
                 showNotification('工具已加载完成', 'success');
             } catch (error) {
                 console.error('❌ 初始化错误:', error);
-                showNotification('页面加载时出现错误', 'error');
+                showNotification('页面加载出现时错误', 'error');
             }
         };
 
@@ -10881,9 +11805,254 @@
         const functionTags = document.getElementById('function-tags');
         // 颜色池：12种高区分度颜色
         const colorPool = ['#165DFF', '#36CFC9', '#FF7D00', '#722ED1', '#F759AB', '#13C2C2', '#FF9F1C', '#2F54EB', '#F5222D', '#52C41A', '#FAAD14', '#7B61FF'];
-        let colorIndex = 0; 
-        let datasetId = 0; 
+        let colorIndex = 0;
+        let datasetId = 0;
 
+        // ========== 百度网盘链接管理功能 ==========
+        let panLinksData = JSON.parse(localStorage.getItem('panLinks')) || [];
+        let editingPanLinkId = null;
+
+        // 获取分类图标
+        function getCategoryIcon(category) {
+            const icons = {
+                '试卷': '📄',
+                '课件': '📚',
+                '资料': '📖',
+                '视频': '🎬',
+                '其他': '📦'
+            };
+            return icons[category] || '📦';
+        }
+
+        // 获取分类颜色
+        function getCategoryColor(category) {
+            const colors = {
+                '试卷': 'bg-blue-100 text-blue-700',
+                '课件': 'bg-green-100 text-green-700',
+                '资料': 'bg-purple-100 text-purple-700',
+                '视频': 'bg-red-100 text-red-700',
+                '其他': 'bg-gray-100 text-gray-700'
+            };
+            return colors[category] || 'bg-gray-100 text-gray-700';
+        }
+
+        // 保存网盘链接数据到本地存储
+        function savePanLinksData() {
+            localStorage.setItem('panLinks', JSON.stringify(panLinksData));
+        }
+
+        // 获取表单数据
+        function getPanLinkFormData() {
+            return {
+                id: editingPanLinkId || Date.now(),
+                name: document.getElementById('panLinkName').value.trim(),
+                url: document.getElementById('panLinkUrl').value.trim(),
+                code: document.getElementById('panLinkCode').value.trim(),
+                category: document.getElementById('panLinkCategory').value,
+                note: document.getElementById('panLinkNote').value.trim(),
+                createTime: editingPanLinkId ? panLinksData.find(l => l.id === editingPanLinkId)?.createTime || new Date().toISOString() : new Date().toISOString()
+            };
+        }
+
+        // 验证表单
+        function validatePanLink(data) {
+            if (!data.name) {
+                showNotification('请输入链接名称', 'error');
+                return false;
+            }
+            if (!data.url) {
+                showNotification('请输入网盘链接', 'error');
+                return false;
+            }
+            // 验证链接格式
+            if (!data.url.includes('pan.baidu.com')) {
+                showNotification('请输入有效的百度网盘链接', 'error');
+                return false;
+            }
+            return true;
+        }
+
+        // 保存链接
+        function savePanLink() {
+            const data = getPanLinkFormData();
+
+            if (!validatePanLink(data)) {
+                return;
+            }
+
+            if (editingPanLinkId) {
+                // 更新现有链接
+                const index = panLinksData.findIndex(l => l.id === editingPanLinkId);
+                if (index !== -1) {
+                    panLinksData[index] = data;
+                }
+                showNotification('链接更新成功', 'success');
+            } else {
+                // 添加新链接
+                panLinksData.unshift(data);
+                showNotification('链接添加成功', 'success');
+            }
+
+            savePanLinksData();
+            renderPanLinksList();
+            resetPanForm();
+        }
+
+        // 重置表单
+        function resetPanForm() {
+            document.getElementById('panLinkForm').reset();
+            document.getElementById('panLinkId').value = '';
+            document.getElementById('panFormTitle').textContent = '添加链接';
+            document.getElementById('panSaveBtnText').textContent = '保存';
+            editingPanLinkId = null;
+        }
+
+        // 编辑链接
+        function editPanLink(id) {
+            const link = panLinksData.find(l => l.id === id);
+            if (!link) return;
+
+            editingPanLinkId = id;
+            document.getElementById('panLinkId').value = id;
+            document.getElementById('panLinkName').value = link.name;
+            document.getElementById('panLinkUrl').value = link.url;
+            document.getElementById('panLinkCode').value = link.code || '';
+            document.getElementById('panLinkCategory').value = link.category || '其他';
+            document.getElementById('panLinkNote').value = link.note || '';
+
+            document.getElementById('panFormTitle').textContent = '编辑链接';
+            document.getElementById('panSaveBtnText').textContent = '更新';
+
+            // 滚动到表单
+            document.getElementById('panLinkForm').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        // 删除链接
+        function deletePanLink(id) {
+            if (!confirm('确定要删除这个链接吗？')) return;
+
+            panLinksData = panLinksData.filter(l => l.id !== id);
+            savePanLinksData();
+            renderPanLinksList();
+
+            if (editingPanLinkId === id) {
+                resetPanForm();
+            }
+
+            showNotification('链接已删除', 'success');
+        }
+
+        // 复制链接
+        function copyPanLink(id) {
+            const link = panLinksData.find(l => l.id === id);
+            if (!link) return;
+
+            let textToCopy = `链接：${link.url}`;
+            if (link.code) {
+                textToCopy += `\n提取码：${link.code}`;
+            }
+
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                showNotification('链接已复制到剪贴板', 'success');
+            }).catch(() => {
+                // 降级方案
+                const textarea = document.createElement('textarea');
+                textarea.value = textToCopy;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                showNotification('链接已复制到剪贴板', 'success');
+            });
+        }
+
+        // 打开链接
+        function openPanLink(url) {
+            window.open(url, '_blank');
+        }
+
+        // 渲染链接列表
+        function renderPanLinksList() {
+            const container = document.getElementById('panLinksList');
+            const countEl = document.getElementById('panLinkCount');
+
+            if (!container) return;
+
+            // 获取筛选条件
+            const searchTerm = document.getElementById('panSearchInput')?.value.toLowerCase() || '';
+            const categoryFilter = document.getElementById('panFilterCategory')?.value || '';
+
+            // 筛选数据
+            let filteredData = panLinksData.filter(link => {
+                const matchSearch = link.name.toLowerCase().includes(searchTerm) ||
+                                   (link.note && link.note.toLowerCase().includes(searchTerm));
+                const matchCategory = !categoryFilter || link.category === categoryFilter;
+                return matchSearch && matchCategory;
+            });
+
+            // 更新计数
+            if (countEl) {
+                countEl.textContent = `共 ${filteredData.length} 条`;
+            }
+
+            if (filteredData.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center text-gray-500 py-12">
+                        <i class="fa fa-cloud text-5xl mb-3 text-gray-300"></i>
+                        <p>${panLinksData.length === 0 ? '暂无网盘链接' : '没有找到匹配的链接'}</p>
+                        <p class="text-sm mt-1">${panLinksData.length === 0 ? '点击左侧添加新链接' : '请调整搜索条件'}</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = filteredData.map(link => `
+                <div class="bg-gray-50 rounded-xl p-4 hover:bg-gray-100 transition-colors group">
+                    <div class="flex justify-between items-start mb-2">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xl">${getCategoryIcon(link.category)}</span>
+                            <h3 class="font-semibold text-gray-900">${escapeHTML(link.name)}</h3>
+                            <span class="text-xs px-2 py-1 rounded-full ${getCategoryColor(link.category)}">${link.category}</span>
+                        </div>
+                        <div class="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <button onclick="editPanLink(${link.id})" class="text-blue-500 hover:text-blue-700 p-1.5 rounded hover:bg-blue-50" title="编辑">
+                                <i class="fa fa-edit"></i>
+                            </button>
+                            <button onclick="deletePanLink(${link.id})" class="text-red-500 hover:text-red-700 p-1.5 rounded hover:bg-red-50" title="删除">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="text-sm text-gray-600 truncate flex-1 font-mono">${escapeHTML(link.url)}</span>
+                    </div>
+                    ${link.code ? `<div class="text-sm text-gray-600 mb-2"><span class="font-medium">提取码：</span><span class="font-mono text-orange-600 bg-orange-50 px-2 py-0.5 rounded">${link.code}</span></div>` : ''}
+                    ${link.note ? `<p class="text-sm text-gray-500 mb-3">${escapeHTML(link.note)}</p>` : ''}
+                    <div class="flex gap-2">
+                        <button onclick="openPanLink('${link.url}')" class="flex-1 bg-blue-500 text-white py-2 px-3 rounded-lg text-sm hover:bg-blue-600 transition-colors flex items-center justify-center gap-1">
+                            <i class="fa fa-external-link"></i>
+                            打开链接
+                        </button>
+                        <button onclick="copyPanLink(${link.id})" class="flex-1 bg-green-500 text-white py-2 px-3 rounded-lg text-sm hover:bg-green-600 transition-colors flex items-center justify-center gap-1">
+                            <i class="fa fa-copy"></i>
+                            复制
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // 筛选链接
+        function filterPanLinks() {
+            renderPanLinksList();
+        }
+
+        // 初始化网盘链接模块
+        function initPanLinks() {
+            renderPanLinksList();
+        }
+
+        // ========== 函数绘制功能 ==========
         function initFunctionDrawing() {
             initTabSwitch();
             initFunctionTypeSwitch();
