@@ -1,5 +1,5 @@
 # MathTeacherRedBook.github.io
-# mathtools1.2.html
+# [mathtools1.2.html](https://mathteacherredbook.github.io/mathtools1.2.html)
 # 项目名称
 一个简洁、实用的小工具。
 
